@@ -365,12 +365,9 @@ FodyWeavers.xsd
 
 # Editor folders
 .vscode/
-.idea/
 
 # Angular cache and build outputs
 .angular/
-dist/
-build/
 
 # Public assets
 public/
