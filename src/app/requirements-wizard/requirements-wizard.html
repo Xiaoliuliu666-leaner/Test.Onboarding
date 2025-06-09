@@ -1,1 +1,36 @@
-<p>requirements-wizard works!</p>
+<div class="wizard-container">
+  <h2>Step {{ stepIndex }}</h2>
+
+  <!-- Step 1: Select Tenant -->
+  <div *ngIf="stepIndex === 1">
+    <label for="tenant">Select Tenant:</label>
+    <select [(ngModel)]="formData.tenant" id="tenant">
+      <option value="" disabled selected>Select...</option>
+      <option *ngFor="let t of tenants" [value]="t">{{ t }}</option>
+    </select>
+  </div>
+
+  <!-- Step 2: Select Modules -->
+  <div *ngIf="stepIndex === 2">
+    <label>Select Modules:</label>
+    <div *ngFor="let module of availableModules">
+      <input type="checkbox"
+             [value]="module"
+             (change)="onModuleChange($event)">
+      {{ module }}
+    </div>
+  </div>
+
+  <!-- Step 3: Notes -->
+  <div *ngIf="stepIndex === 3">
+    <label>Configuration Notes:</label>
+    <textarea [(ngModel)]="formData.configNotes" rows="5"></textarea>
+  </div>
+
+  <!-- Navigation Buttons -->
+  <div class="wizard-nav">
+    <button (click)="previousStep()" [disabled]="stepIndex === 1">Previous</button>
+    <button *ngIf="stepIndex < 3" (click)="nextStep()" [disabled]="!isStepValid()">Next</button>
+    <button *ngIf="stepIndex === 3" (click)="submitWizard()" [disabled]="!isStepValid()">Submit</button>
+  </div>
+</div>
