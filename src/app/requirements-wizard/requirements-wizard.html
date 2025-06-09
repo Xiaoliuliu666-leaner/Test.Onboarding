@@ -10,8 +10,8 @@
       <option value="__new__">+ New Tenant</option>
     </select>
   </div>
-  
-  <!-- Step 1: Select New Tenant -->
+
+  <!-- Step 1: Select to add New Tenant -->
   <div *ngIf="isCreatingNewTenant" style="margin-top: 10px;">
     <label>Enter New Tenant Name:</label>
     <input type="text" [(ngModel)]="formData.newTenantName" />
