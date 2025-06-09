@@ -1,43 +1,71 @@
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
+  standalone: true,
   selector: 'app-requirements-wizard',
-  imports: [],
+  imports: [FormsModule,CommonModule],
   templateUrl: './requirements-wizard.html',
   styleUrl: './requirements-wizard.css'
 })
+
 export class RequirementsWizard {
-  step = 1;
+  stepIndex = 1;
 
-  client = {
-    name: '',
-    tenantID: '',
-    services: [] as string[]
-  };
+  formData: {
+  tenant: string;
+  modules: string[];
+  configNotes: string;
+} = {
+  tenant: '',
+  modules: [],
+  configNotes: ''
+};
 
-   availableServices = [
-    { name: 'Active Directory Certificate Services', selected: false },
-    { name: 'DNS Server', selected: false },
-    { name: 'DHCP Server', selected: false },
-    { name: 'File Services', selected: false }
-  ];
+   tenants = ['Tenant A', 'Tenant B', 'Tenant C'];
+  availableModules = ['User Management', 'Reporting', 'Billing', 'Support'];
 
   nextStep() {
-    if (this.step === 2) {
-      this.client.services = this.availableServices
-        .filter(s => s.selected)
-        .map(s => s.name);
+    if (this.stepIndex < 3) {
+      this.stepIndex++;
     }
-    this.step++;
   }
 
-  prevStep() {
-    this.step--;
+  previousStep() {
+    if (this.stepIndex > 1) {
+      this.stepIndex--;
+    }
   }
 
-  submit() {
-    console.log('Final client config:', this.client);
+  isStepValid(): boolean {
+    switch (this.stepIndex) {
+      case 1:
+        return this.formData.tenant !== '';
+      case 2:
+        return this.formData.modules.length > 0;
+      default:
+        return true;
+    }
   }
 
+  onModuleChange(event: any) {
+    const module = event.target.value;
+    const checked = event.target.checked;
 
+    if (checked) {
+      this.formData.modules.push(module);
+    } else {
+      const index = this.formData.modules.indexOf(module);
+      if (index >= 0) {
+        this.formData.modules.splice(index, 1);
+      }
+    }
+  }
+
+  submitWizard() {
+    console.log('Wizard Data:', this.formData);
+    alert('Wizard submitted! Check console for data.');
+  }
+  
 }
