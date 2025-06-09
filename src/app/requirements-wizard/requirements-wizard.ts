@@ -15,10 +15,12 @@ export class RequirementsWizard {
 
   formData: {
   tenant: string;
+  newTenantName: string;
   modules: string[];
   configNotes: string;
 } = {
   tenant: '',
+  newTenantName: '',
   modules: [],
   configNotes: ''
 };
@@ -40,14 +42,18 @@ export class RequirementsWizard {
 
   isStepValid(): boolean {
     switch (this.stepIndex) {
-      case 1:
-        return this.formData.tenant !== '';
-      case 2:
-        return this.formData.modules.length > 0;
-      default:
-        return true;
-    }
+    case 1:
+      if (this.formData.tenant === '__new__') {
+        return this.formData.newTenantName.trim().length > 0;
+      }
+      return this.formData.tenant !== '';
+
+    case 2:
+      return this.formData.modules.length > 0;
+    default:
+      return true;
   }
+}
 
   onModuleChange(event: any) {
     const module = event.target.value;
@@ -64,8 +70,22 @@ export class RequirementsWizard {
   }
 
   submitWizard() {
-    console.log('Wizard Data:', this.formData);
-    alert('Wizard submitted! Check console for data.');
+    const finalTenant = this.formData.tenant === '__new__'
+    ? this.formData.newTenantName
+    : this.formData.tenant;
+
+  console.log('Final Tenant:', finalTenant);
+  console.log('Selected Modules:', this.formData.modules);
+  console.log('Notes:', this.formData.configNotes);
+
+  alert('Wizard submitted! Check console for data.');
   }
+
+isCreatingNewTenant = false;
+
+checkNewTenant() {
+  this.isCreatingNewTenant = this.formData.tenant === '__new__';
+}
+
   
 }
