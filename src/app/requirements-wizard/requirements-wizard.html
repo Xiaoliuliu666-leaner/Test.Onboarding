@@ -7,8 +7,17 @@
     <select [(ngModel)]="formData.tenant" id="tenant">
       <option value="" disabled selected>Select...</option>
       <option *ngFor="let t of tenants" [value]="t">{{ t }}</option>
+      <option value="__new__">+ New Tenant</option>
     </select>
   </div>
+  
+  <!-- Step 1: Select New Tenant -->
+  <div *ngIf="isCreatingNewTenant" style="margin-top: 10px;">
+    <label>Enter New Tenant Name:</label>
+    <input type="text" [(ngModel)]="formData.newTenantName" />
+  </div>
+
+</div>
 
   <!-- Step 2: Select Modules -->
   <div *ngIf="stepIndex === 2">
@@ -33,4 +42,3 @@
     <button *ngIf="stepIndex < 3" (click)="nextStep()" [disabled]="!isStepValid()">Next</button>
     <button *ngIf="stepIndex === 3" (click)="submitWizard()" [disabled]="!isStepValid()">Submit</button>
   </div>
-</div>
