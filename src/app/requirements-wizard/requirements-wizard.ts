@@ -70,15 +70,8 @@ export class RequirementsWizard {
   }
 
   submitWizard() {
-    const finalTenant = this.formData.tenant === '__new__'
-    ? this.formData.newTenantName
-    : this.formData.tenant;
-
-  console.log('Final Tenant:', finalTenant);
-  console.log('Selected Modules:', this.formData.modules);
-  console.log('Notes:', this.formData.configNotes);
-
-  alert('Wizard submitted! Check console for data.');
+    console.log('Wizard Data:', this.formData);
+    alert('Wizard submitted! Check console for data.');
   }
 
 isCreatingNewTenant = false;
