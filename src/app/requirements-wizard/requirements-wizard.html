@@ -4,24 +4,19 @@
   <!-- Step 1: Select Tenant -->
   <div *ngIf="stepIndex === 1">
     <label for="tenant">Select Tenant:</label>
-    <select [(ngModel)]="formData.tenant" id="tenant">
+    <select [(ngModel)]="formData.tenant" (change)="checkNewTenant()" id="tenant">
       <option value="" disabled selected>Select...</option>
       <option *ngFor="let t of tenants" [value]="t">{{ t }}</option>
       <option value="__new__">+ New Tenant</option>
     </select>
   </div>
 
-  <!-- Step 1: Select to add New Tenant -->
+  <!-- Step 1: Select to add New Tenant & Add a new user input box -->
   <div *ngIf="isCreatingNewTenant" style="margin-top: 10px;">
     <label>Enter New Tenant Name:</label>
-    <input type="text" [(ngModel)]="formData.newTenantName" />
-  </div>
-  
-  <!-- Step 1:  Add a new user input box -->
-  <input type="text"
-       [(ngModel)]="formData.newTenantName"
-       placeholder="Enter new tenant name..." />
-
+    <input type="text" 
+    [(ngModel)]="formData.newTenantName"
+    placeholder="Enter new tenant name..." />
 </div>
 
   <!-- Step 2: Select Modules -->
