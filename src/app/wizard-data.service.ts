@@ -18,6 +18,14 @@ export class WizardDataService {
     return this.data;//Get all the data saved during the entire wizard process
   }
 
+  saveWizardData(formData: any) {
+    this.data = formData;
+  }
+
+  getWizardData() {
+    return this.data;
+  }
+
   resetData() {
     this.data = {};
   }
