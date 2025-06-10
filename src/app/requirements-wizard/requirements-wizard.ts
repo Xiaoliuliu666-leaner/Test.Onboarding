@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { WizardDataService } from '../wizard-data.service';
+import { Router } from '@angular/router';
 
 @Component({
   standalone: true,
@@ -12,7 +13,9 @@ import { WizardDataService } from '../wizard-data.service';
 })
 
 export class RequirementsWizard {
-  constructor(private wizardDataService: WizardDataService) {}
+  constructor(
+    private wizardDataService: WizardDataService,
+    private router: Router) {}
   stepIndex = 1;
 
   formData: {
@@ -92,6 +95,7 @@ export class RequirementsWizard {
     const allData = this.wizardDataService.getAllData();     // Get all step data
     console.log('Wizard Data:', this.formData);
     alert('Wizard submitted! Check console for data.');
+    this.router.navigate(['/']);                             // Jump to the home page
   }
 
 isCreatingNewTenant = false;
