@@ -64,6 +64,9 @@ export class RequirementsWizard {
       return this.formData.modules.length > 0;
     default:
       return true;
+
+    case 3:
+      return this.formData.configNotes.trim().length >= 10;
   }
 }
 
