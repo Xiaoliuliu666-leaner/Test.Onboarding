@@ -1,0 +1,36 @@
+.home-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #f5f8fa;
+  font-family: 'Segoe UI', sans-serif;
+
+  h1 {
+    font-size: 28px;
+    margin-bottom: 24px;
+    color: #333;
+  }
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: #0078d4;
+    color: #fff;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+
+    &:hover {
+      background: #005fa3;
+    }
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
