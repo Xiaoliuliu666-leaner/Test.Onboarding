@@ -27,6 +27,7 @@ export class RequirementsWizard {
   contactPhone: string;
   modules: string[];
   configNotes: string;
+  createdBy: string
 } = {
   tenant: '',
   newTenantName: '',
@@ -34,7 +35,8 @@ export class RequirementsWizard {
   contactEmail: '',
   contactPhone: '',
   modules: [],
-  configNotes: ''
+  configNotes: '',
+  createdBy: ''
 };
 
   tenants = ['Tenant A', 'Tenant B', 'Tenant C'];
@@ -94,7 +96,9 @@ export class RequirementsWizard {
   submitWizard() {
   this.wizardDataService.saveWizardEntry(this.formData); 
   alert('Wizard submitted!');
-  this.router.navigate(['/']); 
+  this.router.navigate(['/']);
+  
+ 
 }
 
 isCreatingNewTenant = false;
