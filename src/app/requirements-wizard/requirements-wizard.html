@@ -29,9 +29,14 @@
 
   <!-- Step 2: Select Modules -->
   <div *ngIf="stepIndex === 2">
-    <label>Select Modules:</label>
+    <label>Select Module:</label>
+
     <div *ngFor="let module of availableModules">
-      <input type="checkbox" [value]="module.name" (change)="onModuleChange($event)" /> {{ module.name }}
+      <input type="checkbox" 
+      [value]="module.name" 
+      (change)="onModuleChange($event)" /> 
+      <strong>{{ module.name }}</strong>
+
     <div style="font-size: 12px; color: #666; margin-left: 20px;">{{ module.description }}</div>
   </div>
 </div>
@@ -40,6 +45,11 @@
   <div *ngIf="stepIndex === 3">
     <label>Configuration Notes:</label>
     <textarea [(ngModel)]="formData.configNotes" rows="5"></textarea>
+
+    <p *ngIf="formData.configNotes.trim().length < 10"
+     style="color: red; font-size: 13px; margin-top: 4px;">
+    Please enter at least 10 characters.
+  </p>
   </div>
 
   <!-- Navigation Buttons -->
