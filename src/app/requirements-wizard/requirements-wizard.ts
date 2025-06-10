@@ -92,12 +92,10 @@ export class RequirementsWizard {
   }
 
   submitWizard() {
-    this.saveCurrentStep();                                  // Save the final data
-    const allData = this.wizardDataService.getAllData();     // Get all step data
-    console.log('Wizard Data:', this.formData);
-    alert('Wizard submitted! Check console for data.');
-    this.router.navigate(['/']);                             // Jump to the home page
-  }
+  this.wizardDataService.saveWizardEntry(this.formData); 
+  alert('Wizard submitted!');
+  this.router.navigate(['/']); 
+}
 
 isCreatingNewTenant = false;
 
