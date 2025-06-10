@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { WizardDataService } from '../wizard-data.service'; 
@@ -10,8 +10,14 @@ import { WizardDataService } from '../wizard-data.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent {
-   constructor(private wizardDataService: WizardDataService) {
-    console.log('Retrieved Wizard Data:', this.wizardDataService.getWizardData());
+export class HomeComponent implements OnInit {
+  wizardEntries: any[] = [];
+
+  constructor(private wizardDataService: WizardDataService) {}
+
+  ngOnInit(): void {
+    this.wizardEntries = this.wizardDataService.getAllEntries(); 
+    console.log('Retrieved Wizard Entries:', this.wizardEntries);
   }
 }
+
