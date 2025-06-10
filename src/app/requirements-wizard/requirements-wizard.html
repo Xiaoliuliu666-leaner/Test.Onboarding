@@ -1,64 +1,78 @@
-  <a routerLink="/" class="back-home-link"> ← Back to Home </a>
+<a routerLink="/" class="back-home-link">← Back to Home</a>
 
+<div class="wizard-layout">
+  <!-- Left Side Navigation -->
+  <aside class="wizard-sidebar">
+    <ul>
+      <li [class.active]="stepIndex === 1">Step 1: Tenant</li>
+      <li [class.active]="stepIndex === 2">Step 2: Modules</li>
+      <li [class.active]="stepIndex === 3">Step 3: Notes</li>
+    </ul>
+  </aside>
 
-<div class="wizard-container">
-  <div class="step-indicator">Step {{ stepIndex }} of 3</div>
-  <h2>Step {{ stepIndex }}</h2>
+  <!-- Main Content Area -->
+  <div class="wizard-container">
+    <div class="step-indicator">Step {{ stepIndex }} of 3</div>
+    <h2>Step {{ stepIndex }}</h2>
 
-  <!-- Step 1: Select Tenant -->
-  <div *ngIf="stepIndex === 1">
-    <label for="tenant">Select Tenant:</label>
-    <select [(ngModel)]="formData.tenant" (change)="checkNewTenant()" id="tenant">
-      <option value="" disabled selected>Select...</option>
-      <option *ngFor="let t of tenants" [value]="t">{{ t }}</option>
-      <option value="__new__">+ New Tenant</option>
-    </select>
-  
+    <!-- Step 1 -->
+    <div *ngIf="stepIndex === 1">
+      <label for="tenant">Select Tenant:</label>
+      <select [(ngModel)]="formData.tenant" (change)="checkNewTenant()" id="tenant">
+        <option value="" disabled selected>Select...</option>
+        <option *ngFor="let t of tenants" [value]="t">{{ t }}</option>
+        <option value="__new__">+ New Tenant</option>
+      </select>
 
-  <!-- Step 1: Select to add New Tenant & Add a new user input box -->
-  <div *ngIf="isCreatingNewTenant" style="margin-top: 10px;">
-    <label>Enter New Tenant Name:</label>
-    <input type="text" [(ngModel)]="formData.newTenantName" placeholder="Enter new tenant name..." />
-    
-    <label>Contact Name:</label>
-    <input type="text" [(ngModel)]="formData.contactName" placeholder="Enter contact name..." />
+      <div *ngIf="isCreatingNewTenant" style="margin-top: 10px;">
+        <label>Enter New Tenant Name:</label>
+        <input type="text" [(ngModel)]="formData.newTenantName" placeholder="Enter new tenant name..." />
 
-    <label>Contact Email:</label>
-    <input type="email" [(ngModel)]="formData.contactEmail" placeholder="Enter contact email..." />
+        <label>Contact Name:</label>
+        <input type="text" [(ngModel)]="formData.contactName" placeholder="Enter contact name..." />
 
-    <label>Contact Phone:</label>
-    <input type="tel" [(ngModel)]="formData.contactPhone" placeholder="Enter contact phone..." />
+        <label>Contact Email:</label>
+        <input type="email" [(ngModel)]="formData.contactEmail" placeholder="Enter contact email..." />
+
+        <label>Contact Phone:</label>
+        <input type="tel" [(ngModel)]="formData.contactPhone" placeholder="Enter contact phone..." />
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div *ngIf="stepIndex === 2">
+      <label>Select Module:</label>
+
+      <div *ngFor="let module of availableModules">
+        <input type="checkbox" [value]="module.name" (change)="onModuleChange($event)" />
+        <strong>{{ module.name }}</strong>
+        <div style="font-size: 12px; color: #666; margin-left: 20px;">{{ module.description }}</div>
+      </div>
+
+      <!-- Selected module preview panel -->
+      <div *ngIf="formData.modules.length" class="selected-module-panel">
+        <strong>Selected Modules:</strong>
+        <ul>
+          <li *ngFor="let m of formData.modules">{{ m }}</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div *ngIf="stepIndex === 3">
+      <label>Configuration Notes:</label>
+      <textarea [(ngModel)]="formData.configNotes" rows="5"></textarea>
+
+      <p *ngIf="formData.configNotes.trim().length < 10" style="color: red; font-size: 13px; margin-top: 4px;">
+        Please enter at least 10 characters.
+      </p>
+    </div>
+
+    <!-- Buttons -->
+    <div class="wizard-nav">
+      <button (click)="previousStep()" [disabled]="stepIndex === 1">Previous</button>
+      <button *ngIf="stepIndex < 3" (click)="nextStep()" [disabled]="!isStepValid()">Next</button>
+      <button *ngIf="stepIndex === 3" (click)="submitWizard()" [disabled]="!isStepValid()">Submit</button>
+    </div>
   </div>
 </div>
-
-  <!-- Step 2: Select Modules -->
-  <div *ngIf="stepIndex === 2">
-    <label>Select Module:</label>
-
-    <div *ngFor="let module of availableModules">
-      <input type="checkbox" 
-      [value]="module.name" 
-      (change)="onModuleChange($event)" /> 
-      <strong>{{ module.name }}</strong>
-
-    <div style="font-size: 12px; color: #666; margin-left: 20px;">{{ module.description }}</div>
-  </div>
-</div>
-
-  <!-- Step 3: Notes -->
-  <div *ngIf="stepIndex === 3">
-    <label>Configuration Notes:</label>
-    <textarea [(ngModel)]="formData.configNotes" rows="5"></textarea>
-
-    <p *ngIf="formData.configNotes.trim().length < 10"
-     style="color: red; font-size: 13px; margin-top: 4px;">
-    Please enter at least 10 characters.
-  </p>
-  </div>
-
-  <!-- Navigation Buttons -->
-  <div class="wizard-nav">
-    <button (click)="previousStep()" [disabled]="stepIndex === 1">Previous</button>
-    <button *ngIf="stepIndex < 3" (click)="nextStep()" [disabled]="!isStepValid()">Next</button>
-    <button *ngIf="stepIndex === 3" (click)="submitWizard()" [disabled]="!isStepValid()">Submit</button>
-  </div>
