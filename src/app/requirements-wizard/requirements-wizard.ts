@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   selector: 'app-requirements-wizard',
   imports: [FormsModule,CommonModule],
   templateUrl: './requirements-wizard.html',
-  styleUrl: './requirements-wizard.css'
+  styleUrl: './requirements-wizard.scss'
 })
 
 export class RequirementsWizard {

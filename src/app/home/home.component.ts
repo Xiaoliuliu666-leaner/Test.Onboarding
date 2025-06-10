@@ -8,7 +8,7 @@ import { WizardDataService } from '../wizard-data.service';
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
    constructor(private wizardDataService: WizardDataService) {
