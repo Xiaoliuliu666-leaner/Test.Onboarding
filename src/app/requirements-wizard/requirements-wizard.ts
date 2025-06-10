@@ -16,17 +16,29 @@ export class RequirementsWizard {
   formData: {
   tenant: string;
   newTenantName: string;
+  contactName: string;
+  contactEmail: string;
+  contactPhone: string;
   modules: string[];
   configNotes: string;
 } = {
   tenant: '',
   newTenantName: '',
+  contactName: '',
+  contactEmail: '',
+  contactPhone: '',
   modules: [],
   configNotes: ''
 };
 
-   tenants = ['Tenant A', 'Tenant B', 'Tenant C'];
-  availableModules = ['User Management', 'Reporting', 'Billing', 'Support'];
+  tenants = ['Tenant A', 'Tenant B', 'Tenant C'];
+
+  availableModules = [
+    { name: 'User Management', description: 'Manage users and roles' },
+    { name: 'Reporting', description: 'Access various reports and dashboards' },
+    { name: 'Billing', description: 'Manage invoicing, payment processing, and subscription plans'},
+    { name: 'Support', description: 'Provide customer assistance and issue resolution services'},
+  ];
 
   nextStep() {
     if (this.stepIndex < 3) {
