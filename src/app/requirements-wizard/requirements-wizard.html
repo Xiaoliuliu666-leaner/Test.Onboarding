@@ -9,26 +9,32 @@
       <option *ngFor="let t of tenants" [value]="t">{{ t }}</option>
       <option value="__new__">+ New Tenant</option>
     </select>
-  </div>
+  
 
   <!-- Step 1: Select to add New Tenant & Add a new user input box -->
   <div *ngIf="isCreatingNewTenant" style="margin-top: 10px;">
     <label>Enter New Tenant Name:</label>
-    <input type="text" 
-    [(ngModel)]="formData.newTenantName"
-    placeholder="Enter new tenant name..." />
+    <input type="text" [(ngModel)]="formData.newTenantName" placeholder="Enter new tenant name..." />
+    
+    <label>Contact Name:</label>
+    <input type="text" [(ngModel)]="formData.contactName" placeholder="Enter contact name..." />
+
+    <label>Contact Email:</label>
+    <input type="email" [(ngModel)]="formData.contactEmail" placeholder="Enter contact email..." />
+
+    <label>Contact Phone:</label>
+    <input type="tel" [(ngModel)]="formData.contactPhone" placeholder="Enter contact phone..." />
+  </div>
 </div>
 
   <!-- Step 2: Select Modules -->
   <div *ngIf="stepIndex === 2">
     <label>Select Modules:</label>
     <div *ngFor="let module of availableModules">
-      <input type="checkbox"
-             [value]="module"
-             (change)="onModuleChange($event)">
-      {{ module }}
-    </div>
+      <input type="checkbox" [value]="module.name" (change)="onModuleChange($event)" /> {{ module.name }}
+    <div style="font-size: 12px; color: #666; margin-left: 20px;">{{ module.description }}</div>
   </div>
+</div>
 
   <!-- Step 3: Notes -->
   <div *ngIf="stepIndex === 3">
