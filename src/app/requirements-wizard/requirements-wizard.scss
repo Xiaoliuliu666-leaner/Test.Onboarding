@@ -89,3 +89,17 @@ button:not(:disabled):hover {
   margin-top: -14px;
   margin-bottom: 12px;
 }
+
+.back-home-link {
+  display: inline-block;
+  margin-bottom: 16px;
+  color: #0078d4;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+
+  &:hover {
+    color: #005fa3;
+    text-decoration: underline;
+  }
+}

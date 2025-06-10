@@ -3,11 +3,12 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { WizardDataService } from '../wizard-data.service';
 import { Router } from '@angular/router';
+import { RouterModule } from '@angular/router';
 
 @Component({
   standalone: true,
   selector: 'app-requirements-wizard',
-  imports: [FormsModule,CommonModule],
+  imports: [FormsModule,CommonModule,RouterModule],
   templateUrl: './requirements-wizard.html',
   styleUrl: './requirements-wizard.scss'
 })
