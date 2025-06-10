@@ -12,7 +12,7 @@ import { RouterModule } from '@angular/router';
     RouterModule
   ],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: './app.scss'
 })
 export class App {
   protected title = 'InsureTech.Onboarding';
