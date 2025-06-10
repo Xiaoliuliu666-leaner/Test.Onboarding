@@ -1,69 +1,55 @@
 .wizard-container {
-  max-width: 600px;
-  margin: 40px auto;
-  padding: 24px;
-  border: 1px solid #ccc;
+  max-width: 640px;
+  margin: 48px auto;
+  padding: 32px;
+  background: #fff;
   border-radius: 12px;
-  background-color: #fff;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
   font-family: 'Segoe UI', sans-serif;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
 }
 
 h2 {
   text-align: center;
-  color: #2b2b2b;
-  font-size: 24px;
-  font-weight: 600;
   margin-bottom: 24px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
+}
+
+.step-indicator {
+  text-align: center;
+  font-size: 14px;
+  color: #777;
+  margin-bottom: 12px;
 }
 
 label {
   display: block;
   margin-bottom: 6px;
-  color: #333;
-  font-weight: 500;
+  font-weight: 600;
+  color: #444;
 }
 
 input[type="text"],
 input[type="email"],
 input[type="tel"],
-select,
-textarea {
+textarea,
+select {
   width: 100%;
-  padding: 10px 14px;
-  font-size: 14px;
+  padding: 10px 12px;
   border: 1px solid #ccc;
   border-radius: 6px;
-  margin-bottom: 16px;
-  transition: border-color 0.2s ease;
-
-  &:focus {
-    border-color: #0078d4;
-    outline: none;
-  }
+  margin-bottom: 18px;
+  font-size: 14px;
+  transition: border 0.2s ease;
 }
 
-textarea {
-  resize: vertical;
-}
-
-.module-item {
-  padding: 12px;
-  border: 1px solid #e0e0e0;
-  border-radius: 6px;
-  margin-bottom: 12px;
-  background-color: #f9fafc;
-
-  strong {
-    display: block;
-    margin-bottom: 4px;
-    color: #0078d4;
-  }
-
-  div {
-    color: #666;
-    font-size: 13px;
-  }
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: #0078d4;
+  outline: none;
+  background-color: #f3faff;
 }
 
 .wizard-nav {
@@ -75,22 +61,31 @@ textarea {
 button {
   padding: 10px 20px;
   font-size: 14px;
-  font-weight: 500;
   border: none;
   border-radius: 6px;
+  font-weight: 500;
   cursor: pointer;
-  background-color: #0078d4;
-  color: white;
   transition: background-color 0.2s ease;
-
-  &:hover:not(:disabled) {
-    background-color: #005fa3;
-  }
-
-  &:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
-  }
 }
 
+button:disabled {
+  background-color: #ddd;
+  color: #888;
+  cursor: not-allowed;
+}
 
+button:not(:disabled) {
+  background-color: #0078d4;
+  color: #fff;
+}
+
+button:not(:disabled):hover {
+  background-color: #005fa3;
+}
+
+.error-msg {
+  color: red;
+  font-size: 13px;
+  margin-top: -14px;
+  margin-bottom: 12px;
+}
