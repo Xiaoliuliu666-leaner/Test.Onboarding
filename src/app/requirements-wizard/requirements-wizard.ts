@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { WizardDataService } from '../wizard-data.service';
 
 @Component({
   standalone: true,
@@ -11,6 +12,7 @@ import { CommonModule } from '@angular/common';
 })
 
 export class RequirementsWizard {
+  constructor(private wizardDataService: WizardDataService) {}
   stepIndex = 1;
 
   formData: {
@@ -41,6 +43,7 @@ export class RequirementsWizard {
   ];
 
   nextStep() {
+    this.saveCurrentStep()
     if (this.stepIndex < 3) {
       this.stepIndex++;
     }
@@ -85,6 +88,8 @@ export class RequirementsWizard {
   }
 
   submitWizard() {
+    this.saveCurrentStep();                                  // Save the final data
+    const allData = this.wizardDataService.getAllData();     // Get all step data
     console.log('Wizard Data:', this.formData);
     alert('Wizard submitted! Check console for data.');
   }
@@ -93,6 +98,11 @@ isCreatingNewTenant = false;
 
 checkNewTenant() {
   this.isCreatingNewTenant = this.formData.tenant === '__new__';
+}
+
+saveCurrentStep() {
+  this.wizardDataService.setData('step${this.stepIndex}', 
+    {...this.formData});
 }
 
   
