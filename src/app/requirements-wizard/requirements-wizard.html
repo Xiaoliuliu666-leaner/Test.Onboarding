@@ -7,9 +7,16 @@
     <!-- Step 1: Tenant -->
     <li [class.active]="stepIndex === 1">Step 1: Tenant</li>
     <ng-container *ngIf="formData.tenant">
-      <li class="step-summary-item">{{ formData.tenant }}</li>
-      <li class="step-summary-item" *ngIf="formData.contactEmail">{{ formData.contactEmail }}</li>
-    </ng-container>
+    <li class="step-summary-item">
+      {{
+        formData.tenant === '__new__'
+          ? formData.newTenantName
+          : formData.tenant
+      }}
+    </li>
+    <li class="step-summary-item" *ngIf="formData.contactEmail">{{ formData.contactEmail }}</li>
+    <li class="step-summary-item" *ngIf="formData.contactPhone">{{ formData.contactPhone }}</li>
+  </ng-container>
 
     <!-- Step 2: Modules -->
     <li [class.active]="stepIndex === 2">Step 2: Modules</li>
@@ -81,13 +88,13 @@
       </div>
     </div>
 
-  <!-- Selected module preview panel -->
-    <div *ngIf="formData.modules.length" class="selected-module-panel">
+    <!-- Selected module preview panel -->
+    <!-- <div *ngIf="formData.modules.length" class="selected-module-panel">
       <strong>Selected Modules:</strong>
       <ul>
         <li *ngFor="let m of formData.modules">{{ m }}</li>
       </ul>
-    </div>
+    </div> -->
     </div>
 
     <!-- Step 3 -->
