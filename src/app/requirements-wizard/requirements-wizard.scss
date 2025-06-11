@@ -139,6 +139,13 @@ button:not(:disabled):hover {
   font-size: 14px;
 }
 
+.step-summary-item {
+  margin-left: 24px;
+  font-size: 13px;
+  color: #666;
+  list-style-type: disc;
+}
+
 .wizard-sidebar ul {
   list-style: none;
   padding: 0;
@@ -230,4 +237,11 @@ button:not(:disabled):hover {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
+}
+
+.step-summary-item {
+  margin-left: 24px;
+  font-size: 13px;
+  color: #666;
+  list-style-type: disc;
 }
