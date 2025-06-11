@@ -10,7 +10,7 @@ import { RouterModule } from '@angular/router';
   selector: 'app-requirements-wizard',
   imports: [FormsModule,CommonModule,RouterModule],
   templateUrl: './requirements-wizard.html',
-  styleUrl: './requirements-wizard.scss'
+  styleUrls: ['./requirements-wizard.scss']
 })
 
 export class RequirementsWizard {
