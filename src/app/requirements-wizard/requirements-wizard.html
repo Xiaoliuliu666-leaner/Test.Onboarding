@@ -24,7 +24,7 @@
         <option value="__new__">+ New Tenant</option>
       </select>
 
-      <div *ngIf="isCreatingNewTenant" style="margin-top: 10px;">
+      <div *ngIf="isCreatingNewTenant">
         <label>Enter New Tenant Name:</label>
         <input type="text" [(ngModel)]="formData.newTenantName" placeholder="Enter new tenant name..." />
 
@@ -44,23 +44,37 @@
     </div>
 
     <!-- Step 2 -->
-    <div *ngIf="stepIndex === 2">
-      <label>Select Module:</label>
+<div *ngIf="stepIndex === 2">
+  <div class="module-grid">
+    <div
+      *ngFor="let module of availableModules"
+      class="module-item"
+      [class.selected]="formData.modules.includes(module.name)"
+    >
+      <label class="module-body">
+        <input
+          type="checkbox"
+          [value]="module.name"
+          (change)="onModuleChange($event)"
+          [checked]="formData.modules.includes(module.name)"
+        />
 
-      <div *ngFor="let module of availableModules">
-        <input type="checkbox" [value]="module.name" (change)="onModuleChange($event)" />
-        <strong>{{ module.name }}</strong>
-        <div style="font-size: 12px; color: #666; margin-left: 20px;">{{ module.description }}</div>
-      </div>
-
-      <!-- Selected module preview panel -->
-      <div *ngIf="formData.modules.length" class="selected-module-panel">
-        <strong>Selected Modules:</strong>
-        <ul>
-          <li *ngFor="let m of formData.modules">{{ m }}</li>
-        </ul>
-      </div>
+        <div class="module-text">
+          <div class="module-name">{{ module.name }}</div>
+          <div class="module-description">{{ module.description }}</div>
+        </div>
+      </label>
     </div>
+  </div>
+
+  <!-- Selected module preview panel -->
+  <div *ngIf="formData.modules.length" class="selected-module-panel">
+    <strong>Selected Modules:</strong>
+    <ul>
+      <li *ngFor="let m of formData.modules">{{ m }}</li>
+    </ul>
+  </div>
+</div>
 
     <!-- Step 3 -->
     <div *ngIf="stepIndex === 3">
@@ -79,4 +93,3 @@
       <button *ngIf="stepIndex === 3" (click)="submitWizard()" [disabled]="!isStepValid()">Submit</button>
     </div>
   </div>
-</div>
