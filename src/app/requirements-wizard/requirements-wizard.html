@@ -15,63 +15,63 @@
     <div class="step-indicator">Step {{ stepIndex }} of 3</div>
     <h2>Step {{ stepIndex }}</h2>
 
-    <!-- Step 1 -->
-    <div *ngIf="stepIndex === 1">
-      <label for="tenant">Select Tenant:</label>
-      <select [(ngModel)]="formData.tenant" (change)="checkNewTenant()" id="tenant">
-        <option value="" disabled selected>Select...</option>
-        <option *ngFor="let t of tenants" [value]="t">{{ t }}</option>
-        <option value="__new__">+ New Tenant</option>
-      </select>
+  <!-- Step 1 -->
+  <div *ngIf="stepIndex === 1">
+    <label for="tenant">Select Tenant:</label>
+    <select [(ngModel)]="formData.tenant" (change)="checkNewTenant()" id="tenant">
+      <option value="" disabled selected>Select...</option>
+      <option *ngFor="let t of tenants" [value]="t">{{ t }}</option>
+      <option value="__new__">+ New Tenant</option>
+    </select>
 
-      <div *ngIf="isCreatingNewTenant">
-        <label>Enter New Tenant Name:</label>
-        <input type="text" [(ngModel)]="formData.newTenantName" placeholder="Enter new tenant name..." />
+  <div *ngIf="isCreatingNewTenant">
+    <label>Enter New Tenant Name:</label>
+    <input type="text" [(ngModel)]="formData.newTenantName" placeholder="Enter new tenant name..." />
 
-        <label>Contact Name:</label>
-        <input type="text" [(ngModel)]="formData.contactName" placeholder="Enter contact name..." />
+    <label>Contact Name:</label>
+    <input type="text" [(ngModel)]="formData.contactName" placeholder="Enter contact name..." />
 
-        <label>Contact Email:</label>
-        <input type="email" [(ngModel)]="formData.contactEmail" placeholder="Enter contact email..." />
+    <label>Contact Email:</label>
+    <input type="email" [(ngModel)]="formData.contactEmail" placeholder="Enter contact email..." />
 
-        <label>Contact Phone:</label>
-        <input type="tel" [(ngModel)]="formData.contactPhone" placeholder="Enter contact phone..." />
+    <label>Contact Phone:</label>
+    <input type="tel" [(ngModel)]="formData.contactPhone" placeholder="Enter contact phone..." />
 
-        <label>Your Name (Created By):</label>
-        <input type="text" [(ngModel)]="formData.createdBy" placeholder="Enter your name..." />
+    <label>Your Name (Created By):</label>
+    <input type="text" [(ngModel)]="formData.createdBy" placeholder="Enter your name..." />
 
+    </div>
+  </div>
+
+  <!-- Step 2 -->
+  <div *ngIf="stepIndex === 2">
+    <div class="module-grid">
+      <div
+        *ngFor="let module of availableModules"
+        class="module-item"
+        [class.selected]="formData.modules.includes(module.name)"
+      >
+        <label class="module-row">
+          <input
+            type="checkbox"
+            [value]="module.name"
+            (change)="onModuleChange($event)"
+            [checked]="formData.modules.includes(module.name)"
+          />
+          <div class="module-title">{{ module.name }}</div>
+          <div class="module-description">{{ module.description }}</div>
+        </label>
       </div>
     </div>
 
-    <!-- Step 2 -->
-<div *ngIf="stepIndex === 2">
-  <div class="module-grid">
-    <div
-      *ngFor="let module of availableModules"
-      class="module-item"
-      [class.selected]="formData.modules.includes(module.name)"
-    >
-      <label class="module-row">
-        <input
-          type="checkbox"
-          [value]="module.name"
-          (change)="onModuleChange($event)"
-          [checked]="formData.modules.includes(module.name)"
-        />
-        <div class="module-title">{{ module.name }}</div>
-        <div class="module-description">{{ module.description }}</div>
-      </label>
-    </div>
-  </div>
-
   <!-- Selected module preview panel -->
-   <div *ngIf="formData.modules.length" class="selected-module-panel">
-    <strong>Selected Modules:</strong>
-    <ul>
-      <li *ngFor="let m of formData.modules">{{ m }}</li>
-    </ul>
-  </div>
-</div>
+    <div *ngIf="formData.modules.length" class="selected-module-panel">
+      <strong>Selected Modules:</strong>
+      <ul>
+        <li *ngFor="let m of formData.modules">{{ m }}</li>
+      </ul>
+      </div>
+    </div>
 
     <!-- Step 3 -->
     <div *ngIf="stepIndex === 3">
