@@ -3,12 +3,29 @@
 <div class="wizard-layout">
   <!-- Left Side Navigation -->
   <aside class="wizard-sidebar">
-    <ul>
-      <li [class.active]="stepIndex === 1">Step 1: Tenant</li>
-      <li [class.active]="stepIndex === 2">Step 2: Modules</li>
-      <li [class.active]="stepIndex === 3">Step 3: Notes</li>
-    </ul>
-  </aside>
+  <ul>
+    <!-- Step 1: Tenant -->
+    <li [class.active]="stepIndex === 1">Step 1: Tenant</li>
+    <ng-container *ngIf="formData.tenant">
+      <li class="step-summary-item">{{ formData.tenant }}</li>
+      <li class="step-summary-item" *ngIf="formData.contactEmail">{{ formData.contactEmail }}</li>
+    </ng-container>
+
+    <!-- Step 2: Modules -->
+    <li [class.active]="stepIndex === 2">Step 2: Modules</li>
+    <ng-container *ngIf="formData.modules && formData.modules.length">
+      <li class="step-summary-item" *ngFor="let module of formData.modules">{{ module }}</li>
+    </ng-container>
+
+
+    <!-- Step 3: Notes -->
+    <li [class.active]="stepIndex === 3">Step 3: Notes</li>
+    <ng-container *ngIf="formData.configNotes">
+      <li class="step-summary-item">{{ formData.configNotes | slice: 0:30 }}...</li>
+    </ng-container>
+  </ul>
+</aside>
+
 
   <!-- Main Content Area -->
   <div class="wizard-container">
@@ -70,7 +87,7 @@
       <ul>
         <li *ngFor="let m of formData.modules">{{ m }}</li>
       </ul>
-      </div>
+    </div>
     </div>
 
     <!-- Step 3 -->
