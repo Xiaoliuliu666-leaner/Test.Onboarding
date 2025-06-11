@@ -51,24 +51,21 @@
       class="module-item"
       [class.selected]="formData.modules.includes(module.name)"
     >
-      <label class="module-body">
+      <label class="module-row">
         <input
           type="checkbox"
           [value]="module.name"
           (change)="onModuleChange($event)"
           [checked]="formData.modules.includes(module.name)"
         />
-
-        <div class="module-text">
-          <div class="module-name">{{ module.name }}</div>
-          <div class="module-description">{{ module.description }}</div>
-        </div>
+        <div class="module-title">{{ module.name }}</div>
+        <div class="module-description">{{ module.description }}</div>
       </label>
     </div>
   </div>
 
   <!-- Selected module preview panel -->
-  <div *ngIf="formData.modules.length" class="selected-module-panel">
+   <div *ngIf="formData.modules.length" class="selected-module-panel">
     <strong>Selected Modules:</strong>
     <ul>
       <li *ngFor="let m of formData.modules">{{ m }}</li>
