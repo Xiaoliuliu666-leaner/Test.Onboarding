@@ -183,16 +183,18 @@ button:not(:disabled):hover {
   border-radius: 10px;
   background-color: #fff;
   transition: all 0.2s ease;
+  
 
   &.selected {
     border-color: #0078d4;
     background-color: #e6f2fb;
   }
 
-  .module-body {
-    display: flex;
+  .module-row {
+    display: grid;
+    grid-template-columns: 40px 1fr 2fr; 
     align-items: center;
-    gap: 16px;
+    gap: 20px;
     padding: 20px;
     cursor: pointer;
   }
@@ -201,19 +203,14 @@ button:not(:disabled):hover {
     transform: scale(1.3);
     accent-color: #0078d4;
     cursor: pointer;
+    justify-self: center;
   }
 
-  .module-text {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
 
-  .module-name {
+  .module-title {
     font-size: 16px;
     font-weight: 600;
     color: #222;
-    margin-bottom: 4px;
   }
 
   .module-description {
