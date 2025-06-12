@@ -1,0 +1,8 @@
+<h2>Billing Module Details</h2>
+<label>Billing Account:</label>
+<input [(ngModel)]="detail.billingAccount" type="text" placeholder="Enter billing account..." />
+
+<label>Notes:</label>
+<textarea [(ngModel)]="detail.billingNotes"></textarea>
+
+<button (click)="onNext()">Next</button>
