@@ -73,14 +73,14 @@
       <div
         *ngFor="let module of availableModules"
         class="module-item"
-        [class.selected]="formData.modules.includes(module.name)"
+        [class.selected]="formData.modules.includes(module.key)"
       >
         <label class="module-row">
           <input
             type="checkbox"
-            [value]="module.name"
+            [value]="module.key"
             (change)="onModuleChange($event)"
-            [checked]="formData.modules.includes(module.name)"
+            [checked]="formData.modules.includes(module.key)"
           />
           <div class="module-title">{{ module.name }}</div>
           <div class="module-description">{{ module.description }}</div>
