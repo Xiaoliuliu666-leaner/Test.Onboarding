@@ -24,14 +24,19 @@ export class ModuleUserManagementComponent {
   ) {}
 
   onNext() {
-    // Save data to global service
-    this.wizardDataService.setModuleDetail('userManagement', this.detail);
-    // Jump to the next checked module or notes
-    const next = this.wizardDataService.getNextModule('user-management');
-    if (next) {
-      this.router.navigate(['/requirements-wizard/module-' + next]);
-    } else {
-      this.router.navigate(['/requirements-wizard/notes']);
-    }
+  console.log('modules:', this.wizardDataService.getSelectedModules());
+  console.log('current:', 'user-management');
+  const next = this.wizardDataService.getNextModule('user-management');
+  console.log('next:', next);
+
+  // Save data to global service
+  this.wizardDataService.setModuleDetail('user-management', this.detail);
+
+  // Jump to the next checked module or notes
+  if (next) {
+    this.router.navigate(['/requirements/wizard/module-' + next]);
+  } else {
+    this.router.navigate(['/requirements/wizard'], { queryParams: { step: 3 } });
   }
+}
 }
