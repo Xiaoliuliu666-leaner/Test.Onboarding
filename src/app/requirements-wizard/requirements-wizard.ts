@@ -104,6 +104,7 @@ export class RequirementsWizard {
 
   submitWizard() {
   this.wizardDataService.saveWizardEntry(this.formData); 
+  console.log(this.wizardDataService.getAllEntries());
   alert('Wizard submitted!');
   this.router.navigate(['/']);
   
