@@ -42,14 +42,23 @@ export class RequirementsWizard {
   tenants = ['Tenant A', 'Tenant B', 'Tenant C'];
 
   availableModules = [
-    { name: 'User Management', description: 'Manage users and roles' },
-    { name: 'Reporting', description: 'Access various reports and dashboards' },
-    { name: 'Billing', description: 'Manage invoicing, payment processing, and subscription plans'},
-    { name: 'Support', description: 'Provide customer assistance and issue resolution services'},
-  ];
+  { key: 'user-management', name: 'User Management', description: 'Manage users and roles' },
+  { key: 'reporting', name: 'Reporting', description: 'Access various reports and dashboards' },
+  { key: 'billing', name: 'Billing', description: 'Manage invoicing, payment processing, and subscription plans'},
+  { key: 'support', name: 'Support', description: 'Provide customer assistance and issue resolution services'},
+];
 
   nextStep() {
     this.saveCurrentStep()
+    if (this.stepIndex === 2) {
+    // After Step 2 (module selection), jump to the first selected module details page面
+    if (this.formData.modules.length > 0) {
+      const firstModuleKey = this.formData.modules[0];
+      this.router.navigate([`/requirements/wizard/module-${this.formData.modules[0]}`]);
+      return; 
+    }
+  }
+    // In other cases, add steps normally
     if (this.stepIndex < 3) {
       this.stepIndex++;
     }
