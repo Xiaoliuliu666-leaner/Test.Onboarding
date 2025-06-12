@@ -1,8 +1,27 @@
-<h2>User Management - Details</h2>
-<label>How many admins?</label>
-<input type="number" [(ngModel)]="detail.adminCount" min="1" />
-<br />
-<label>Notes</label>
-<textarea [(ngModel)]="detail.notes"></textarea>
-<br />
-<button (click)="onNext()">Next</button>
+<div class="module-card">
+  <h2>User Management - Details</h2>
+  <form (ngSubmit)="onNext()">
+    <div class="form-group">
+      <label for="adminCount">How many admins?</label>
+      <input
+        id="adminCount"
+        type="number"
+        [(ngModel)]="detail.adminCount"
+        name="adminCount"
+        min="1"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="notes">Notes:</label>
+      <textarea
+        id="notes"
+        [(ngModel)]="detail.notes"
+        name="notes"
+        rows="3"
+      ></textarea>
+    </div>
+    <button type="submit" class="next-btn">Next</button>
+  </form>
+</div>
