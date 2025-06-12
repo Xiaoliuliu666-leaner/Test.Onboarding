@@ -1,0 +1,56 @@
+.module-card {
+  max-width: 480px;
+  margin: 64px auto 0;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+  padding: 32px 32px 24px;
+  font-family: 'Segoe UI', sans-serif;
+
+  h2 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 32px;
+    color: #173054;
+  }
+
+  .form-group {
+    margin-bottom: 24px;
+
+    label {
+      font-weight: 600;
+      color: #333;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 8px 12px;
+      font-size: 1rem;
+      border: 1px solid #d4dbe2;
+      border-radius: 8px;
+      outline: none;
+      transition: border .2s;
+      &:focus {
+        border-color: #007bff;
+      }
+    }
+  }
+
+  .next-btn {
+    width: 100%;
+    padding: 10px 0;
+    border: none;
+    background: #007bff;
+    color: #fff;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .2s;
+    &:hover {
+      background: #005bb5;
+    }
+  }
+}
