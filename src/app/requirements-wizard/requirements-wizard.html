@@ -105,6 +105,10 @@
       <p *ngIf="formData.configNotes.trim().length < 10" style="color: red; font-size: 13px; margin-top: 4px;">
         Please enter at least 10 characters.
       </p>
+      <div style="margin-top:24px;">
+        <h3>Preview All Data:</h3>
+        <pre>{{ formData | json }}</pre>
+      </div>
     </div>
 
     <!-- Buttons -->
