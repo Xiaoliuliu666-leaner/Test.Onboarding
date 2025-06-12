@@ -42,7 +42,7 @@ export class WizardDataService {
 
   wizardData = {
   modules: [] as string[],
-  moduleDetails: {} as { [key: string]: any }
+  moduleDetails: {} as Record<string, any>
   };
 
   //Save detailed data of a single module
@@ -54,7 +54,7 @@ export class WizardDataService {
    getNextModule(current: string): string | null {
     const mods = this.wizardData.modules;
     const idx = mods.indexOf(current);
-    return mods[idx + 1] || null;
+    return idx >= 0 && idx < mods.length - 1 ? mods[idx + 1] : null;
   }
 
   // Set all currently selected modules
