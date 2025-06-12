@@ -15,19 +15,19 @@ import { ActivatedRoute } from '@angular/router';
 })
 
 export class RequirementsWizard {
-  constructor(
-    private wizardDataService: WizardDataService,
-    private router: Router,
-    private route: ActivatedRoute
-  ){
-    this.route.queryParams.subscribe(params => {
-    if (params['step']) {
-      this.stepIndex = +params['step'];
-      this.restoreStepData(); 
-    }
+  stepIndex: number = 1;
+
+constructor(
+  private wizardDataService: WizardDataService,
+  private router: Router,
+  private route: ActivatedRoute
+){
+  this.route.queryParams.subscribe(params => {
+    const stepParam = Number(params['step']);
+    this.stepIndex = !isNaN(stepParam) && stepParam > 0 ? stepParam : 1;
   });
 }
-  stepIndex = 1;
+  
 
   formData: {
   tenant: string;
@@ -183,6 +183,10 @@ ngOnInit() {
   this.formData.moduleDetails = this.wizardDataService.wizardData.moduleDetails;
 }
 
+getSelectedModuleNames(): string {
+  return (this.formData.modules || [])
+    .map((m: string) => this.getModuleNameByKey(m))
+    .join(', ');
+}
 
-  
 }
