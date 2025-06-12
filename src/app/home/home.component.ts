@@ -13,6 +13,18 @@ import { WizardDataService } from '../wizard-data.service';
 export class HomeComponent implements OnInit {
   wizardEntries: any[] = [];
 
+  availableModules = [
+  { key: 'user-management', name: 'User Management', description: 'Manage users and roles' },
+  { key: 'reporting', name: 'Reporting', description: 'Access various reports and dashboards' },
+  { key: 'billing', name: 'Billing', description: 'Manage invoicing, payment processing, and subscription plans'},
+  { key: 'support', name: 'Support', description: 'Provide customer assistance and issue resolution services'},
+];
+
+getModuleNameByKey(key: string): string {
+  const mod = this.availableModules.find(m => m.key === key);
+  return mod ? mod.name : key;
+}
+
   constructor(private wizardDataService: WizardDataService) {}
 
   ngOnInit(): void {
