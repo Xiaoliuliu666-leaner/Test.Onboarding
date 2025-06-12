@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root'})
 export class WizardDataService {
   private data: any = {};
+  public moduleDetails: { [key: string]: any } = {};
   private savedEntries: any[] = [];
 
   setData(step: string, value: any) {
@@ -25,7 +24,7 @@ export class WizardDataService {
   }
 
   saveWizardEntry(entry: any) {
-    this.savedEntries.push(entry); 
+  this.savedEntries.push(JSON.parse(JSON.stringify(entry)));
   }
 
   getWizardData() {
