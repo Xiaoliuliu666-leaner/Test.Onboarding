@@ -18,15 +18,15 @@ export class RequirementsWizard {
   constructor(
     private wizardDataService: WizardDataService,
     private router: Router,
-     private route: ActivatedRoute
+    private route: ActivatedRoute
   ){
     this.route.queryParams.subscribe(params => {
     if (params['step']) {
       this.stepIndex = +params['step'];
+      this.restoreStepData(); 
     }
   });
-  
-  }
+}
   stepIndex = 1;
 
   formData: {
@@ -38,6 +38,8 @@ export class RequirementsWizard {
   modules: string[];
   configNotes: string;
   createdBy: string
+  moduleDetails?: any;
+  [key: string]: any;
 } = {
   tenant: '',
   newTenantName: '',
@@ -59,24 +61,30 @@ export class RequirementsWizard {
 ];
 
   nextStep() {
-    this.saveCurrentStep()
-    if (this.stepIndex === 2) {
-    // After Step 2 (module selection), jump to the first selected module details page面
+  this.saveCurrentStep();
+  if (this.stepIndex === 2) {
     if (this.formData.modules.length > 0) {
-      const firstModuleKey = this.formData.modules[0];
       this.router.navigate([`/requirements/wizard/module-${this.formData.modules[0]}`]);
-      return; 
+      return;
     }
   }
     // In other cases, add steps normally
-    if (this.stepIndex < 3) {
-      this.stepIndex++;
-    }
+      if (this.stepIndex < 3) {
+    this.stepIndex++;
+    this.restoreStepData();
   }
+  if (this.stepIndex === 3) {
+    this.formData['moduleDetails'] = this.wizardDataService.wizardData.moduleDetails;
+  }
+}
 
+
+  
   previousStep() {
+    this.saveCurrentStep();
     if (this.stepIndex > 1) {
       this.stepIndex--;
+      this.restoreStepData();
     }
   }
 
@@ -115,12 +123,21 @@ export class RequirementsWizard {
   }
 
   submitWizard() {
-  this.wizardDataService.saveWizardEntry(this.formData); 
-  console.log(this.wizardDataService.getAllEntries());
-  alert('Wizard submitted!');
+  this.formData['moduleDetails'] = this.wizardDataService.wizardData.moduleDetails;
+  const entry = {
+    tenant: this.wizardDataService.getData('tenant') || '',
+    newTenantName: this.wizardDataService.getData('newTenantName') || '',
+    contactName: this.wizardDataService.getData('contactName') || '',
+    contactEmail: this.wizardDataService.getData('contactEmail') || '',
+    contactPhone: this.wizardDataService.getData('contactPhone') || '',
+    modules: this.wizardDataService.getSelectedModules() || [],
+    configNotes: this.wizardDataService.getData('configNotes') || '',
+    createdBy: this.wizardDataService.getData('createdBy') || '',
+    moduleDetails: this.wizardDataService.wizardData.moduleDetails
+  };
+  this.wizardDataService.saveWizardEntry(entry);
   this.router.navigate(['/']);
-  
- 
+  this.wizardDataService.resetData();
 }
 
 isCreatingNewTenant = false;
@@ -130,9 +147,42 @@ checkNewTenant() {
 }
 
 saveCurrentStep() {
-  this.wizardDataService.setData('step${this.stepIndex}', 
-    {...this.formData});
+  this.wizardDataService.setData('step' + this.stepIndex, { ...this.formData });
+  Object.keys(this.formData).forEach(key => {
+    this.wizardDataService.setData(key, this.formData[key]);
+  });
 }
+
+restoreStepData() {
+  const saved = this.wizardDataService.getData('step' + this.stepIndex);
+  if (saved) {
+    this.formData = { ...this.formData, ...saved };
+  }
+}
+
+getModuleNameByKey(key: string): string {
+  const mod = this.availableModules.find(m => m.key === key);
+  return mod ? mod.name : key;
+}
+
+onInputChange(field: string, value: any) {
+  this.formData[field] = value;
+  this.wizardDataService.setData(field, value);
+}
+
+ngOnInit() {
+  this.restoreStepData();
+  this.formData.tenant = this.wizardDataService.getData('tenant') || '';
+  this.formData.newTenantName = this.wizardDataService.getData('newTenantName') || '';
+  this.formData.contactName = this.wizardDataService.getData('contactName') || '';
+  this.formData.contactEmail = this.wizardDataService.getData('contactEmail') || '';
+  this.formData.contactPhone = this.wizardDataService.getData('contactPhone') || '';
+  this.formData.modules = this.wizardDataService.getSelectedModules() || [];
+  this.formData.configNotes = this.wizardDataService.getData('configNotes') || '';
+  this.formData.createdBy = this.wizardDataService.getData('createdBy') || '';
+  this.formData.moduleDetails = this.wizardDataService.wizardData.moduleDetails;
+}
+
 
   
 }
