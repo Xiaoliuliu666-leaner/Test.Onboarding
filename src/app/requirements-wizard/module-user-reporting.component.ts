@@ -29,9 +29,9 @@ export class ModuleUserReportingComponent {
     // Jump to the next checked module or notes
     const next = this.wizardDataService.getNextModule('reporting');
     if (next) {
-      this.router.navigate(['/requirements-wizard/module-' + next]);
+      this.router.navigate(['/requirements/wizard/module-' + next]);
     } else {
-      this.router.navigate(['/requirements-wizard/notes']);
+      this.router.navigate(['/requirements/wizard'], { queryParams: { step: 3 } });
     }
   }
 }
