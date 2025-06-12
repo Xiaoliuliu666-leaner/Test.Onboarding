@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { WizardDataService } from '../wizard-data.service';
 import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   standalone: true,
@@ -16,7 +17,16 @@ import { RouterModule } from '@angular/router';
 export class RequirementsWizard {
   constructor(
     private wizardDataService: WizardDataService,
-    private router: Router) {}
+    private router: Router,
+     private route: ActivatedRoute
+  ){
+    this.route.queryParams.subscribe(params => {
+    if (params['step']) {
+      this.stepIndex = +params['step'];
+    }
+  });
+  
+  }
   stepIndex = 1;
 
   formData: {
@@ -100,6 +110,8 @@ export class RequirementsWizard {
         this.formData.modules.splice(index, 1);
       }
     }
+
+     this.wizardDataService.setSelectedModules(this.formData.modules);
   }
 
   submitWizard() {
