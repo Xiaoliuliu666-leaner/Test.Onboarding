@@ -21,7 +21,9 @@
     <!-- Step 2: Modules -->
     <li [class.active]="stepIndex === 2">Step 2: Modules</li>
     <ng-container *ngIf="formData.modules && formData.modules.length">
-      <li class="step-summary-item" *ngFor="let module of formData.modules">{{ module }}</li>
+      <li class="step-summary-item" *ngFor="let module of formData.modules">
+        {{ getModuleNameByKey(module) }}
+      </li>
     </ng-container>
 
 
@@ -50,19 +52,21 @@
 
   <div *ngIf="isCreatingNewTenant">
     <label>Enter New Tenant Name:</label>
-    <input type="text" [(ngModel)]="formData.newTenantName" placeholder="Enter new tenant name..." />
+    <input type="text" [(ngModel)]="formData.newTenantName" (ngModelChange)="onInputChange('newTenantName', $event)" placeholder="Enter new tenant name..." />
 
     <label>Contact Name:</label>
-    <input type="text" [(ngModel)]="formData.contactName" placeholder="Enter contact name..." />
+    <input type="text" [(ngModel)]="formData.contactName" (ngModelChange)="onInputChange('contactName', $event)" placeholder="Enter contact name..." />
 
     <label>Contact Email:</label>
-    <input type="email" [(ngModel)]="formData.contactEmail" placeholder="Enter contact email..." />
+    <input type="email" [(ngModel)]="formData.contactEmail" (ngModelChange)="onInputChange('contactEmail', $event)" placeholder="Enter contact email..." />
 
     <label>Contact Phone:</label>
-    <input type="tel" [(ngModel)]="formData.contactPhone" placeholder="Enter contact phone..." />
+    <input type="tel" [(ngModel)]="formData.contactPhone" (ngModelChange)="onInputChange('contactPhone', $event)" placeholder="Enter contact phone..." />
 
     <label>Your Name (Created By):</label>
-    <input type="text" [(ngModel)]="formData.createdBy" placeholder="Enter your name..." />
+    <input type="text" [(ngModel)]="formData.createdBy" (ngModelChange)="onInputChange('createdBy', $event)" placeholder="Enter your name..." />
+
+    <textarea [(ngModel)]="formData.configNotes" (ngModelChange)="onInputChange('configNotes', $event)" rows="5"></textarea>
 
     </div>
   </div>
