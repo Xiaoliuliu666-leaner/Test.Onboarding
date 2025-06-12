@@ -1,8 +1,27 @@
-<h2>Reporting Module Details</h2>
-<label>Report Types Needed:</label>
-<input [(ngModel)]="detail.reportTypes" type="text" placeholder="Enter report types..." />
+<div class="module-card">
+  <h2>User Management - Details</h2>
+  <form (ngSubmit)="onNext()">
+    <div class="form-group">
+      <label for="adminCount">How many admins?</label>
+      <input
+        id="adminCount"
+        type="number"
+        [(ngModel)]="detail.reportTypes"
+        name="adminCount"
+        min="1"
+        required
+      />
+    </div>
 
-<label>Notes:</label>
-<textarea [(ngModel)]="detail.reportingNotes"></textarea>
-
-<button (click)="onNext()">Next</button>
+    <div class="form-group">
+      <label for="notes">Notes:</label>
+      <textarea
+        id="notes"
+        [(ngModel)]="detail.reportingNotes"
+        name="notes"
+        rows="3"
+      ></textarea>
+    </div>
+    <button type="submit" class="next-btn">Next</button>
+  </form>
+</div>
