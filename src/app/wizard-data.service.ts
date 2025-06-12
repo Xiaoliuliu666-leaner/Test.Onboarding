@@ -39,4 +39,32 @@ export class WizardDataService {
   resetData() {
     this.data = {};
   }
+
+  wizardData = {
+  modules: [] as string[],
+  moduleDetails: {} as { [key: string]: any }
+  };
+
+  //Save detailed data of a single module
+   setModuleDetail(key: string, detail: any) {
+    this.wizardData.moduleDetails[key] = detail;
+  }
+
+  // Get the key of the next selected module
+   getNextModule(current: string): string | null {
+    const mods = this.wizardData.modules;
+    const idx = mods.indexOf(current);
+    return mods[idx + 1] || null;
+  }
+
+  // Set all currently selected modules
+  setSelectedModules(modules: string[]) {
+    this.wizardData.modules = modules;
+  }
+
+  // Get all currently selected modules
+  getSelectedModules(): string[] {
+    return this.wizardData.modules;
+  }
+  
 }
