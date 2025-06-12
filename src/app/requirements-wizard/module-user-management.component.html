@@ -1,0 +1,8 @@
+<h2>User Management - Details</h2>
+<label>How many admins?</label>
+<input type="number" [(ngModel)]="detail.adminCount" min="1" />
+<br />
+<label>Notes</label>
+<textarea [(ngModel)]="detail.notes"></textarea>
+<br />
+<button (click)="onNext()">Next</button>
