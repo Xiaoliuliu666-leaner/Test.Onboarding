@@ -25,10 +25,13 @@
   <h2>Previously Created Entries</h2>
   <ul>
     <li *ngFor="let entry of wizardEntries">
-      Created for <strong>{{ entry.tenant === '__new__' ? entry.newTenantName : entry.tenant }}</strong> – {{ entry.modules.join(', ') }}
+      Created for <strong>{{ entry.newTenantName || entry.tenant || '(Not Provided)' }}</strong>
+      <span *ngFor="let module of entry.modules; let last = last">
+        {{ getModuleNameByKey(module) }}<span *ngIf="!last">, </span>
+      </span>
       <br />
-      <small>Created by: {{ entry.createdBy || 'Unknown User' }}</small>
-    </li>
+      <small>Created by: {{ entry.createdBy || '(Not Provided)' }}</small>
+</li>
   </ul>
   </div>
 </div>
