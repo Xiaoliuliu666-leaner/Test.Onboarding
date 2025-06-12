@@ -1,8 +1,26 @@
-<h2>Support Module Details</h2>
-<label>Support Level Required:</label>
-<input [(ngModel)]="detail.supportLevel" type="text" placeholder="Enter support level..." />
-
-<label>Notes:</label>
-<textarea [(ngModel)]="detail.supportNotes"></textarea>
-
-<button (click)="onNext()">Next</button>
+<div class="module-card">
+  <h2>Support Module Details</h2>
+  <form (ngSubmit)="onNext()">
+    <div class="form-group">
+      <label for="supportLevel">Support Level Required:</label>
+      <input
+        id="supportLevel"
+        type="number"
+        [(ngModel)]="detail.supportLevel"
+        name="supportLevel"
+        min="1"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="supportNotes">Notes:</label>
+      <textarea
+        id="supportNotes"
+        [(ngModel)]="detail.supportNotes"
+        name="supportNotes"
+        rows="3"
+      ></textarea>
+    </div>
+    <button type="submit" class="next-btn">Next</button>
+  </form>
+</div>
