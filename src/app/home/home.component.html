@@ -12,30 +12,37 @@
 
   <div class="wizard-list-panel" *ngIf="wizardEntries && wizardEntries.length > 0">
     <h2>Previously Created Entries</h2>
-    <ul>
-      <li *ngFor="let entry of wizardEntries">
-        Created for
-        <strong>
-          {{
-            entry.tenant.tenant === '__new__'
-              ? entry.tenant.newTenantName
-              : entry.tenant.tenant
-          }}
-        </strong>
-        <span *ngIf="entry.modules && getModuleKeys(entry.modules).length">
-          &nbsp;
-          <span *ngFor="let moduleKey of getModuleKeys(entry.modules); let last = last">
-            {{ getModuleNameByKey(moduleKey) }}<span *ngIf="!last">, </span>
-          </span>
-        </span>
-        <br />
-        <small>Created by: {{ entry.tenant.createdBy || 'Counter Clerk' }}</small>
-        <span *ngIf="entry.tenant.configNotes">
-          <br />
-          <small>Notes: {{ entry.tenant.configNotes }}</small>
-        </span>
-      </li>
-    </ul>
+    <table class="wizard-table">
+      <thead>
+        <tr>
+          <th>Client Name</th>
+          <th>Contact</th>
+          <th *ngFor="let module of availableModules">{{ module.name }}</th>
+          <th>Created By</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let entry of wizardEntries">
+          <td>
+            {{
+              entry.tenant.tenant === '__new__'
+                ? entry.tenant.newTenantName
+                : entry.tenant.tenant
+            }}
+          </td>
+          <td>
+            <div>{{ entry.tenant.contactEmail }}</div>
+            <div>{{ entry.tenant.contactPhone }}</div>
+          </td>
+          <td *ngFor="let module of availableModules" style="text-align: center;">
+            <span *ngIf="entry.modules && entry.modules[module.key]">✔️</span>
+          </td>
+          <td>{{ entry.tenant.createdBy || 'Counter Clerk' }}</td>
+          <td>{{ entry.tenant.configNotes || '-' }}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
 
