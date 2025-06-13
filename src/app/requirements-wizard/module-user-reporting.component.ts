@@ -1,8 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { WizardDataService } from '../wizard-data.service';
 import { FormsModule } from '@angular/forms';
-
 
 @Component({
   standalone: true,
@@ -11,11 +10,11 @@ import { FormsModule } from '@angular/forms';
   imports: [FormsModule],
   styleUrls: ['./module-user-reporting.component.scss']
 })
-export class ModuleUserReportingComponent {
-  // Used to collect user input data
+export class ModuleUserReportingComponent implements OnInit {
   detail = {
-    reportTypes: 1,
-    reportingNotes: ''
+    reportTypes: '',
+    reportingNotes: '',
+    reports: [{ name: '', description: '' }]
   };
 
   constructor(
@@ -23,11 +22,25 @@ export class ModuleUserReportingComponent {
     private wizardDataService: WizardDataService
   ) {}
 
+  ngOnInit() {
+    const saved = this.wizardDataService.getModuleDetail('reporting');
+    if (saved) {
+      this.detail = { ...this.detail, ...saved };
+    }
+  }
+
+  addReport() {
+    this.detail.reports.push({ name: '', description: '' });
+  }
+  removeReport(i: number) {
+    this.detail.reports.splice(i, 1);
+  }
+
   onNext() {
-    // Save data to global service
     this.wizardDataService.setModuleDetail('reporting', this.detail);
-    // Jump to the next checked module or notes
-    const next = this.wizardDataService.getNextModule('reporting');
+    const selected = this.wizardDataService.getSelectedModules();
+    const idx = selected.indexOf('reporting');
+    const next = idx >= 0 && idx < selected.length - 1 ? selected[idx + 1] : null;
     if (next) {
       this.router.navigate(['/requirements/wizard/module-' + next]);
     } else {
