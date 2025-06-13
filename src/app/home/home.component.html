@@ -1,20 +1,9 @@
 <div class="home-container">
   <div class="home-header">
     <h1>Welcome to InsureTech.Onboarding</h1>
-
-    <a
-      routerLink="/requirements/wizard"
-      class="start-wizard-btn"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="20"
-        height="20"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-        stroke-width="2"
-      >
+    <a routerLink="/requirements/wizard" class="start-wizard-btn">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none"
+        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
         <path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14M5 12h14" />
       </svg>
       Start Requirements Wizard
@@ -22,17 +11,31 @@
   </div>
 
   <div class="wizard-list-panel" *ngIf="wizardEntries && wizardEntries.length > 0">
-  <h2>Previously Created Entries</h2>
-  <ul>
-    <li *ngFor="let entry of wizardEntries">
-      Created for <strong>{{ entry.newTenantName || entry.tenant || '(Not Provided)' }}</strong>
-      <span *ngFor="let module of entry.modules; let last = last">
-        {{ getModuleNameByKey(module) }}<span *ngIf="!last">, </span>
-      </span>
-      <br />
-      <small>Created by: {{ entry.createdBy || '(Not Provided)' }}</small>
-</li>
-  </ul>
+    <h2>Previously Created Entries</h2>
+    <ul>
+      <li *ngFor="let entry of wizardEntries">
+        Created for
+        <strong>
+          {{
+            entry.tenant.tenant === '__new__'
+              ? entry.tenant.newTenantName
+              : entry.tenant.tenant
+          }}
+        </strong>
+        <span *ngIf="entry.modules && getModuleKeys(entry.modules).length">
+          &nbsp;
+          <span *ngFor="let moduleKey of getModuleKeys(entry.modules); let last = last">
+            {{ getModuleNameByKey(moduleKey) }}<span *ngIf="!last">, </span>
+          </span>
+        </span>
+        <br />
+        <small>Created by: {{ entry.tenant.createdBy || '(Not Provided)' }}</small>
+        <span *ngIf="entry.tenant.configNotes">
+          <br />
+          <small>Notes: {{ entry.tenant.configNotes }}</small>
+        </span>
+      </li>
+    </ul>
   </div>
 </div>
 
