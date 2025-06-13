@@ -1,69 +1,100 @@
 import { Injectable } from '@angular/core';
 
-@Injectable({ providedIn: 'root'})
-export class WizardDataService {
-  private data: any = {};
-  public moduleDetails: { [key: string]: any } = {};
-  private savedEntries: any[] = [];
 
-  setData(step: string, value: any) {
-    this.data[step] = value;   //Set or save data for a certain step
+export interface ClientToOnboard {
+  tenant: {
+    tenant?: string;          
+    newTenantName?: string;   
+    contactName: string;
+    contactEmail: string;
+    contactPhone: string;
+    createdBy?: string;       
+    configNotes?: string;     
+  },
+  modules: {
+    [key: string]: any;
+    userManagement?: any;
+    reporting?: any;
+    billing?: any;
+    support?: any;
   }
-
-  getData(step: string): any {
-    return this.data[step]; //Read the data of a certain step
-  }
-
-  getAllData(): any {
-    return this.data;//Get all the data saved during the entire wizard process
-  }
-
-  saveWizardData(formData: any) {
-    this.data = formData;
-    this.savedEntries.push(formData);
-  }
-
-  saveWizardEntry(entry: any) {
-  this.savedEntries.push(JSON.parse(JSON.stringify(entry)));
-  }
-
-  getWizardData() {
-    return this.data;
-  }
-
-  getAllEntries() {
-  return this.savedEntries;
 }
 
-  resetData() {
-    this.data = {};
+@Injectable({ providedIn: 'root' })
+export class WizardDataService {
+  private currentClient: ClientToOnboard = {
+  tenant: {
+    tenant: '',
+    newTenantName: '',
+    contactName: '',
+    contactEmail: '',
+    contactPhone: '',
+    createdBy: '',
+    configNotes: ''
+  },
+  modules: {}
+};
+  private savedEntries: ClientToOnboard[] = [];
+
+  // Tenant Info
+  setTenantInfo(info: {tenant?: string; newTenantName?: string; contactName: string; contactEmail: string; contactPhone: string; createdBy?: string; configNotes?: string;})
+  {
+  this.currentClient.tenant = { ...info };
+  }
+  getTenantInfo() {
+    return this.currentClient.tenant;
   }
 
-  wizardData = {
-  modules: [] as string[],
-  moduleDetails: {} as Record<string, any>
-  };
+  // Select Module
+  setSelectedModules(moduleKeys: string[]) {
 
-  //Save detailed data of a single module
-   setModuleDetail(key: string, detail: any) {
-    this.wizardData.moduleDetails[key] = detail;
+    moduleKeys.forEach(key => {
+      if (!this.currentClient.modules[key]) this.currentClient.modules[key] = {};
+    });
+    
+    Object.keys(this.currentClient.modules).forEach(key => {
+      if (!moduleKeys.includes(key)) delete this.currentClient.modules[key];
+    });
+  }
+  getSelectedModules(): string[] {
+    return Object.keys(this.currentClient.modules);
   }
 
-  // Get the key of the next selected module
-   getNextModule(current: string): string | null {
-    const mods = this.wizardData.modules;
+  
+  setModuleDetail(moduleKey: string, detail: any) {
+    this.currentClient.modules[moduleKey] = { ...detail };
+  }
+  getModuleDetail(moduleKey: string) {
+    return this.currentClient.modules[moduleKey];
+  }
+
+  
+  getCurrentClient(): ClientToOnboard {
+    return this.currentClient;
+  }
+  setCurrentClient(client: ClientToOnboard) {
+    this.currentClient = { ...client };
+  }
+  resetCurrentClient() {
+    this.currentClient = {
+      tenant: { contactName: '', contactEmail: '', contactPhone: '' },
+      modules: {}
+    };
+  }
+
+  // Data history
+  saveCurrentClient() {
+    this.savedEntries.push(JSON.parse(JSON.stringify(this.currentClient)));
+  }
+  getAllEntries() {
+    return this.savedEntries;
+  }
+
+  // Module Navigation
+  getNextModule(current: string): string | null {
+    const mods = this.getSelectedModules();
     const idx = mods.indexOf(current);
     return idx >= 0 && idx < mods.length - 1 ? mods[idx + 1] : null;
   }
-
-  // Set all currently selected modules
-  setSelectedModules(modules: string[]) {
-    this.wizardData.modules = modules;
-  }
-
-  // Get all currently selected modules
-  getSelectedModules(): string[] {
-    return this.wizardData.modules;
-  }
-  
 }
+
