@@ -1,8 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { WizardDataService } from '../wizard-data.service';
 import { FormsModule } from '@angular/forms';
-
 
 @Component({
   standalone: true,
@@ -11,11 +10,11 @@ import { FormsModule } from '@angular/forms';
   imports: [FormsModule],
   styleUrls: ['./module-user-support.component.scss']
 })
-export class ModuleUserSupportComponent {
-  // Used to collect user input data
+export class ModuleUserSupportComponent implements OnInit {
   detail = {
-    supportLevel: 1,
-    supportNotes: ''
+    supportLevel:'',
+    supportNotes:'',
+    levelRequired: 1
   };
 
   constructor(
@@ -23,11 +22,18 @@ export class ModuleUserSupportComponent {
     private wizardDataService: WizardDataService
   ) {}
 
+  ngOnInit() {
+    const saved = this.wizardDataService.getModuleDetail('support');
+    if (saved) {
+      this.detail = { ...this.detail, ...saved };
+    }
+  }
+
   onNext() {
-    // Save data to global service
     this.wizardDataService.setModuleDetail('support', this.detail);
-    // Jump to the next checked module or notes
-    const next = this.wizardDataService.getNextModule('support');
+    const selected = this.wizardDataService.getSelectedModules();
+    const idx = selected.indexOf('support');
+    const next = idx >= 0 && idx < selected.length - 1 ? selected[idx + 1] : null;
     if (next) {
       this.router.navigate(['/requirements/wizard/module-' + next]);
     } else {
