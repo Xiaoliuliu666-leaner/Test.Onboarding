@@ -20,6 +20,10 @@ export class HomeComponent implements OnInit {
   { key: 'support', name: 'Support', description: 'Provide customer assistance and issue resolution services'},
 ];
 
+getModuleKeys(modules: any): string[] {
+  return Object.keys(modules || {});
+}
+
 getModuleNameByKey(key: string): string {
   const mod = this.availableModules.find(m => m.key === key);
   return mod ? mod.name : key;
