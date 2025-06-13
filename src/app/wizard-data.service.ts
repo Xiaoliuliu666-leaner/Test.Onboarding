@@ -85,8 +85,15 @@ export class WizardDataService {
   // Data history
   saveCurrentClient() {
     //this.savedEntries.push(JSON.parse(JSON.stringify(this.currentClient)));
-    this.savedEntries = [JSON.parse(JSON.stringify(this.currentClient))];
+    //this.savedEntries = [JSON.parse(JSON.stringify(this.currentClient))];
+    const newEntry = JSON.parse(JSON.stringify(this.currentClient));
+    this.savedEntries = [ ...this.savedEntries.filter(e =>
+      (e.tenant.tenant === newEntry.tenant.tenant && e.tenant.newTenantName === newEntry.tenant.newTenantName) === false
+    ),
+    newEntry
+  ];
   }
+  
   getAllEntries() {
     return this.savedEntries;
   }
