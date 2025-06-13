@@ -5,6 +5,7 @@ import { WizardDataService } from '../wizard-data.service';
 import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
 import { OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   standalone: true,
@@ -38,11 +39,16 @@ export class RequirementsWizard implements OnInit {
 
   constructor(
     private wizardDataService: WizardDataService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+    const stepParam = Number(params['step']);
+    this.stepIndex = !isNaN(stepParam) && stepParam > 0 ? stepParam : 1;
     this.restoreCurrentClient(); // Change：初始化同步独立变量
+  });
   }
 
   nextStep() {
