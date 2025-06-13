@@ -11,11 +11,13 @@ import { FormsModule } from '@angular/forms';
   imports: [FormsModule],
   styleUrls: ['./module-user-billing.component.scss']
 })
+
 export class ModuleUserBillingComponent {
-  // Used to collect user input data
   detail = {
-    billingAccount: 1,
-    billingNotes: ''
+    billingAccount: '',
+    billingNotes: '',
+    billingCycles: [{ cycleName: '', amount: 0 }],
+    paymentMethods: [{ methodName: '', details: '' }]
   };
 
   constructor(
@@ -23,11 +25,31 @@ export class ModuleUserBillingComponent {
     private wizardDataService: WizardDataService
   ) {}
 
+  ngOnInit() {
+    const saved = this.wizardDataService.getModuleDetail('billing');
+    if (saved) {
+      this.detail = { ...this.detail, ...saved };
+    }
+  }
+
+  addBillingCycle() {
+    this.detail.billingCycles.push({ cycleName: '', amount: 0 });
+  }
+  removeBillingCycle(i: number) {
+    this.detail.billingCycles.splice(i, 1);
+  }
+  addPaymentMethod() {
+    this.detail.paymentMethods.push({ methodName: '', details: '' });
+  }
+  removePaymentMethod(i: number) {
+    this.detail.paymentMethods.splice(i, 1);
+  }
+
   onNext() {
-    // Save data to global service
     this.wizardDataService.setModuleDetail('billing', this.detail);
-    // Jump to the next checked module or notes
-    const next = this.wizardDataService.getNextModule('billing');
+    const selected = this.wizardDataService.getSelectedModules();
+    const idx = selected.indexOf('billing');
+    const next = idx >= 0 && idx < selected.length - 1 ? selected[idx + 1] : null;
     if (next) {
       this.router.navigate(['/requirements/wizard/module-' + next]);
     } else {
