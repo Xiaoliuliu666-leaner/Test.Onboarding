@@ -84,7 +84,8 @@ export class WizardDataService {
 
   // Data history
   saveCurrentClient() {
-    this.savedEntries.push(JSON.parse(JSON.stringify(this.currentClient)));
+    //this.savedEntries.push(JSON.parse(JSON.stringify(this.currentClient)));
+    this.savedEntries = [JSON.parse(JSON.stringify(this.currentClient))];
   }
   getAllEntries() {
     return this.savedEntries;
