@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { WizardDataService } from '../wizard-data.service'; 
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -29,11 +30,16 @@ getModuleNameByKey(key: string): string {
   return mod ? mod.name : key;
 }
 
-  constructor(private wizardDataService: WizardDataService) {}
+  constructor(private wizardDataService: WizardDataService, private router: Router ) {}
 
   ngOnInit(): void {
     this.wizardEntries = this.wizardDataService.getAllEntries(); 
     console.log('Retrieved Wizard Entries:', this.wizardEntries);
   }
+
+  resumeEntry(entry: any) {
+  this.wizardDataService.setCurrentClient(entry);
+  this.router.navigate(['/requirements/wizard']);
+}
 }
 
