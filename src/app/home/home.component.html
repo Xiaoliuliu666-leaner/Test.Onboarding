@@ -36,7 +36,7 @@
             <div>{{ entry.tenant.contactPhone }}</div>
           </td>
           <td *ngFor="let module of availableModules" style="text-align: center;">
-            <span *ngIf="entry.modules && entry.modules[module.key]">✔️</span>
+            <span *ngIf="entry.modules && entry.modules[module.key]">&#10004;</span>
           </td>
           <td>{{ entry.tenant.createdBy || 'Counter Clerk' }}</td>
           <td>{{ entry.tenant.configNotes || '-' }}</td>
