@@ -23,7 +23,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let entry of wizardEntries">
+        <tr *ngFor="let entry of wizardEntries" (click)="resumeEntry(entry)"class="resumable-row">
           <td>
             {{
               entry.tenant.tenant === '__new__'
