@@ -12,31 +12,31 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./module-user-management.component.scss']
 })
 export class ModuleUserManagementComponent {
-
-  detail = {
-    adminCount: 1,
-    notes: ''
-  };
+  detail = {adminCount: 1, notes:''};
+  users = [{ Name:'', Email:'', Phone:'', Role:''}];
 
   constructor(
     private router: Router,
     private wizardDataService: WizardDataService
   ) {}
 
-  onNext() {
-  console.log('modules:', this.wizardDataService.getSelectedModules());
-  console.log('current:', 'user-management');
-  const next = this.wizardDataService.getNextModule('user-management');
-  console.log('next:', next);
-
-
-  this.wizardDataService.setModuleDetail('user-management', this.detail);
-
-
-  if (next) {
-    this.router.navigate(['/requirements/wizard/module-' + next]);
-  } else {
-    this.router.navigate(['/requirements/wizard'], { queryParams: { step: 3 } });
+  onAddUser(){
+    this.users.push({ Name:'', Email:'', Phone:'', Role:'' });
   }
-}
-}
+
+  onRemoveUser(idx:number){
+    this.users.splice(idx, 1);
+  }
+
+  onNext() {
+    this.wizardDataService.setModuleDetail('user-management',{ users: this.users});
+    const selected = this.wizardDataService.getSelectedModules();
+      const idx = selected.indexOf('user-management');
+      const next = idx >= 0 && idx < selected.length - 1 ? selected[idx + 1] : null;
+      if (next) {
+        this.router.navigate(['/requirements/wizard/module-' + next]);
+      } else {
+        this.router.navigate(['/requirements/wizard'], { queryParams: { step: 3 } });
+      }
+    }
+  }
