@@ -38,32 +38,47 @@ body {
 
 /* 左侧红边栏+浅橙色 */
 .wizard-sidebar {
-  flex: 0 0 220px;
-  background: #fff6f1;
-  border-right: 2.5px solid #f5683d;
-  padding: 38px 0 0 0;
-  font-family: 'Segoe UI', sans-serif;
-  font-size: 15px;
-  height: 100%;
+  flex: 0 0 240px;
+  background: #fffdfb;
+  border-right: 2px solid #ff9966;
+  padding: 32px 0 0 0;
+  font-size: 16px;
+  min-height: 0;
+  box-sizing: border-box;
 
   ul {
     list-style: none;
-    padding: 0 0 0 24px;
     margin: 0;
+    padding: 0 0 0 24px;
   }
+
   li {
-    padding: 13px 8px 13px 0;
-    margin-bottom: 10px;
+    margin-bottom: 16px;
+    padding: 12px 10px 12px 0;
     border-radius: 8px 0 0 8px;
-    color: #f5683d;
-    font-weight: 600;
+    color: #f38424;
+    font-weight: 500;
     background: none;
+    cursor: pointer;
     transition: background 0.2s, color 0.2s;
+    font-size: 1rem;
+
     &.active {
-      background: linear-gradient(90deg, #ffb370 70%, #fff6f1 100%);
-      color: #fff;
+      background: #f5faff;
+      color: #1570ef;
       font-weight: bold;
+      box-shadow: 0 2px 8px rgba(50,112,255,0.08);
     }
+  }
+
+  .step-summary-item {
+    margin: 2px 0 10px 16px;
+    font-size: 13px;
+    color: #8b6a3f;
+    opacity: 0.85;
+    background: none;
+    border-radius: 0;
+    font-weight: normal;
   }
 }
 
