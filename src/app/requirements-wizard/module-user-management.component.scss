@@ -99,14 +99,19 @@ body {
 
 /* 白色内容卡片 */
 .module-card {
-  max-width: 420px;
+  max-width: 600px;    
   width: 100%;
-  margin: 64px auto 64px;
+  min-width: 320px;
+  margin: 48px auto;
   background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 4px 24px rgba(30,70,170,0.07);
-  padding: 32px 32px 24px;
+  border-radius: 26px;
+  box-shadow: 0 8px 36px rgba(30,70,170,0.09);
+  padding: 42px 48px 32px;
   font-family: 'Segoe UI', sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  box-sizing: border-box;
 
   h2 {
     font-size: 1.35rem;
@@ -150,4 +155,52 @@ body {
       background: #005bb5;
     }
   }
+  .user-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr auto; 
+    gap: 2px;                              // 输入框和按钮间距
+    margin-bottom: 14px;
+    align-items: center;
+    width: 100%;
+  }
+
+  .user-row input {
+    width: 100%;          
+    min-width: 0;
+    padding: 12px 16px;   
+    font-size: 1.03rem;
+    border: 1.5px solid #d4dbe2;
+    border-radius: 8px;
+    outline: none;
+    background: #f4f7fb;
+    transition: border-color 0.2s, background 0.2s;
+    box-sizing: border-box;
+  }
+  .user-row input:focus {
+    border-color: #007bff;
+    background: #fff;
+  }
+
+  .user-row button {
+    height: 44px;           
+    min-width: 90px;        
+    padding: 0 18px;        
+    border-radius: 8px;
+    border: none;
+    background: #ffe4e4;
+    color: #be2736;
+    font-size: 1.02rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.16s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+  }
+  .user-row button:hover {
+    background: #ffd6d6;
+  }
+
 }
+
