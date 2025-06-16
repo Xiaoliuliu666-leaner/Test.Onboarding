@@ -6,21 +6,23 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #d5f6da;
+
+  background: none;
+  border: none;
   border-bottom: 1.5px solid #a0e2b7;
-  padding: 0 32px;
+  padding: 0.75rem 2rem 0.5rem 2rem;
+  
   height: 3.5rem;
 }
 
 .wizard-header-link {
+  color: #222;
   font-weight: 600;
-  color: #163b23;
   text-decoration: underline;
-  font-size: 1rem;
 }
 
 .back-home-link {
-  color: #163b23;
-  font-size: 1rem;
+  color: #222;
+  font-weight: 600;
   text-decoration: underline;
 }

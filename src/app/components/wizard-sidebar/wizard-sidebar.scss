@@ -1,32 +1,28 @@
 .wizard-sidebar {
-  min-width: 200px;
-  height: 100vh;
-  background: #fffdfb;
-  border-right: 2px solid #ff9966;
-  padding: 32px 0 0 0;
-  font-size: 16px;
+  background: none;
+  border: none;
+  padding: 2rem 0 2rem 0.5rem;
+  min-width: 180px;
 
   ul {
     list-style: none;
+    padding: 0;
     margin: 0;
-    padding: 0 0 0 24px;
   }
-
   li {
-    margin-bottom: 16px;
-    padding: 12px 10px 12px 0;
-    border-radius: 8px 0 0 8px;
-    color: #f38424;
+    font-size: 1.08rem;
+    padding: 0.5rem 1.5rem;
+    color: #666;
     font-weight: 500;
-    background: none;
+    border-radius: 10px;
     cursor: pointer;
-    font-size: 1rem;
-    transition: background 0.2s, color 0.2s;
+    margin-bottom: 0.2rem;
+    background: none;
+    border: none;
     &.active {
-      background: #f5faff;
-      color: #1570ef;
-      font-weight: bold;
-      box-shadow: 0 2px 8px rgba(50,112,255,0.08);
+      color: #0070f3;
+      font-weight: 700;
+      background: #f8faff;
     }
   }
 }
