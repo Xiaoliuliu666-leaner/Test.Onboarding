@@ -2,6 +2,11 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { WizardHeadbarComponent } from './components/wizard-headbar/wizard-headbar';
+import { WizardSidebarComponent } from './components/wizard-sidebar/wizard-sidebar';
+import { WizardContentOutlineComponent } from './components/wizard-content-outline/wizard-content-outline';
+
+
 
 @Component({
   selector: 'app-root',
@@ -9,7 +14,10 @@ import { RouterModule } from '@angular/router';
   imports: [
     RouterOutlet,
     CommonModule,
-    RouterModule
+    RouterModule,
+    WizardHeadbarComponent,
+    WizardSidebarComponent,
+    WizardContentOutlineComponent,
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss'
