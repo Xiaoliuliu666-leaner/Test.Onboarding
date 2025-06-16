@@ -1,27 +1,48 @@
-<div class="module-card">
-  <h2>User Management - Details</h2>
-  <form (ngSubmit)="onNext()">
-    <div class="form-group">
-      <label for="adminCount">How many admins?</label>
-      <input
-        id="adminCount"
-        type="number"
-        [(ngModel)]="detail.adminCount"
-        name="adminCount"
-        min="1"
-        required
-      />
-    </div>
-
-    <div class="form-group">
-      <label for="notes">Notes:</label>
-      <textarea
-        id="notes"
-        [(ngModel)]="detail.notes"
-        name="notes"
-        rows="3"
-      ></textarea>
-    </div>
-    <button type="submit" class="next-btn">Next</button>
-  </form>
+<!-- 顶部绿色横条 -->
+<div class="wizard-header-bar">
+  <a routerLink="/requirements/wizard" class="wizard-header-link">Start the Requirements Gathering Wizard</a>
+  <a routerLink="/" class="back-home-link">← Back to Home</a>
 </div>
+
+<div class="wizard-layout">
+  <!-- 左侧红色边栏 -->
+  <aside class="wizard-sidebar">
+    <ul>
+      <li>Wizard</li>
+      <li class="active">User Management</li>
+      <li>Billing</li>
+      <li>Reporting</li>
+      <li>Support</li>
+    </ul>
+  </aside>
+  <!-- 主体区域有蓝色大框，内嵌卡片 -->
+  <main class="wizard-main-panel">
+    <div class="module-card">
+      <h2>User Management - Details</h2>
+      <form (ngSubmit)="onNext()" style="width: 100%; max-width: 420px;">
+        <div class="form-group">
+          <label for="adminCount">How many admins?</label>
+          <input
+            id="adminCount"
+            type="number"
+            [(ngModel)]="detail.adminCount"
+            name="adminCount"
+            min="1"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="notes">Notes:</label>
+          <textarea
+            id="notes"
+            [(ngModel)]="detail.notes"
+            name="notes"
+            rows="3"
+          ></textarea>
+        </div>
+        <button type="submit" class="next-btn">Next</button>
+      </form>
+    </div>
+  </main>
+</div>
+
