@@ -2,12 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { WizardDataService } from '../wizard-data.service';
 import { FormsModule } from '@angular/forms';
+import { WizardHeadbarComponent } from '../components/wizard-headbar/wizard-headbar';
+import { WizardSidebarComponent } from '../components/wizard-sidebar/wizard-sidebar';
+import { WizardContentOutlineComponent } from '../components/wizard-content-outline/wizard-content-outline';
 
 @Component({
   standalone: true,
   selector: 'app-module-user-reporting',
   templateUrl: './module-user-reporting.component.html',
-  imports: [FormsModule],
+  imports: [FormsModule, WizardHeadbarComponent, WizardSidebarComponent, WizardContentOutlineComponent,],
   styleUrls: ['./module-user-reporting.component.scss']
 })
 export class ModuleUserReportingComponent implements OnInit {

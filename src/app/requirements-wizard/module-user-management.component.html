@@ -1,22 +1,12 @@
-<!-- 顶部绿色横条 -->
-<div class="wizard-header-bar">
-  <a routerLink="/requirements/wizard" class="wizard-header-link">Start the Requirements Gathering Wizard</a>
-  <a routerLink="/" class="back-home-link">← Back to Home</a>
-</div>
+<!-- 绿色头部横条 -->
+<app-wizard-headbar></app-wizard-headbar>
 
 <div class="wizard-layout">
-  <!-- 左侧红色边栏 -->
-  <aside class="wizard-sidebar">
-    <ul>
-      <li>Wizard</li>
-      <li class="active">User Management</li>
-      <li>Billing</li>
-      <li>Reporting</li>
-      <li>Support</li>
-    </ul>
-  </aside>
-  <!-- 主体区域有蓝色大框，内嵌卡片 -->
-  <main class="wizard-main-panel">
+  <!-- 左侧侧边栏，高亮 User Management -->
+  <app-wizard-sidebar [activeMenu]="'User Management'"></app-wizard-sidebar>
+
+  <!-- 主体蓝色大框 -->
+  <app-wizard-content-outline>
     <div class="module-card">
       <h2>User Management - Details</h2>
       <form (ngSubmit)="onNext()" style="width: 100%; max-width: 420px;">
@@ -43,6 +33,5 @@
         <button type="submit" class="next-btn">Next</button>
       </form>
     </div>
-  </main>
+  </app-wizard-content-outline>
 </div>
-
