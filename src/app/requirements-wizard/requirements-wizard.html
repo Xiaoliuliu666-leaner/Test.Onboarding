@@ -1,9 +1,9 @@
 <a routerLink="/" class="back-home-link">← Back to Home</a>
 
 <div class="wizard-layout">
+  <!-- 侧边栏 -->
   <aside class="wizard-sidebar">
     <ul>
-      <!-- Step 1: Tenant -->
       <li [class.active]="stepIndex === 1">Step 1: Tenant</li>
       <ng-container *ngIf="tenant">
         <li class="step-summary-item">
@@ -12,16 +12,12 @@
         <li class="step-summary-item" *ngIf="contactEmail">{{ contactEmail }}</li>
         <li class="step-summary-item" *ngIf="contactPhone">{{ contactPhone }}</li>
       </ng-container>
-
-      <!-- Step 2: Modules -->
       <li [class.active]="stepIndex === 2">Step 2: Modules</li>
       <ng-container *ngIf="selectedModules && selectedModules.length">
         <li class="step-summary-item" *ngFor="let module of selectedModules">
           {{ getModuleNameByKey(module) }}
         </li>
       </ng-container>
-
-      <!-- Step 3: Notes -->
       <li [class.active]="stepIndex === 3">Step 3: Notes</li>
       <ng-container *ngIf="configNotes">
         <li class="step-summary-item">{{ configNotes | slice: 0:30 }}...</li>
@@ -29,19 +25,17 @@
     </ul>
   </aside>
 
-  <div class="wizard-container">
-    <div class="step-indicator">Step {{ stepIndex }} of 3</div>
-    <h2>Step {{ stepIndex }}</h2>
-
-    <!-- Step 1 -->
-    <div *ngIf="stepIndex === 1">
+  <div class="wizard-content-center">
+    <!-- Step 1: Tenant -->
+    <div *ngIf="stepIndex === 1" class="wizard-card">
+      <div class="step-indicator">Step 1 of 3</div>
+      <h2>Step 1</h2>
       <label for="tenant">Select Tenant:</label>
       <select [(ngModel)]="tenant" (change)="checkNewTenant()" id="tenant">
         <option value="" disabled selected>Select...</option>
         <option *ngFor="let t of tenants" [value]="t">{{ t }}</option>
         <option value="__new__">+ New Tenant</option>
       </select>
-
       <div *ngIf="isCreatingNewTenant">
         <label>Enter New Tenant Name:</label>
         <input type="text" [(ngModel)]="newTenantName" placeholder="Enter new tenant name..." />
@@ -61,10 +55,16 @@
         <label>Configuration Notes:</label>
         <textarea [(ngModel)]="configNotes" rows="5"></textarea>
       </div>
+      <div class="wizard-nav">
+        <button (click)="previousStep()" [disabled]="stepIndex === 1">Previous</button>
+        <button (click)="nextStep()" [disabled]="!isStepValid()">Next</button>
+      </div>
     </div>
 
-    <!-- Step 2 -->
-    <div *ngIf="stepIndex === 2">
+    <!-- Step 2: Modules -->
+    <div *ngIf="stepIndex === 2" class="wizard-card">
+      <div class="step-indicator">Step 2 of 3</div>
+      <h2>Step 2</h2>
       <div class="module-grid">
         <div
           *ngFor="let module of availableModules"
@@ -81,23 +81,27 @@
           </label>
         </div>
       </div>
+      <div class="wizard-nav">
+        <button (click)="previousStep()">Previous</button>
+        <button (click)="nextStep()" [disabled]="!isStepValid()">Next</button>
+      </div>
     </div>
 
-    <!-- Step 3 -->
-    <div *ngIf="stepIndex === 3">
+    <!-- Step 3: Notes -->
+    <div *ngIf="stepIndex === 3" class="wizard-card">
+      <div class="step-indicator">Step 3 of 3</div>
+      <h2>Step 3</h2>
       <label>Configuration Notes:</label>
       <textarea [(ngModel)]="configNotes" rows="5"></textarea>
       <p *ngIf="configNotes.trim().length < 10" style="color: red; font-size: 13px; margin-top: 4px;">
         Please enter at least 10 characters.
       </p>
-    </div>
-
-    <!-- Buttons -->
-    <div class="wizard-nav">
-      <button (click)="previousStep()" [disabled]="stepIndex === 1">Previous</button>
-      <button *ngIf="stepIndex < 3" (click)="nextStep()" [disabled]="!isStepValid()">Next</button>
-      <button *ngIf="stepIndex === 3" (click)="submitWizard()" [disabled]="!isStepValid()">Submit</button>
+      <div class="wizard-nav">
+        <button (click)="previousStep()">Previous</button>
+        <button (click)="submitWizard()" [disabled]="!isStepValid()">Submit</button>
+      </div>
     </div>
   </div>
 </div>
+
 
