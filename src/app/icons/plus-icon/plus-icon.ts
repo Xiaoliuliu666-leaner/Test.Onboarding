@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-plus-icon',
   imports: [],
   templateUrl: './plus-icon.html',
-  styleUrl: './plus-icon.css'
+  styleUrl: './plus-icon.scss'
 })
 export class PlusIcon {
 
