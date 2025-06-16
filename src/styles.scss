@@ -1,1 +1,176 @@
-/* You can add global styles to this file, and also import other style files */
+.portal-layout {
+  display: flex;
+  min-height: 100vh;
+  background: #f4f7fb;
+}
+
+.portal-content form {
+  width: 100%;
+  max-width: 440px;
+  padding: 38px 30px 32px 30px;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 8px 24px 0 rgba(180,180,180,0.09);
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  margin-top: 24px;
+}
+
+.portal-content h2 {
+  margin-bottom: 18px;
+  font-size: 2rem;
+  color: #223254;
+  font-weight: 700;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+label {
+  font-size: 1.07rem;
+  font-weight: 600;
+  color: #37476a;
+}
+
+input[type="text"], 
+input[type="number"], 
+textarea {
+  padding: 11px 12px;
+  font-size: 1rem;
+  border: 1.2px solid #d6ddeb;
+  border-radius: 7px;
+  background: #fafcff;
+  transition: border 0.2s;
+  font-family: inherit;
+}
+input:focus, textarea:focus {
+  border-color: #2f80ed;
+  outline: none;
+  background: #f1f7ff;
+}
+
+.next-btn, button[type="submit"] {
+  margin-top: 10px;
+  width: 100%;
+  padding: 13px 0;
+  background: #0078d4;
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  font-size: 1.08rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.16s;
+}
+.next-btn:hover, button[type="submit"]:hover {
+  background: #005fa3;
+}
+
+.home-portal-root {
+  min-height: 100vh;
+  background: #f4f7fb;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 56px 10px 80px 10px;
+}
+
+.home-header-card {
+  margin: 0 auto 40px auto;
+  max-width: 660px;
+  width: 100%;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 8px 32px 0 rgba(180,180,180,0.09);
+  padding: 42px 40px 36px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.home-header-card h1 {
+  font-size: 2.3rem;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 22px;
+  letter-spacing: 0.01em;
+  text-align: center;
+}
+.home-header-card .brand {
+  color: #0078d4;
+  font-weight: 800;
+}
+
+.start-wizard-btn {
+  display: inline-flex;
+  align-items: center;
+  background: #0078d4;
+  color: #fff;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 13px 26px;
+  border-radius: 9px;
+  text-decoration: none;
+  box-shadow: 0 2px 8px 0 rgba(0,120,212,0.05);
+  transition: background 0.16s, box-shadow 0.16s;
+}
+.start-wizard-btn:hover {
+  background: #005fa3;
+  box-shadow: 0 2px 18px 0 rgba(0,120,212,0.09);
+}
+
+.wizard-list-panel {
+  margin: 0 auto;
+  max-width: 1100px;
+  width: 100%;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 8px 24px 0 rgba(180,180,180,0.09);
+  padding: 32px 24px 32px 24px;
+}
+
+.wizard-list-panel h2 {
+  font-size: 1.36rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 18px;
+}
+
+.wizard-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1rem;
+  background: #fff;
+}
+
+.wizard-table th, .wizard-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid #eef1f5;
+  text-align: left;
+}
+
+.wizard-table th {
+  background: #f7fafd;
+  color: #0078d4;
+  font-weight: 700;
+}
+
+.wizard-table tr:last-child td {
+  border-bottom: none;
+}
+
+.wizard-table td {
+  color: #2b3a4a;
+}
+
+.resumable-row {
+  cursor: pointer;
+  transition: background 0.13s;
+}
+.resumable-row:hover {
+  background: #eaf4ff;
+}
