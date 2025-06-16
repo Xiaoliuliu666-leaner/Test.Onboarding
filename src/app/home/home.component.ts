@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { WizardDataService } from '../wizard-data.service'; 
 import { Router } from '@angular/router';
+import { PlusIcon  } from '../icons/plus-icon/plus-icon';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, PlusIcon ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
