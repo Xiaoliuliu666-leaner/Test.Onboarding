@@ -87,7 +87,7 @@ body {
   }
 }
 
-// 主内容区
+// 主内容区（带蓝色外边框）
 .wizard-main {
   flex: 1 1 auto;
   display: flex;
@@ -98,18 +98,32 @@ body {
   min-width: 0;
 }
 
+.wizard-content-outline {
+  border: 2.5px solid #1570ef;
+  border-radius: 18px;
+  box-shadow: 0 0 10px 1.5px #1570ef33;
+  background: #f4f7fb;
+  padding: 72px 90px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 1450px; // 你可根据实际页面微调
+  min-height: 690px;
+}
+
+// 内层白色卡片
 .wizard-card {
   background: #fff;
   border-radius: 22px;
   box-shadow: 0 8px 32px rgba(80, 132, 225, 0.10);
   padding: 38px 44px 32px 44px;
-  max-width: 410px;
+  max-width: 800px;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: stretch;
   gap: 8px;
-  margin: 28px 0;
+  margin: 0 auto;
   animation: fadein 0.5s;
 
   @keyframes fadein {
@@ -180,21 +194,24 @@ body {
   .module-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 18px;
+    gap: 28px;
     background: none;
     box-shadow: none;
     margin-bottom: 12px;
     padding: 0;
+    justify-content: center;
 
     .module-item {
-      border: 2px solid #d2e6fa;
+      border: 2px solid #2196f3;
       border-radius: 14px;
-      background: #f9fcfe;
-      padding: 14px 12px 12px 12px;
+      background: #fff;
+      min-width: 280px;
+      padding: 18px 10px;
+      transition: box-shadow .18s, border .18s, background .18s;
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       transition: border 0.17s, box-shadow 0.19s;
-      box-shadow: 0 2px 8px #8dc7fa11;
+      box-shadow: 0 6px 32px rgba(50,90,200,0.05);
       margin-bottom: 0;
 
       &.selected {
@@ -203,12 +220,10 @@ body {
         box-shadow: 0 3px 16px #1570ef14;
       }
       .module-row {
-        display: grid;
-        grid-template-columns: 36px 1fr 2fr;
+        display: flex;
         align-items: center;
-        gap: 9px;
+        gap: 12px;
         width: 100%;
-
         .module-title {
           font-size: 15.8px;
           font-weight: 600;
