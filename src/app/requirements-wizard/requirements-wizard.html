@@ -1,23 +1,29 @@
-<a routerLink="/" class="back-home-link">← Back to Home</a>
+<!-- Header区域 -->
+<div class="wizard-header">
+  <div class="wizard-header-title">
+    <span>Start the Requirements Gathering Wizard</span>
+  </div>
+  <a routerLink="/" class="wizard-header-back">← Back to Home</a>
+</div>
 
-<div class="wizard-layout">
+<div class="wizard-portal">
   <!-- 侧边栏 -->
   <aside class="wizard-sidebar">
     <ul>
       <li [class.active]="stepIndex === 1">Step 1: Tenant</li>
       <ng-container *ngIf="tenant">
-        <li class="step-summary-item">
-          {{ tenant === '__new__' ? newTenantName : tenant }}
-        </li>
+        <li class="step-summary-item">{{ tenant === '__new__' ? newTenantName : tenant }}</li>
         <li class="step-summary-item" *ngIf="contactEmail">{{ contactEmail }}</li>
         <li class="step-summary-item" *ngIf="contactPhone">{{ contactPhone }}</li>
       </ng-container>
+
       <li [class.active]="stepIndex === 2">Step 2: Modules</li>
       <ng-container *ngIf="selectedModules && selectedModules.length">
         <li class="step-summary-item" *ngFor="let module of selectedModules">
           {{ getModuleNameByKey(module) }}
         </li>
       </ng-container>
+
       <li [class.active]="stepIndex === 3">Step 3: Notes</li>
       <ng-container *ngIf="configNotes">
         <li class="step-summary-item">{{ configNotes | slice: 0:30 }}...</li>
@@ -25,83 +31,89 @@
     </ul>
   </aside>
 
-  <div class="wizard-content-center">
-    <!-- Step 1: Tenant -->
-    <div *ngIf="stepIndex === 1" class="wizard-card">
-      <div class="step-indicator">Step 1 of 3</div>
-      <h2>Step 1</h2>
-      <label for="tenant">Select Tenant:</label>
-      <select [(ngModel)]="tenant" (change)="checkNewTenant()" id="tenant">
-        <option value="" disabled selected>Select...</option>
-        <option *ngFor="let t of tenants" [value]="t">{{ t }}</option>
-        <option value="__new__">+ New Tenant</option>
-      </select>
-      <div *ngIf="isCreatingNewTenant">
-        <label>Enter New Tenant Name:</label>
-        <input type="text" [(ngModel)]="newTenantName" placeholder="Enter new tenant name..." />
+  <!-- 主内容区 -->
+  <main class="wizard-main">
+    <div class="wizard-card">
+      <div class="step-indicator">Step {{ stepIndex }} of 3</div>
+      <h2>Step {{ stepIndex }}</h2>
 
-        <label>Contact Name:</label>
-        <input type="text" [(ngModel)]="contactName" placeholder="Enter contact name..." />
-
-        <label>Contact Email:</label>
-        <input type="email" [(ngModel)]="contactEmail" placeholder="Enter contact email..." />
-
-        <label>Contact Phone:</label>
-        <input type="tel" [(ngModel)]="contactPhone" placeholder="Enter contact phone..." />
-
-        <label>Your Name (Created By):</label>
-        <input type="text" [(ngModel)]="createdBy" placeholder="Enter your name..." />
-
-        <label>Configuration Notes:</label>
-        <textarea [(ngModel)]="configNotes" rows="5"></textarea>
-      </div>
-      <div class="wizard-nav">
-        <button (click)="previousStep()" [disabled]="stepIndex === 1">Previous</button>
-        <button (click)="nextStep()" [disabled]="!isStepValid()">Next</button>
-      </div>
-    </div>
-
-    <!-- Step 2: Modules -->
-    <div *ngIf="stepIndex === 2" class="wizard-card">
-      <div class="step-indicator">Step 2 of 3</div>
-      <h2>Step 2</h2>
-      <div class="module-grid">
-        <div
-          *ngFor="let module of availableModules"
-          class="module-item"
-          [class.selected]="selectedModules.includes(module.key)">
-          <label class="module-row">
-            <input
-              type="checkbox"
-              [value]="module.key"
-              (change)="onModuleChange($event, module.key)"
-              [checked]="selectedModules.includes(module.key)" />
-            <div class="module-title">{{ module.name }}</div>
-            <div class="module-description">{{ module.description }}</div>
-          </label>
+      <!-- Step 1 -->
+      <div *ngIf="stepIndex === 1">
+        <div class="wizard-form-group">
+          <label for="tenant">Select Tenant:</label>
+          <select [(ngModel)]="tenant" (change)="checkNewTenant()" id="tenant">
+            <option value="" disabled selected>Select...</option>
+            <option *ngFor="let t of tenants" [value]="t">{{ t }}</option>
+            <option value="__new__">+ New Tenant</option>
+          </select>
+        </div>
+        <div *ngIf="isCreatingNewTenant">
+          <div class="wizard-form-group">
+            <label>Enter New Tenant Name:</label>
+            <input type="text" [(ngModel)]="newTenantName" placeholder="Enter new tenant name..." />
+          </div>
+          <div class="wizard-form-group">
+            <label>Contact Name:</label>
+            <input type="text" [(ngModel)]="contactName" placeholder="Enter contact name..." />
+          </div>
+          <div class="wizard-form-group">
+            <label>Contact Email:</label>
+            <input type="email" [(ngModel)]="contactEmail" placeholder="Enter contact email..." />
+          </div>
+          <div class="wizard-form-group">
+            <label>Contact Phone:</label>
+            <input type="tel" [(ngModel)]="contactPhone" placeholder="Enter contact phone..." />
+          </div>
+          <div class="wizard-form-group">
+            <label>Your Name (Created By):</label>
+            <input type="text" [(ngModel)]="createdBy" placeholder="Enter your name..." />
+          </div>
+          <div class="wizard-form-group">
+            <label>Configuration Notes:</label>
+            <textarea [(ngModel)]="configNotes" rows="5"></textarea>
+          </div>
         </div>
       </div>
-      <div class="wizard-nav">
-        <button (click)="previousStep()">Previous</button>
-        <button (click)="nextStep()" [disabled]="!isStepValid()">Next</button>
-      </div>
-    </div>
 
-    <!-- Step 3: Notes -->
-    <div *ngIf="stepIndex === 3" class="wizard-card">
-      <div class="step-indicator">Step 3 of 3</div>
-      <h2>Step 3</h2>
-      <label>Configuration Notes:</label>
-      <textarea [(ngModel)]="configNotes" rows="5"></textarea>
-      <p *ngIf="configNotes.trim().length < 10" style="color: red; font-size: 13px; margin-top: 4px;">
-        Please enter at least 10 characters.
-      </p>
+      <!-- Step 2 -->
+      <div *ngIf="stepIndex === 2">
+        <div class="module-grid">
+          <div
+            *ngFor="let module of availableModules"
+            class="module-item"
+            [class.selected]="selectedModules.includes(module.key)">
+            <label class="module-row">
+              <input
+                type="checkbox"
+                [value]="module.key"
+                (change)="onModuleChange($event, module.key)"
+                [checked]="selectedModules.includes(module.key)" />
+              <div class="module-title">{{ module.name }}</div>
+              <div class="module-description">{{ module.description }}</div>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div *ngIf="stepIndex === 3">
+        <div class="wizard-form-group">
+          <label>Configuration Notes:</label>
+          <textarea [(ngModel)]="configNotes" rows="5"></textarea>
+          <p *ngIf="configNotes.trim().length < 10" class="wizard-note-error">
+            Please enter at least 10 characters.
+          </p>
+        </div>
+      </div>
+
+      <!-- 按钮 -->
       <div class="wizard-nav">
-        <button (click)="previousStep()">Previous</button>
-        <button (click)="submitWizard()" [disabled]="!isStepValid()">Submit</button>
+        <button (click)="previousStep()" [disabled]="stepIndex === 1" class="wizard-btn wizard-btn-outline">Previous</button>
+        <button *ngIf="stepIndex < 3" (click)="nextStep()" [disabled]="!isStepValid()" class="wizard-btn wizard-btn-primary">Next</button>
+        <button *ngIf="stepIndex === 3" (click)="submitWizard()" [disabled]="!isStepValid()" class="wizard-btn wizard-btn-primary">Submit</button>
       </div>
     </div>
-  </div>
+  </main>
 </div>
 
 
