@@ -1,0 +1,17 @@
+:host {
+  display: flex;
+  flex: 1 1 auto;
+}
+
+.wizard-content-outline {
+  flex: 1 1 auto;
+  background: #f5f8fa;
+  border: 2px solid #1991fa;
+  border-radius: 18px;
+  margin: 24px;
+  min-height: 600px;
+  box-shadow: 0 2px 24px 0 rgba(25, 145, 250, 0.08);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}

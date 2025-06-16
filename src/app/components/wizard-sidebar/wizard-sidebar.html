@@ -1,0 +1,10 @@
+<aside class="wizard-sidebar">
+  <ul>
+    <li
+      *ngFor="let menu of menuList"
+      [class.active]="menu.key === activeMenu"
+    >
+      {{ menu.label }}
+    </li>
+  </ul>
+</aside>

@@ -1,0 +1,26 @@
+:host {
+  display: block;
+}
+
+.wizard-header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #d5f6da;
+  border-bottom: 1.5px solid #a0e2b7;
+  padding: 0 32px;
+  height: 3.5rem;
+}
+
+.wizard-header-link {
+  font-weight: 600;
+  color: #163b23;
+  text-decoration: underline;
+  font-size: 1rem;
+}
+
+.back-home-link {
+  color: #163b23;
+  font-size: 1rem;
+  text-decoration: underline;
+}
