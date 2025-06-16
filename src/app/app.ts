@@ -15,9 +15,6 @@ import { WizardContentOutlineComponent } from './components/wizard-content-outli
     RouterOutlet,
     CommonModule,
     RouterModule,
-    WizardHeadbarComponent,
-    WizardSidebarComponent,
-    WizardContentOutlineComponent,
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss'
