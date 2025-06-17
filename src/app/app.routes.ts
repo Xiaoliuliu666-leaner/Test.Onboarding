@@ -46,8 +46,8 @@ export const routes: Routes = [
     },
 
     {
-        path: 'requirements/wizard/module-broking-platform-integration',
-        loadComponent: () => import('./requirements-wizard/module-broking-platform-integration.component').then(m => m.ModuleBrokingPlatformIntegrationComponent),
-        title: 'Broking Platform Integration Details'
+        path: 'requirements/wizard/module-integrations',
+        loadComponent: () => import('./requirements-wizard/module-integrations.component').then(m => m.ModuleIntegrationsComponent),
+        title: 'Integrations Details'
     }
 ];
