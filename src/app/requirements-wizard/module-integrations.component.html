@@ -3,7 +3,11 @@
 
 <div class="wizard-layout">
   <!-- 左侧高亮 Integrations -->
-  <app-wizard-sidebar [activeMenu]="'Integrations'"></app-wizard-sidebar>
+  <app-wizard-sidebar [activeMenu]="'Integrations'"
+  [integrationSteps]="selectedKeys"
+  [integrationStepIndex]="stepIndex"
+  (integrationStepChange)="stepIndex = $event">
+  </app-wizard-sidebar>
   
   <!-- 主体蓝色大框 -->
   <app-wizard-content-outline>
