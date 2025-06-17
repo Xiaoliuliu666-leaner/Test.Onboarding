@@ -36,7 +36,7 @@ export class RequirementsWizard implements OnInit {
     { key: 'billing', name: 'Billing', description: 'Manage invoicing, payment processing, and subscription plans' },
     { key: 'support', name: 'Support', description: 'Provide customer assistance and issue resolution services' },
     { key: 'workflows', name: 'Workflows', description: 'Define custom workflow requirements' },
-    { key: 'broking-platform-integration', name: 'Broking Platform Integration', description: 'Integration with WinBEAT, Insight, or OfficeTech'},
+    { key: 'integrations', name: 'Integrations', description: 'Setup Broking Platform and Document Management integrations'},
   ];
 
   constructor(
