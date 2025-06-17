@@ -1,22 +1,21 @@
 <aside class="wizard-sidebar">
   <ul>
-    <!-- 渲染所有非 Integrations 菜单 -->
-    <ng-container *ngFor="let menu of menuList">
-      <li *ngIf="menu.key !== 'Integrations'"
-          [class.active]="menu.key === activeMenu">
+    <ng-container *ngFor="let menu of menuList; let idx = index">
+      <li
+        [class.active]="menu.key === activeMenu"
+        [class.step-title]="menu.isStep"
+        [class.sub-item]="menu.isSub"
+      >
         {{ menu.label }}
       </li>
-      <!-- 单独处理 Integrations -->
+      <!-- Integration 特殊情况保留 -->
       <ng-container *ngIf="menu.key === 'Integrations'">
-        <li [class.active]="menu.key === activeMenu && (integrationStepIndex === null || !integrationSteps.length)">
-          {{ menu.label }}
-        </li>
         <ul *ngIf="integrationSteps?.length">
-          <li *ngFor="let step of integrationSteps; let i = index"
-              [class.active]="activeMenu === 'Integrations' && integrationStepIndex === i"
-              (click)="integrationStepChange.emit(i)"
-              class="integration-substep"
-              style="cursor:pointer;">
+          <li
+            *ngFor="let step of integrationSteps; let i = index"
+            [class.active]="activeMenu === 'Integrations' && integrationStepIndex === i"
+            class="integration-substep"
+            (click)="integrationStepChange.emit(i)">
             {{ getIntegrationLabel(step) }}
           </li>
         </ul>
@@ -24,3 +23,4 @@
     </ng-container>
   </ul>
 </aside>
+
