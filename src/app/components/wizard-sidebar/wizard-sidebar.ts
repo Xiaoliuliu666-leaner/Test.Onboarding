@@ -20,13 +20,13 @@ export class WizardSidebarComponent {
 
 
   menuList = [
-    { key: 'User Management', label: 'User Management' },
-    { key: 'Billing', label: 'Billing' },
-    { key: 'Reporting', label: 'Reporting' },
-    { key: 'Support', label: 'Support' },
-    { key: 'Workflows', label: 'Workflows'},
-    { key: 'Integrations', label: 'Integrations' }
-  ];
+  { label: 'Step 1: Tenant', key: 'Tenant', isStep: true },
+  { label: 'Tenant A', key: 'TenantA', isSub: true },
+  { label: 'Step 2: Modules', key: 'Modules', isStep: true },
+  { label: 'Workflows', key: 'Workflows', isSub: true },
+  { label: 'Integrations', key: 'Integrations', isStep: true },
+  { label: 'Step 3: Notes', key: 'Notes', isStep: true }
+];
 
   integrationStepLabelMap: any = {
     winbeat: 'WinBEAT',
