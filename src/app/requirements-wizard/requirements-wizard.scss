@@ -57,10 +57,8 @@ body {
   min-height: 0;
   box-sizing: border-box;
   border-right: 1.5px solid #f4f7fb;
-  border-left: 2.5px none !important; 
-  border-top: none;
-  border-bottom: none;
   border-radius: 0 0 0 10px;
+  font-family: 'Segoe UI', Arial, sans-serif;
 
   ul {
     list-style: none;
@@ -73,7 +71,7 @@ body {
     padding: 12px 10px 12px 0;
     border-radius: 8px 0 0 8px;
     color: #f38424;
-    font-weight: 500;
+    font-weight: 700;
     background: none;
     cursor: pointer;
     transition: background 0.2s, color 0.2s;
@@ -85,6 +83,10 @@ body {
       font-weight: bold;
       box-shadow: 0 2px 8px rgba(50,112,255,0.08);
     }
+
+     &:not(.active):not(.step-title):not(.main-title) {
+      color: #aaa;
+      font-weight: 500;
   }
 
   .step-summary-item {
@@ -293,4 +295,5 @@ body {
       }
     }
   }
+}
 }
