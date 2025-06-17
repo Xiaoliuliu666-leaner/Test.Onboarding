@@ -1,0 +1,48 @@
+<!-- 绿色头部横条 -->
+<app-wizard-headbar></app-wizard-headbar>
+
+<div class="wizard-layout">
+  <!-- 左侧侧边栏，高亮 Workflows -->
+  <app-wizard-sidebar [activeMenu]="'Workflows'"></app-wizard-sidebar>
+
+  <!-- 主体蓝色大框（内容区）-->
+  <app-wizard-content-outline>
+    <div class="module-card">
+      <h2>Workflows - Requirements</h2>
+
+      <form (ngSubmit)="onNext()" style="width: 100%; max-width: 900px;">
+        <div *ngFor="let wf of workflows; let i = index" class="form-group">
+          <label>Workflow Description</label>
+          <textarea
+            [(ngModel)]="workflows[i].description"
+            name="workflow-desc-{{i}}"
+            placeholder="Describe the workflow required"
+            rows="2"
+            required
+          ></textarea>
+          <button
+            type="button"
+            class="remove-btn"
+            (click)="onRemoveWorkflow(i)"
+            style="margin-bottom:12px;"
+          >
+            Remove
+          </button>
+        </div>
+
+        <button
+          type="button"
+          (click)="onAddWorkflow()"
+          style="margin: 12px 0;"
+        >
+          Add Workflow
+        </button>
+
+        <div style="margin-top: 28px;">
+          <button type="submit" class="next-btn">Next</button>
+        </div>
+      </form>
+    </div>
+  </app-wizard-content-outline>
+</div>
+
