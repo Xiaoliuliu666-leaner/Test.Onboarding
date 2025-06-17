@@ -16,16 +16,29 @@ import { WizardContentOutlineComponent } from '../components/wizard-content-outl
 })
 export class ModuleIntegrationsComponent {
   selected: { [key: string]: boolean } = {
-  winbeat: false,
-  insight: false,
-  officetech: false
-};
+    winbeat: false,
+    insight: false,
+    officetech: false
+  };
 
-details: { [key: string]: any } = {
-  winbeat: { hostingProvider: '', connectionInfo: '' },
-  insight: { ledger: '', notes: '' },
-  officetech: { hostingProvider: '', sqlConnection: '', fileStorage: '' }
-};
+  details: { [key: string]: any } = {
+    winbeat: { hostingProvider: '', connectionInfo: '' },
+    insight: { ledger: '', notes: '' },
+    officetech: { hostingProvider: '', sqlConnection: '', fileStorage: '' }
+  };
+
+  // 决定当前轮到哪个integration
+  stepIndex = 0;
+
+  // 选中的integration key数组，自动过滤顺序
+  get selectedKeys(): string[] {
+    return Object.keys(this.selected).filter(k => this.selected[k]);
+  }
+
+  // 当前要填写的integration key
+  get currentKey(): string {
+    return this.selectedKeys[this.stepIndex];
+  }
 
   constructor(
     private router: Router,
@@ -33,27 +46,36 @@ details: { [key: string]: any } = {
   ) {}
 
   onNext() {
-    // 只存选中的详情
+    // 保存所有已填数据
     const chosen: any = {};
-    Object.keys(this.selected).forEach(key => {
-      if (this.selected[key]) {
-        chosen[key] = this.details[key];
-      }
+    this.selectedKeys.forEach(key => {
+      chosen[key] = this.details[key];
     });
     this.wizardDataService.setModuleDetail('integrations', {
       selected: this.selected,
       details: chosen
     });
 
-    // 正常流程跳转
-    const selectedModules = this.wizardDataService.getSelectedModules();
-    const idx = selectedModules.indexOf('integrations');
-    const next = idx >= 0 && idx < selectedModules.length - 1 ? selectedModules[idx + 1] : null;
-    if (next) {
-      this.router.navigate(['/requirements/wizard/module-' + next]);
+    // 如果还有下一个integration，stepIndex++
+    if (this.stepIndex < this.selectedKeys.length - 1) {
+      this.stepIndex++;
+    // 保持在本页面，刷新后只显示下一个integration的表单
     } else {
-      this.router.navigate(['/requirements/wizard'], { queryParams: { step: 3 } });
+      // 跳到下一个wizard主模块
+      const selectedModules = this.wizardDataService.getSelectedModules();
+      const idx = selectedModules.indexOf('integrations');
+      const next = idx >= 0 && idx < selectedModules.length - 1 ? selectedModules[idx + 1] : null;
+      if (next) {
+        this.router.navigate(['/requirements/wizard/module-' + next]);
+      } else {
+        this.router.navigate(['/requirements/wizard'], { queryParams: { step: 3 } });
+      }
     }
+  }
+
+  // 切换了勾选项，重置stepIndex
+  onSelectionChange() {
+    this.stepIndex = 0;
   }
 }
 
