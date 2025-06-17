@@ -38,4 +38,10 @@ export const routes: Routes = [
         loadComponent: () => import('./requirements-wizard/module-user-support.component').then(m => m.ModuleUserSupportComponent),
         title: 'Support Details'
     },
+
+    {
+        path: 'requirements/wizard/module-workflows',
+        loadComponent: () => import('./requirements-wizard/module-user-workflows.component').then(m => m.ModuleUserWorkflowsComponent),
+        title: 'Workflows Requirements'
+    },
 ];
