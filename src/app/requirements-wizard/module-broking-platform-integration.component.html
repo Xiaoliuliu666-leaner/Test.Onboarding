@@ -1,0 +1,66 @@
+<!-- 顶部绿色横条 -->
+<app-wizard-headbar></app-wizard-headbar>
+
+<div class="wizard-layout">
+  <!-- 左侧高亮 Broking Platform Integration -->
+  <app-wizard-sidebar [activeMenu]="'Broking Platform Integration'"></app-wizard-sidebar>
+
+  <!-- 主体蓝色大框 -->
+  <app-wizard-content-outline>
+    <div class="module-card">
+      <h2>Broking Platform Integration - Details</h2>
+
+      <form (ngSubmit)="onNext()" style="width: 100%;">
+        <div class="form-group">
+          <label for="platform">Select Broking Platform</label>
+          <select id="platform" [(ngModel)]="selectedPlatform" name="platform" required>
+            <option value="" disabled>Select...</option>
+            <option *ngFor="let p of platforms" [value]="p.value">{{ p.label }}</option>
+          </select>
+        </div>
+
+        <!-- WinBEAT 记录-->
+        <ng-container *ngIf="selectedPlatform === 'winbeat'">
+          <div class="form-group">
+            <label>Hosting Provider</label>
+            <input type="text" [(ngModel)]="detail.hostingProvider" name="winbeat_hostingProvider" />
+          </div>
+          <div class="form-group">
+            <label>Connection Information</label>
+            <textarea [(ngModel)]="detail.connectionInfo" name="winbeat_connectionInfo" rows="3"></textarea>
+          </div>
+        </ng-container>
+
+        <!-- Insight 记录-->
+        <ng-container *ngIf="selectedPlatform === 'insight'">
+          <div class="form-group">
+            <label>Ledger</label>
+            <input type="text" [(ngModel)]="detail.ledger" name="insight_ledger" />
+          </div>
+          <div class="form-group">
+            <label>Notes</label>
+            <textarea [(ngModel)]="detail.notes" name="insight_notes" rows="3"></textarea>
+          </div>
+        </ng-container>
+
+        <!-- OfficeTech 记录-->
+        <ng-container *ngIf="selectedPlatform === 'officetech'">
+          <div class="form-group">
+            <label>Hosting Provider</label>
+            <input type="text" [(ngModel)]="detail.hostingProvider" name="officetech_hostingProvider" />
+          </div>
+          <div class="form-group">
+            <label>SQL Connection Information</label>
+            <textarea [(ngModel)]="detail.sqlConnection" name="officetech_sqlConnection" rows="3"></textarea>
+          </div>
+          <div class="form-group">
+            <label>File Storage Connection Information</label>
+            <textarea [(ngModel)]="detail.fileStorage" name="officetech_fileStorage" rows="3"></textarea>
+          </div>
+        </ng-container>
+
+        <button type="submit" class="next-btn" [disabled]="!selectedPlatform">Next</button>
+      </form>
+    </div>
+  </app-wizard-content-outline>
+</div>
