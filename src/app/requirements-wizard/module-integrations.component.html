@@ -4,23 +4,23 @@
 <div class="wizard-layout">
   <!-- 左侧高亮 Integrations -->
   <app-wizard-sidebar [activeMenu]="'Integrations'"></app-wizard-sidebar>
-
+  
   <!-- 主体蓝色大框 -->
   <app-wizard-content-outline>
     <div class="module-card">
       <h2>Integrations - Details</h2>
-
+      
       <form (ngSubmit)="onNext()" style="width: 100%;">
         <!-- Broking Platform 分组 -->
         <div class="form-group">
           <label style="font-weight:bold; margin-bottom:6px;">Broking Platform</label>
           <div style="display: flex; gap: 40px;">
             <label style="display: flex; align-items: center; gap: 6px;">
-              <input type="checkbox" [(ngModel)]="selected['winbeat']" name="winbeat" />
+              <input type="checkbox" [(ngModel)]="selected['winbeat']" name="winbeat" (change)="onSelectionChange()" />
               WinBEAT
             </label>
             <label style="display: flex; align-items: center; gap: 6px;">
-              <input type="checkbox" [(ngModel)]="selected['insight']" name="insight" />
+              <input type="checkbox" [(ngModel)]="selected['insight']" name="insight" (change)="onSelectionChange()" />
               Insight
             </label>
           </div>
@@ -30,56 +30,56 @@
           <label style="font-weight:bold; margin-bottom:6px;">Document Management</label>
           <div style="display: flex; gap: 40px;">
             <label style="display: flex; align-items: center; gap: 6px;">
-              <input type="checkbox" [(ngModel)]="selected['officetech']" name="officetech" />
+              <input type="checkbox" [(ngModel)]="selected['officetech']" name="officetech" (change)="onSelectionChange()" />
               Officetech
             </label>
           </div>
         </div>
 
-
-        <!-- WinBEAT表单 -->
-        <ng-container *ngIf="selected['winbeat']">
-          <div class="form-group">
-            <label>WinBEAT - Hosting Provider</label>
-            <input type="text" [(ngModel)]="details['winbeat'].hostingProvider" name="winbeat_hostingProvider" />
-          </div>
-          <div class="form-group">
-            <label>WinBEAT - Connection Information</label>
-            <textarea [(ngModel)]="details['winbeat'].connectionInfo" name="winbeat_connectionInfo" rows="3"></textarea>
-          </div>
+        <!-- 当前 integration 的表单，分步展示 -->
+        <ng-container [ngSwitch]="currentKey">
+          <ng-container *ngSwitchCase="'winbeat'">
+            <div class="form-group">
+              <label>WinBEAT - Hosting Provider</label>
+              <input type="text" [(ngModel)]="details['winbeat'].hostingProvider" name="winbeat_hostingProvider" />
+            </div>
+            <div class="form-group">
+              <label>WinBEAT - Connection Information</label>
+              <textarea [(ngModel)]="details['winbeat'].connectionInfo" name="winbeat_connectionInfo" rows="3"></textarea>
+            </div>
+          </ng-container>
+          <ng-container *ngSwitchCase="'insight'">
+            <div class="form-group">
+              <label>Insight - Ledger</label>
+              <input type="text" [(ngModel)]="details['insight'].ledger" name="insight_ledger" />
+            </div>
+            <div class="form-group">
+              <label>Insight - Notes</label>
+              <textarea [(ngModel)]="details['insight'].notes" name="insight_notes" rows="3"></textarea>
+            </div>
+          </ng-container>
+          <ng-container *ngSwitchCase="'officetech'">
+            <div class="form-group">
+              <label>Officetech - Hosting Provider</label>
+              <input type="text" [(ngModel)]="details['officetech'].hostingProvider" name="officetech_hostingProvider" />
+            </div>
+            <div class="form-group">
+              <label>Officetech - SQL Connection Information</label>
+              <textarea [(ngModel)]="details['officetech'].sqlConnection" name="officetech_sqlConnection" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+              <label>Officetech - File Storage Connection Information</label>
+              <textarea [(ngModel)]="details['officetech'].fileStorage" name="officetech_fileStorage" rows="3"></textarea>
+            </div>
+          </ng-container>
         </ng-container>
 
-        <!-- Insight表单 -->
-        <ng-container *ngIf="selected['insight']">
-          <div class="form-group">
-            <label>Insight - Ledger</label>
-            <input type="text" [(ngModel)]="details['insight'].ledger" name="insight_ledger" />
-          </div>
-          <div class="form-group">
-            <label>Insight - Notes</label>
-            <textarea [(ngModel)]="details['insight'].notes" name="insight_notes" rows="3"></textarea>
-          </div>
-        </ng-container>
-
-        <!-- Officetech表单 -->
-        <ng-container *ngIf="selected['officetech']">
-          <div class="form-group">
-            <label>Officetech - Hosting Provider</label>
-            <input type="text" [(ngModel)]="details['officetech'].hostingProvider" name="officetech_hostingProvider" />
-          </div>
-          <div class="form-group">
-            <label>Officetech - SQL Connection Information</label>
-            <textarea [(ngModel)]="details['officetech'].sqlConnection" name="officetech_sqlConnection" rows="3"></textarea>
-          </div>
-          <div class="form-group">
-            <label>Officetech - File Storage Connection Information</label>
-            <textarea [(ngModel)]="details['officetech'].fileStorage" name="officetech_fileStorage" rows="3"></textarea>
-          </div>
-        </ng-container>
-
+        <div style="margin-top: 18px; font-size: 0.97rem; color: #555;" *ngIf="selectedKeys.length > 1">
+          Step {{ stepIndex + 1 }} of {{ selectedKeys.length }}: <b>{{ currentKey | titlecase }}</b>
+        </div>
         <button type="submit" class="next-btn"
-          [disabled]="!selected['winbeat'] && !selected['insight'] && !selected['officetech']">
-          Next
+          [disabled]="selectedKeys.length === 0">
+          {{ stepIndex === selectedKeys.length - 1 ? 'Next' : 'Continue' }}
         </button>
       </form>
     </div>
