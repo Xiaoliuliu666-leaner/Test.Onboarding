@@ -1,10 +1,26 @@
 <aside class="wizard-sidebar">
   <ul>
-    <li
-      *ngFor="let menu of menuList"
-      [class.active]="menu.key === activeMenu"
-    >
-      {{ menu.label }}
-    </li>
+    <!-- 渲染所有非 Integrations 菜单 -->
+    <ng-container *ngFor="let menu of menuList">
+      <li *ngIf="menu.key !== 'Integrations'"
+          [class.active]="menu.key === activeMenu">
+        {{ menu.label }}
+      </li>
+      <!-- 单独处理 Integrations -->
+      <ng-container *ngIf="menu.key === 'Integrations'">
+        <li [class.active]="menu.key === activeMenu && (integrationStepIndex === null || !integrationSteps.length)">
+          {{ menu.label }}
+        </li>
+        <ul *ngIf="integrationSteps?.length">
+          <li *ngFor="let step of integrationSteps; let i = index"
+              [class.active]="activeMenu === 'Integrations' && integrationStepIndex === i"
+              (click)="integrationStepChange.emit(i)"
+              class="integration-substep"
+              style="cursor:pointer;">
+            {{ getIntegrationLabel(step) }}
+          </li>
+        </ul>
+      </ng-container>
+    </ng-container>
   </ul>
 </aside>
