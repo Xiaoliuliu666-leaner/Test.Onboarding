@@ -34,7 +34,8 @@ export class RequirementsWizard implements OnInit {
     { key: 'user-management', name: 'User Management', description: 'Manage users and roles' },
     { key: 'reporting', name: 'Reporting', description: 'Access various reports and dashboards' },
     { key: 'billing', name: 'Billing', description: 'Manage invoicing, payment processing, and subscription plans' },
-    { key: 'support', name: 'Support', description: 'Provide customer assistance and issue resolution services' }
+    { key: 'support', name: 'Support', description: 'Provide customer assistance and issue resolution services' },
+    { key: 'workflows', name: 'Workflows', description: 'Define custom workflow requirements' }
   ];
 
   constructor(
