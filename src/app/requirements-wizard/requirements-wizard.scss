@@ -74,7 +74,7 @@ body {
     color: #1b274a;
     font-weight: 600;
 
-     &.active {
+    &.active {
       background: #1570ef;
       color: #fff !important;
       font-weight: 700;
@@ -93,15 +93,15 @@ body {
       align-items: flex-start;
       gap: 4px;
       position: relative;
-    }
 
-    &.step-summary-item::before {
-      content: "•";
-      color: #bbb;
-      font-size: 1.1em;
-      margin-right: 8px;
-      margin-left: 2px;
-      line-height: 1.1em;
+      &::before {
+        content: "•";
+        color: #bbb;
+        font-size: 1.1em;
+        margin-right: 8px;
+        margin-left: 2px;
+        line-height: 1.1em;
+      }
     }
 
     &:not(.active):hover {
@@ -111,197 +111,197 @@ body {
   }
 }
 
-    /* 主内容区（蓝色外边框） */
-    .wizard-main {
-      flex: 1 1 auto;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: #f4f7fb;
-      min-height: 0;
-      min-width: 0;
-    }
+/* 主内容区（蓝色外边框） */
+.wizard-main {
+  flex: 1 1 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f4f7fb;
+  min-height: 0;
+  min-width: 0;
+}
 
-    .wizard-content-outline {
-      border: none;
-      border-radius: 18px;
-      background: #f4f7fb;
-      padding: 48px 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 600px;
-    }
+.wizard-content-outline {
+  border: none;
+  border-radius: 18px;
+  background: #f4f7fb;
+  padding: 48px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 600px;
+}
 
-    /* 内层白色卡片 */
-    .wizard-card {
+/* 内层白色卡片 */
+.wizard-card {
+  background: #fff;
+  border-radius: 22px;
+  box-shadow: 0 8px 32px rgba(80, 132, 225, 0.10);
+  padding: 38px 44px 32px 44px;
+  max-width: 900px;
+  width: 100%;
+  min-width: 900px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  margin: 0 auto;
+  animation: fadein 0.5s;
+}
+
+@keyframes fadein {
+  from { opacity: 0; transform: translateY(40px);}
+  to { opacity: 1; transform: none;}
+}
+
+.step-indicator {
+  font-size: 1rem;
+  color: #5c6475;
+  text-align: center;
+  margin-bottom: 6px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+h2 {
+  text-align: center;
+  font-size: 1.45rem;
+  font-weight: 600;
+  margin: 8px 0 18px 0;
+  color: #223154;
+}
+
+.wizard-form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 18px;
+
+  label {
+    font-weight: 600;
+    color: #293f61;
+    margin-bottom: 7px;
+    font-size: 1.02rem;
+  }
+  input,
+  select,
+  textarea {
+    border: 1.5px solid #d8e3ed;
+    border-radius: 7px;
+    padding: 9px 12px;
+    font-size: 1rem;
+    background: #f8fafb;
+    margin-bottom: 0;
+    outline: none;
+    transition: border 0.19s, box-shadow 0.19s;
+    font-family: inherit;
+    &:focus {
+      border: 1.5px solid #1570ef;
       background: #fff;
-      border-radius: 22px;
-      box-shadow: 0 8px 32px rgba(80, 132, 225, 0.10);
-      padding: 38px 44px 32px 44px;
-      max-width: 900px;
+      box-shadow: 0 2px 8px #1570ef11;
+    }
+  }
+  textarea {
+    min-height: 68px;
+    resize: vertical;
+  }
+}
+
+.wizard-note-error {
+  color: #e32a2a;
+  font-size: 13px;
+  margin-top: 5px;
+}
+
+/* Step2模块选择 */
+.module-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  background: none;
+  box-shadow: none;
+  margin-bottom: 12px;
+  padding: 0;
+  justify-content: center;
+
+  .module-item {
+    border: 2px solid #2196f3;
+    border-radius: 14px;
+    background: #fff;
+    min-width: 210px;
+    padding: 18px 10px;
+    transition: box-shadow .18s, border .18s, background .18s;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 6px 32px rgba(50,90,200,0.05);
+    margin-bottom: 0;
+
+    &.selected {
+      border: 2px solid #1570ef;
+      background: #f2f8fe;
+      box-shadow: 0 3px 16px #1570ef14;
+    }
+    .module-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
       width: 100%;
-      min-width: 900px;
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
-      gap: 8px;
-      margin: 0 auto;
-      animation: fadein 0.5s;
-    }
-
-    @keyframes fadein {
-      from { opacity: 0; transform: translateY(40px);}
-      to { opacity: 1; transform: none;}
-    }
-
-    .step-indicator {
-      font-size: 1rem;
-      color: #5c6475;
-      text-align: center;
-      margin-bottom: 6px;
-      font-weight: 400;
-      letter-spacing: 0.02em;
-    }
-
-    h2 {
-      text-align: center;
-      font-size: 1.45rem;
-      font-weight: 600;
-      margin: 8px 0 18px 0;
-      color: #223154;
-    }
-
-    .wizard-form-group {
-      display: flex;
-      flex-direction: column;
-      margin-bottom: 18px;
-
-    label {
-      font-weight: 600;
-      color: #293f61;
-      margin-bottom: 7px;
-      font-size: 1.02rem;
-    }
-    input,
-    select,
-    textarea {
-      border: 1.5px solid #d8e3ed;
-      border-radius: 7px;
-      padding: 9px 12px;
-      font-size: 1rem;
-      background: #f8fafb;
-      margin-bottom: 0;
-      outline: none;
-      transition: border 0.19s, box-shadow 0.19s;
-      font-family: inherit;
-      &:focus {
-        border: 1.5px solid #1570ef;
-        background: #fff;
-        box-shadow: 0 2px 8px #1570ef11;
+      .module-title {
+        font-size: 15.8px;
+        font-weight: 600;
+        color: #1570ef;
+      }
+      .module-description {
+        font-size: 14px;
+        color: #6a6a7a;
       }
     }
-    textarea {
-      min-height: 68px;
-      resize: vertical;
-    }
-  }
-
-  .wizard-note-error {
-    color: #e32a2a;
-    font-size: 13px;
-    margin-top: 5px;
-  }
-
-  /* Step2模块选择 */
-  .module-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 28px;
-    background: none;
-    box-shadow: none;
-    margin-bottom: 12px;
-    padding: 0;
-    justify-content: center;
-
-    .module-item {
-      border: 2px solid #2196f3;
-      border-radius: 14px;
-      background: #fff;
-      min-width: 210px;
-      padding: 18px 10px;
-      transition: box-shadow .18s, border .18s, background .18s;
-      display: flex;
-      align-items: center;
-      box-shadow: 0 6px 32px rgba(50,90,200,0.05);
-      margin-bottom: 0;
-
-      &.selected {
-        border: 2px solid #1570ef;
-        background: #f2f8fe;
-        box-shadow: 0 3px 16px #1570ef14;
-      }
-      .module-row {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        width: 100%;
-        .module-title {
-          font-size: 15.8px;
-          font-weight: 600;
-          color: #1570ef;
-        }
-        .module-description {
-          font-size: 14px;
-          color: #6a6a7a;
-        }
-      }
-      input[type='checkbox'] {
-        transform: scale(1.17);
-        accent-color: #1570ef;
-        cursor: pointer;
-        margin-right: 2px;
-        margin-left: 4px;
-      }
-    }
-  }
-
-    /* 按钮 */
-    .wizard-nav {
-      display: flex;
-      gap: 1rem;
-      margin-top: 18px;
-      justify-content: center;
-
-    .wizard-btn {
-      min-width: 94px;
-      padding: 9px 0;
-      font-size: 1.08rem;
-      border-radius: 8px;
-      border: none;
-      font-weight: 600;
-      transition: background 0.16s, color 0.16s;
+    input[type='checkbox'] {
+      transform: scale(1.17);
+      accent-color: #1570ef;
       cursor: pointer;
-
-      &.wizard-btn-outline {
-        background: #ececec;
-        color: #858585;
-        &:not(:disabled):hover {
-          background: #e3e3e3;
-          color: #3b3b3b;
-        }
-      }
-      &.wizard-btn-primary {
-        background: #1570ef;
-        color: #fff;
-        &:not(:disabled):hover {
-          background: #175fbc;
-        }
-      }
-      &:disabled {
-        background: #ececec;
-        color: #b6b6b6;
-        cursor: not-allowed;
-      }
+      margin-right: 2px;
+      margin-left: 4px;
     }
   }
+}
+
+/* 按钮 */
+.wizard-nav {
+  display: flex;
+  gap: 1rem;
+  margin-top: 18px;
+  justify-content: center;
+
+  .wizard-btn {
+    min-width: 94px;
+    padding: 9px 0;
+    font-size: 1.08rem;
+    border-radius: 8px;
+    border: none;
+    font-weight: 600;
+    transition: background 0.16s, color 0.16s;
+    cursor: pointer;
+
+    &.wizard-btn-outline {
+      background: #ececec;
+      color: #858585;
+      &:not(:disabled):hover {
+        background: #e3e3e3;
+        color: #3b3b3b;
+      }
+    }
+    &.wizard-btn-primary {
+      background: #1570ef;
+      color: #fff;
+      &:not(:disabled):hover {
+        background: #175fbc;
+      }
+    }
+    &:disabled {
+      background: #ececec;
+      color: #b6b6b6;
+      cursor: not-allowed;
+    }
+  }
+}
