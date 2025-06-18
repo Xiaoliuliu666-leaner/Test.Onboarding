@@ -42,7 +42,7 @@ body {
   background: #f4f7fb;
 }
 
-/* 侧边栏 */
+/* 侧边栏Sidebar */
 .wizard-sidebar {
   flex: 0 0 240px;
   background: #fff;
@@ -111,7 +111,7 @@ body {
   }
 }
 
-/* 主内容区（蓝色外边框） */
+/* 主内容区（蓝色外边框）Main content area */
 .wizard-main {
   flex: 1 1 auto;
   display: flex;
@@ -133,7 +133,7 @@ body {
   min-height: 600px;
 }
 
-/* 内层白色卡片 */
+/* 内层白色卡片 Inner white card */
 .wizard-card {
   background: #fff;
   border-radius: 22px;
@@ -213,7 +213,7 @@ h2 {
   margin-top: 5px;
 }
 
-/* Step2模块选择 */
+/* Step2模块选择 Step 2 Module selection */
 .module-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -266,7 +266,7 @@ h2 {
   }
 }
 
-/* 按钮 */
+/* 按钮 Button */
 .wizard-nav {
   display: flex;
   gap: 1rem;
