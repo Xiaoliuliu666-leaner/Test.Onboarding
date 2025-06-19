@@ -25,7 +25,7 @@ export class ModuleUserManagementComponent {
     private router: Router,
     private wizardDataService: WizardDataService
   ) {
-    // 初始化每个角色的用户数组
+    // 初始化每个角色的用户数组 | Initialize the users array for each role
     this.roles.forEach(role => {
       this.usersByRole[role] = [];
     });

@@ -21,7 +21,7 @@ export class ModuleUserWorkflowsComponent {
     private router: Router,
     private wizardDataService: WizardDataService
   ) {
-    // 如果有已保存的数据（比如返回上一步再进来）
+    // 如果有已保存的数据（比如返回上一步再进来）| If there is saved data (for example, return to the previous step and come back)
     const saved = this.wizardDataService.getModuleDetail('workflows');
     if (saved && Array.isArray(saved.workflows)) {
       this.workflows = saved.workflows;

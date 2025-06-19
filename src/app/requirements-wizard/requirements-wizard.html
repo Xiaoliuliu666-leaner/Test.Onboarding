@@ -7,7 +7,7 @@
 </div>
 
 <div class="wizard-portal">
-  <!-- 侧边栏 -->
+  <!-- 侧边栏 Sidebar-->
   <aside class="wizard-sidebar">
     <ul>
       <li [class.active]="stepIndex === 1">Step 1: Tenant</li>
@@ -31,7 +31,7 @@
     </ul>
   </aside>
 
-  <!-- 主内容区：加一层蓝色描边的包裹 -->
+  <!-- 主内容区：加一层蓝色描边的包裹 | Main content area: add a layer of blue stroke package-->
   <main class="wizard-main">
     <div class="wizard-content-outline">
       <div class="wizard-card">
@@ -109,7 +109,7 @@
           </div>
         </div>
 
-        <!-- 按钮 -->
+        <!-- 按钮 Button-->
         <div class="wizard-nav">
           <button (click)="previousStep()" [disabled]="stepIndex === 1" class="wizard-btn wizard-btn-outline">Previous</button>
           <button *ngIf="stepIndex < 3" (click)="nextStep()" [disabled]="!isStepValid()" class="wizard-btn wizard-btn-primary">Next</button>

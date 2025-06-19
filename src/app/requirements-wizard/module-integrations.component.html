@@ -1,15 +1,15 @@
-<!-- 顶部绿色横条 -->
+<!-- 顶部绿色横条 Headbar-->
 <app-wizard-headbar></app-wizard-headbar>
 
 <div class="wizard-layout">
-  <!-- 左侧高亮 Integrations -->
+  <!-- 左侧高亮sidebar Integrations -->
   <app-wizard-sidebar [activeMenu]="'Integrations'"
   [integrationSteps]="selectedKeys"
   [integrationStepIndex]="stepIndex"
   (integrationStepChange)="stepIndex = $event">
   </app-wizard-sidebar>
   
-  <!-- 主体蓝色大框 -->
+  <!-- 主体蓝色大框 Main content-->
   <app-wizard-content-outline>
     <div class="module-card">
       <h2>Integrations - Details</h2>
@@ -40,7 +40,7 @@
           </div>
         </div>
 
-        <!-- 当前 integration 的表单，分步展示 -->
+        <!-- 当前 integration 的表单，分步展示 Step-by-step present-->
         <ng-container [ngSwitch]="currentKey">
           <ng-container *ngSwitchCase="'winbeat'">
             <div class="form-group">

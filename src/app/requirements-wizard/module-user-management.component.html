@@ -1,11 +1,11 @@
-<!-- 绿色头部横条 -->
+<!-- 绿色头部横条 headbar-->
 <app-wizard-headbar></app-wizard-headbar>
 
 <div class="wizard-layout">
-  <!-- 左侧侧边栏，高亮 User Management -->
+  <!-- 左侧侧边栏，高亮 User Management | sidebar  -->
   <app-wizard-sidebar [activeMenu]="'User Management'"></app-wizard-sidebar>
 
-  <!-- 主体蓝色大框 -->
+  <!-- 主体蓝色大框 Main content-->
   <app-wizard-content-outline>
     <div class="module-card">
       <h2>User Management - Details</h2>
@@ -34,7 +34,7 @@
 
         <hr style="margin: 16px 0;">
 
-        <!-- 逐一检查每个角色 -->
+        <!-- 逐一检查每个角色 Check each character one by one-->
         <div *ngFor="let role of roles">
           <h3>{{ role }}</h3>
           <div *ngFor="let user of usersByRole[role]; let i = index" class="user-row">

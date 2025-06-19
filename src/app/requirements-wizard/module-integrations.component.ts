@@ -27,15 +27,15 @@ export class ModuleIntegrationsComponent {
     officetech: { hostingProvider: '', sqlConnection: '', fileStorage: '' }
   };
 
-  // 决定当前轮到哪个integration
+  // 决定当前轮到哪个integration | Determine which integration is currently in progress
   stepIndex = 0;
 
-  // 选中的integration key数组，自动过滤顺序
+  // 选中的integration key数组，自动过滤顺序 |The selected integration key array, automatically filtering order
   get selectedKeys(): string[] {
     return Object.keys(this.selected).filter(k => this.selected[k]);
   }
 
-  // 当前要填写的integration key
+  // 当前要填写的integration key |The integration key to be filled in currently
   get currentKey(): string {
     return this.selectedKeys[this.stepIndex];
   }
@@ -46,7 +46,7 @@ export class ModuleIntegrationsComponent {
   ) {}
 
   onNext() {
-    // 保存所有已填数据
+    // 保存所有已填数据 | save all filled data
     const chosen: any = {};
     this.selectedKeys.forEach(key => {
       chosen[key] = this.details[key];
@@ -56,12 +56,12 @@ export class ModuleIntegrationsComponent {
       details: chosen
     });
 
-    // 如果还有下一个integration，stepIndex++
+    // 如果还有下一个integration，stepIndex++ | If there is another integration, stepIndex++
     if (this.stepIndex < this.selectedKeys.length - 1) {
       this.stepIndex++;
-    // 保持在本页面，刷新后只显示下一个integration的表单
+    // 保持在本页面，刷新后只显示下一个integration的表单 | Stay on this page, and after refreshing, only the form for the next integration will be displayed.
     } else {
-      // 跳到下一个wizard主模块
+      // 跳到下一个wizard主模块 | Jump to the next wizard main module
       const selectedModules = this.wizardDataService.getSelectedModules();
       const idx = selectedModules.indexOf('integrations');
       const next = idx >= 0 && idx < selectedModules.length - 1 ? selectedModules[idx + 1] : null;
@@ -73,7 +73,7 @@ export class ModuleIntegrationsComponent {
     }
   }
 
-  // 切换了勾选项，重置stepIndex
+  // 切换了勾选项，重置stepIndex | When the check option is toggled, reset stepIndex
   onSelectionChange() {
     this.stepIndex = 0;
   }
