@@ -14,11 +14,9 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './requirements-wizard.html',
   styleUrls: ['./requirements-wizard.scss']
 })
-
 export class RequirementsWizard implements OnInit {
   stepIndex = 1;
 
-  // 拆分原formData，全部改为独立变量 Split the original formData and convert all into independent variables
   tenant: string = '';
   newTenantName: string = '';
   contactName: string = '';
@@ -47,15 +45,27 @@ export class RequirementsWizard implements OnInit {
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
-    const stepParam = Number(params['step']);
-    this.stepIndex = !isNaN(stepParam) && stepParam > 0 ? stepParam : 1;
-    this.restoreCurrentClient(); // Change：初始化同步独立变量 Initialize synchronization independent variables
-  });
+      const stepParam = Number(params['step']);
+      this.stepIndex = !isNaN(stepParam) && stepParam > 0 ? stepParam : 1;
+      this.restoreCurrentClient();
+    });
+  }
+
+  restoreCurrentClient() {
+    const client = this.wizardDataService.getCurrentClient() || {};
+    this.tenant = client.tenant?.tenant || '';
+    this.newTenantName = client.tenant?.newTenantName || '';
+    this.contactName = client.tenant?.contactName || '';
+    this.contactEmail = client.tenant?.contactEmail || '';
+    this.contactPhone = client.tenant?.contactPhone || '';
+    this.createdBy = client.tenant?.createdBy || '';
+    this.configNotes = client.tenant?.configNotes || '';
+    this.selectedModules = client.modules ? Object.keys(client.modules) : [];
+    this.isCreatingNewTenant = this.tenant === '__new__';
   }
 
   nextStep() {
     if (this.stepIndex === 1) {
-      // 存储全部表单变量到service | Store all form variables in service
       this.wizardDataService.setTenantInfo({
         tenant: this.tenant,
         newTenantName: this.newTenantName,
@@ -80,7 +90,6 @@ export class RequirementsWizard implements OnInit {
     if (this.stepIndex > 1) this.stepIndex--;
   }
 
-  // onModuleChange签名加moduleKey参数 | onModuleChange signature plus moduleKey parameter
   onModuleChange(event: any, moduleKey: string) {
     if (event.target.checked) {
       if (!this.selectedModules.includes(moduleKey)) this.selectedModules.push(moduleKey);
@@ -91,7 +100,6 @@ export class RequirementsWizard implements OnInit {
   }
 
   submitWizard() {
-    // 提交表单，存储全部变量 Submit the form and store all variables
     this.wizardDataService.setTenantInfo({
       tenant: this.tenant,
       newTenantName: this.newTenantName,
@@ -107,19 +115,6 @@ export class RequirementsWizard implements OnInit {
     this.router.navigate(['/']);
   }
 
-  // 用service还原变量到表单 Use service to restore variables to the form
-  restoreCurrentClient() {
-    const client = this.wizardDataService.getCurrentClient();
-    this.tenant = client.tenant?.tenant || '';
-    this.newTenantName = client.tenant?.newTenantName || '';
-    this.contactName = client.tenant?.contactName || '';
-    this.contactEmail = client.tenant?.contactEmail || '';
-    this.contactPhone = client.tenant?.contactPhone || '';
-    this.createdBy = client.tenant?.createdBy || '';
-    this.configNotes = client.tenant?.configNotes || '';
-    this.selectedModules = this.wizardDataService.getSelectedModules();
-  }
-
   checkNewTenant() {
     this.isCreatingNewTenant = this.tenant === '__new__';
   }
@@ -129,7 +124,6 @@ export class RequirementsWizard implements OnInit {
     return mod ? mod.name : key;
   }
 
-  // 校验方法rewrite，适配独立变量 Verification method rewrite, adapt to independent variables
   isStepValid(): boolean {
     switch (this.stepIndex) {
       case 1:
