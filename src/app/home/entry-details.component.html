@@ -1,0 +1,92 @@
+<div class="details-root">
+  <h2>Entry Details</h2>
+  <div class="details-layout">
+    <!-- 左栏 基本信息 -->
+    <div class="details-section details-info">
+      <h3>Tenant Info</h3>
+      <div class="info-item"><span class="label">Client Name:</span> {{ entry.tenant?.tenant || entry.tenant?.newTenantName }}</div>
+      <div class="info-item"><span class="label">Contact Name:</span> {{ entry.tenant?.contactName }}</div>
+      <div class="info-item"><span class="label">Contact Email:</span> {{ entry.tenant?.contactEmail }}</div>
+      <div class="info-item"><span class="label">Contact Phone:</span> {{ entry.tenant?.contactPhone }}</div>
+      <div class="info-item"><span class="label">Created By:</span> {{ entry.tenant?.createdBy || '-' }}</div>
+      <div class="info-item"><span class="label">Notes:</span> {{ entry.tenant?.configNotes || '-' }}</div>
+    </div>
+
+    <div class="details-section details-modules">
+      <!-- Billing -->
+      <div class="module-card" *ngIf="entry.modules['billing']">
+        <h4>Billing</h4>
+        <div><span class="label">Billing Account:</span> {{ entry.modules.billing.billingAccount || '-' }}</div>
+        <div><span class="label">Notes:</span> {{ entry.modules.billing.billingNotes || '-' }}</div>
+      </div>
+      <!-- User Management -->
+      <div class="module-card" *ngIf="entry.modules['user-management']">
+        <h4>User Management</h4>
+        <div><span class="label">Admin Count:</span> {{ entry.modules['user-management']?.detail?.adminCount || '-' }}</div>
+        <div><span class="label">Notes:</span> {{ entry.modules['user-management']?.detail?.notes || '-' }}</div>
+        <div>
+          <span class="label">Organisation Admins:</span>
+          <ul>
+            <li *ngFor="let admin of entry.modules['user-management']?.usersByRole?.['Organisation Admins']">{{ admin.Name }} ({{ admin.Email }}, {{ admin.Phone }})</li>
+          </ul>
+        </div>
+        <div>
+          <span class="label">Brokers:</span>
+          <ul>
+            <li *ngFor="let broker of entry.modules['user-management']?.usersByRole?.['Brokers']">{{ broker.Name }} ({{ broker.Email }}, {{ broker.Phone }})</li>
+          </ul>
+        </div>
+      </div>
+      <!-- Reporting -->
+      <div class="module-card" *ngIf="entry.modules['reporting']">
+        <h4>Reporting</h4>
+        <div><span class="label">Report Types:</span> {{ entry.modules.reporting.reportTypes || '-' }}</div>
+        <div><span class="label">Notes:</span> {{ entry.modules.reporting.reportingNotes || '-' }}</div>
+        <div>
+          <span class="label">Reports:</span>
+          <ul>
+            <li *ngFor="let r of entry.modules.reporting.reports">{{ r.name || '-' }} - {{ r.description || '-' }}</li>
+          </ul>
+        </div>
+      </div>
+      <!-- Support -->
+      <div class="module-card" *ngIf="entry.modules['support']">
+        <h4>Support</h4>
+        <div><span class="label">Support Level:</span> {{ entry.modules.support.levelRequired || '-' }}</div>
+        <div><span class="label">Notes:</span> {{ entry.modules.support.supportNotes || '-' }}</div>
+      </div>
+      <!-- Workflows -->
+      <div class="module-card" *ngIf="entry.modules['workflows']">
+        <h4>Workflows</h4>
+        <div *ngFor="let w of entry.modules['workflows']?.workflows; let idx = index">
+          <span class="label">Workflow {{ idx + 1 }}:</span> {{ w.description }}
+        </div>
+      </div>
+      <!-- Integrations -->
+      <div class="module-card" *ngIf="entry.modules['integrations']">
+        <h4>Integrations</h4>
+        <div *ngIf="entry.modules['integrations'].details?.winbeat">
+          <b>WinBEAT:</b>
+          <div><span class="label">Hosting Provider:</span> {{ entry.modules['integrations'].details.winbeat.hostingProvider || '-' }}</div>
+          <div><span class="label">Connection Info:</span> {{ entry.modules['integrations'].details.winbeat.connectionInfo || '-' }}</div>
+        </div>
+        <div *ngIf="entry.modules['integrations'].details?.insight">
+          <b>Insight:</b>
+          <div><span class="label">Ledger:</span> {{ entry.modules['integrations'].details.insight.ledger || '-' }}</div>
+          <div><span class="label">Notes:</span> {{ entry.modules['integrations'].details.insight.notes || '-' }}</div>
+        </div>
+        <div *ngIf="entry.modules['integrations'].details?.officetech">
+          <b>Officetech:</b>
+          <div><span class="label">Hosting Provider:</span> {{ entry.modules['integrations'].details.officetech.hostingProvider || '-' }}</div>
+          <div><span class="label">SQL Connection:</span> {{ entry.modules['integrations'].details.officetech.sqlConnection || '-' }}</div>
+          <div><span class="label">File Storage:</span> {{ entry.modules['integrations'].details.officetech.fileStorage || '-' }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="btn-primary" (click)="editEntry()">Edit</button>
+    <button class="btn-secondary" (click)="goBack()">Back</button>
+  </div>
+</div>
