@@ -49,5 +49,11 @@ export const routes: Routes = [
         path: 'requirements/wizard/module-integrations',
         loadComponent: () => import('./requirements-wizard/module-integrations.component').then(m => m.ModuleIntegrationsComponent),
         title: 'Integrations Details'
-    }
+    },
+
+    {
+        path: 'entry-details/:index',
+        loadComponent: () => import('./home/entry-details.component').then(m => m.EntryDetailsComponent),
+        title: 'Entry Details'
+    },
 ];
