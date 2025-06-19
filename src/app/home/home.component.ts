@@ -47,4 +47,8 @@ export class HomeComponent implements OnInit {
     this.wizardDataService.setCurrentClient(entry);
     this.router.navigate(['/requirements/wizard']);
   }
+
+  viewDetails(idx: number) {
+  this.router.navigate(['/entry-details', idx]);
+  }
 }
