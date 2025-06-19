@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
 
-
 export interface ClientToOnboard {
   tenant: {
-    tenant?: string;          
-    newTenantName?: string;   
+    tenant?: string;
+    newTenantName?: string;
     contactName: string;
     contactEmail: string;
     contactPhone: string;
-    createdBy?: string;       
-    configNotes?: string;     
+    createdBy?: string;
+    configNotes?: string;
   },
   modules: {
     [key: string]: any;
@@ -22,24 +21,27 @@ export interface ClientToOnboard {
 
 @Injectable({ providedIn: 'root' })
 export class WizardDataService {
-  private currentClient: ClientToOnboard = {
-  tenant: {
-    tenant: '',
-    newTenantName: '',
-    contactName: '',
-    contactEmail: '',
-    contactPhone: '',
-    createdBy: '',
-    configNotes: ''
-  },
-  modules: {}
-};
+  private currentClient: ClientToOnboard = this.createEmptyClient();
   private savedEntries: ClientToOnboard[] = [];
 
+  private createEmptyClient(): ClientToOnboard {
+    return {
+      tenant: {
+        tenant: '',
+        newTenantName: '',
+        contactName: '',
+        contactEmail: '',
+        contactPhone: '',
+        createdBy: '',
+        configNotes: ''
+      },
+      modules: {}
+    };
+  }
+
   // Tenant Info
-  setTenantInfo(info: {tenant?: string; newTenantName?: string; contactName: string; contactEmail: string; contactPhone: string; createdBy?: string; configNotes?: string;})
-  {
-  this.currentClient.tenant = { ...info };
+  setTenantInfo(info: {tenant?: string; newTenantName?: string; contactName: string; contactEmail: string; contactPhone: string; createdBy?: string; configNotes?: string;}) {
+    this.currentClient.tenant = { ...info };
   }
   getTenantInfo() {
     return this.currentClient.tenant;
@@ -47,11 +49,9 @@ export class WizardDataService {
 
   // Select Module
   setSelectedModules(moduleKeys: string[]) {
-
     moduleKeys.forEach(key => {
       if (!this.currentClient.modules[key]) this.currentClient.modules[key] = {};
     });
-    
     Object.keys(this.currentClient.modules).forEach(key => {
       if (!moduleKeys.includes(key)) delete this.currentClient.modules[key];
     });
@@ -60,7 +60,6 @@ export class WizardDataService {
     return Object.keys(this.currentClient.modules);
   }
 
-  
   setModuleDetail(moduleKey: string, detail: any) {
     this.currentClient.modules[moduleKey] = { ...detail };
   }
@@ -68,32 +67,28 @@ export class WizardDataService {
     return this.currentClient.modules[moduleKey];
   }
 
-  
   getCurrentClient(): ClientToOnboard {
-    return this.currentClient;
+    // 深拷贝，保证回填表单不会联动原数据
+    return JSON.parse(JSON.stringify(this.currentClient));
   }
   setCurrentClient(client: ClientToOnboard) {
-    this.currentClient = { ...client };
+    this.currentClient = JSON.parse(JSON.stringify(client));
   }
   resetCurrentClient() {
-    this.currentClient = {
-      tenant: { contactName: '', contactEmail: '', contactPhone: '' },
-      modules: {}
-    };
+    this.currentClient = this.createEmptyClient();
   }
 
   // Data history
   saveCurrentClient() {
-    //this.savedEntries.push(JSON.parse(JSON.stringify(this.currentClient)));
-    //this.savedEntries = [JSON.parse(JSON.stringify(this.currentClient))];
     const newEntry = JSON.parse(JSON.stringify(this.currentClient));
-    this.savedEntries = [ ...this.savedEntries.filter(e =>
-      (e.tenant.tenant === newEntry.tenant.tenant && e.tenant.newTenantName === newEntry.tenant.newTenantName) === false
-    ),
-    newEntry
-  ];
+    this.savedEntries = [
+      ...this.savedEntries.filter(e =>
+        (e.tenant.tenant === newEntry.tenant.tenant && e.tenant.newTenantName === newEntry.tenant.newTenantName) === false
+      ),
+      newEntry
+    ];
   }
-  
+
   getAllEntries() {
     return this.savedEntries;
   }
@@ -105,4 +100,3 @@ export class WizardDataService {
     return idx >= 0 && idx < mods.length - 1 ? mods[idx + 1] : null;
   }
 }
-
