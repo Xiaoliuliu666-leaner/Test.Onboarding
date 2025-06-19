@@ -1,11 +1,14 @@
 <div class="home-portal-root">
   <div class="home-header-card">
-    <h1>Welcome to <span class="brand">InsureTech.Onboarding</span></h1>
+    <h1>
+      Welcome to <span class="brand">InsureTech.Onboarding</span>
+    </h1>
     <a routerLink="/requirements/wizard" class="start-wizard-btn">
       <app-plus-icon></app-plus-icon>
       Start Requirements Wizard
     </a>
   </div>
+
   <div class="wizard-list-panel" *ngIf="wizardEntries && wizardEntries.length > 0">
     <h2>Previously Created Entries</h2>
     <table class="wizard-table">
@@ -19,7 +22,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let entry of wizardEntries" (click)="resumeEntry(entry)" class="resumable-row">
+        <tr *ngFor="let entry of wizardEntries" (click)="viewSummary(entry)" class="resumable-row">
           <td>
             {{ entry.tenant.tenant === '__new__' ? entry.tenant.newTenantName : entry.tenant.tenant }}
           </td>
@@ -36,6 +39,23 @@
       </tbody>
     </table>
   </div>
+
+  <!-- Summary Pop-ups -->
+  <div *ngIf="summaryEntry" class="summary-modal">
+    <div class="summary-card">
+      <h2>Entry Summary</h2>
+      <div><b>Client Name:</b> {{ summaryEntry.tenant.tenant === '__new__' ? summaryEntry.tenant.newTenantName : summaryEntry.tenant.tenant }}</div>
+      <div><b>Contact Email:</b> {{ summaryEntry.tenant.contactEmail }}</div>
+      <div><b>Contact Phone:</b> {{ summaryEntry.tenant.contactPhone }}</div>
+      <div><b>User Management:</b> {{ summaryEntry.modules['user-management'] ? 'Yes' : 'No' }}</div>
+      <div><b>Reporting:</b> {{ summaryEntry.modules['reporting'] ? 'Yes' : 'No' }}</div>
+      <div><b>Billing:</b> {{ summaryEntry.modules['billing'] ? 'Yes' : 'No' }}</div>
+      <div><b>Support:</b> {{ summaryEntry.modules['support'] ? 'Yes' : 'No' }}</div>
+      <div><b>Notes:</b> {{ summaryEntry.tenant.configNotes || '-' }}</div>
+      <div><b>Created By:</b> {{ summaryEntry.tenant.createdBy || 'Counter Clerk' }}</div>
+      <br>
+      <button (click)="editEntry(summaryEntry)">Edit</button>
+      <button (click)="closeSummary()">Close</button>
+    </div>
+  </div>
 </div>
-
-
