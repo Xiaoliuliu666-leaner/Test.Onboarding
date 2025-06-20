@@ -54,6 +54,7 @@ export class ModuleUserBillingComponent implements OnInit {
         key: this.getModuleName(key),
         isSub: true
       })),
+      { label: 'Billing', key: 'Billing', isStep: true },
       { label: 'Step 3: Notes', key: 'Notes', isStep: true }
     ];
 

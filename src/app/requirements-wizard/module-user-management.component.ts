@@ -30,19 +30,33 @@ export class ModuleUserManagementComponent implements OnInit {
   }
 
   ngOnInit() {
+    const client = this.wizardDataService.getCurrentClient() || {};
+    const tenant = client.tenant?.tenant || '';
+    const newTenantName = client.tenant?.newTenantName || '';
+    const contactEmail = client.tenant?.contactEmail || '';
+    const contactPhone = client.tenant?.contactPhone || '';
     const selectedModules = this.wizardDataService.getSelectedModules();
+
     this.sidebarMenuList = [
       { label: 'Step 1: Tenant', key: 'Tenant', isStep: true },
-      { label: 'Tenant A', key: 'TenantA', isSub: true },
+      { label: tenant === '__new__' ? newTenantName : tenant, key: 'TenantA', isSub: true },
+      ...(contactEmail ? [{ label: contactEmail, key: 'ContactEmail', isSub: true }] : []),
+      ...(contactPhone ? [{ label: contactPhone, key: 'ContactPhone', isSub: true }] : []),
       { label: 'Step 2: Modules', key: 'Modules', isStep: true },
-      ...selectedModules.map(key => ({
+      ...selectedModules.map((key: string) => ({
         label: this.getModuleName(key),
-        key,
+        key: this.getModuleName(key),
         isSub: true
       })),
+      { label: 'User Management', key: 'User Management', isStep: true },
       { label: 'Step 3: Notes', key: 'Notes', isStep: true }
     ];
-    this.activeMenu = 'user-management';
+
+    const saved = this.wizardDataService.getModuleDetail('User Management');
+    if (saved) {
+      this.detail = { ...this.detail, ...saved };
+    }
+    this.activeMenu = 'User Management';
   }
 
   getModuleName(key: string): string {

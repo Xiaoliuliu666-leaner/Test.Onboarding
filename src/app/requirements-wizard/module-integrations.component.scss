@@ -263,18 +263,22 @@ module-card .form-group input:focus, .module-card .form-group textarea:focus, .m
 }
 
 .prev-btn {
-  background: #0074d9;
-  color: #fff;
+  width: 100%;
+  margin-bottom: 16px;
+  padding: 12px 0;
   border: none;
   border-radius: 10px;
   font-weight: 600;
-  font-size: 1.1rem;
-  padding: 12px 0;
-  width: 100%;
+  font-size: 1.13rem;
+  background: #eef1fa;
+  color: #215195;
   cursor: pointer;
   transition: background 0.2s;
-  margin-bottom: 12px;
+  box-shadow: none;
 }
-.prev-btn:hover {
-  background: #005fa3;
+
+.prev-btn:hover,
+.prev-btn:focus {
+  background: #dde5f5;
+  color: #163871;
 }

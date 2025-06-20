@@ -201,5 +201,26 @@ body {
     background: #ffd6d6;
   }
 
+  .prev-btn {
+  width: 100%;
+  margin-bottom: 16px;
+  padding: 12px 0;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 1.13rem;
+  background: #eef1fa;
+  color: #215195;
+  cursor: pointer;
+  transition: background 0.2s;
+  box-shadow: none;
+}
+
+.prev-btn:hover,
+.prev-btn:focus {
+  background: #dde5f5;
+  color: #163871;
+}
+
 }
 
