@@ -102,4 +102,10 @@ export class WizardDataService {
     const idx = mods.indexOf(current);
     return idx >= 0 && idx < mods.length - 1 ? mods[idx + 1] : null;
   }
+
+  getPrevModule(current: string): string | null {
+  const mods = this.getSelectedModules();
+  const idx = mods.indexOf(current);
+  return idx > 0 ? mods[idx - 1] : null;
+  }
 }

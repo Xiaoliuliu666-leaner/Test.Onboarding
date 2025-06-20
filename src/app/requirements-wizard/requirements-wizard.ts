@@ -1,16 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { WizardDataService } from '../wizard-data.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { RouterModule } from '@angular/router';
-import { OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+// 引入 Sidebar 组件
+import { WizardSidebarComponent } from '../components/wizard-sidebar/wizard-sidebar';
 
 @Component({
   standalone: true,
   selector: 'app-requirements-wizard',
-  imports: [FormsModule,CommonModule,RouterModule],
+  imports: [FormsModule, CommonModule, RouterModule, WizardSidebarComponent],
   templateUrl: './requirements-wizard.html',
   styleUrls: ['./requirements-wizard.scss']
 })
@@ -36,6 +36,43 @@ export class RequirementsWizard implements OnInit {
     { key: 'workflows', name: 'Workflows', description: 'Define custom workflow requirements' },
     { key: 'integrations', name: 'Integrations', description: 'Setup Broking Platform and Document Management integrations'},
   ];
+
+  // 用于sidebar
+  get menuList() {
+    // 步骤和选中的模块动态拼接
+    return [
+      { label: 'Step 1: Tenant', key: 'Tenant', isStep: true },
+      ...(this.tenant ? [
+        { label: this.tenant === '__new__' ? this.newTenantName : this.tenant, key: 'TenantInfo', isSub: true },
+        ...(this.contactEmail ? [{ label: this.contactEmail, key: 'ContactEmail', isSub: true }] : []),
+        ...(this.contactPhone ? [{ label: this.contactPhone, key: 'ContactPhone', isSub: true }] : [])
+      ] : []),
+      { label: 'Step 2: Modules', key: 'Modules', isStep: true },
+      ...(this.selectedModules.length ? this.selectedModules.map(k => ({
+        label: this.getModuleNameByKey(k),
+        key: k,
+        isSub: true
+      })) : []),
+      ...(this.selectedModules.includes('integrations')
+        ? [{ label: 'Integrations', key: 'Integrations', isStep: true }] : []),
+      { label: 'Step 3: Notes', key: 'Notes', isStep: true }
+    ];
+  }
+  get integrationSteps() {
+    return this.selectedModules.includes('integrations')
+      ? ['winbeat', 'insight', 'officetech']
+      : [];
+  }
+
+  // 当前高亮key，和stepIndex关联
+  get activeMenu() {
+    switch (this.stepIndex) {
+      case 1: return 'Tenant';
+      case 2: return 'Modules';
+      case 3: return 'Notes';
+      default: return '';
+    }
+  }
 
   constructor(
     private wizardDataService: WizardDataService,
@@ -137,6 +174,39 @@ export class RequirementsWizard implements OnInit {
         return this.configNotes.trim().length >= 10;
       default:
         return true;
+    }
+  }
+
+  onPreviousStepFromNotes() {
+    const selected = this.wizardDataService.getSelectedModules();
+    if (selected && selected.length > 0) {
+      const lastModule = selected[selected.length - 1];
+      this.router.navigate(['/requirements/wizard/module-' + lastModule]);
+    } else {
+      this.stepIndex = 2;
+    }
+  }
+
+  // 侧边栏菜单点击跳转
+  onSidebarMenuClick(key: string) {
+    // 支持所有模块的跳转
+    const moduleMap: { [k: string]: string } = {
+      'User Management': 'user-management',
+      'Reporting': 'reporting',
+      'Billing': 'billing',
+      'Support': 'support',
+      'Workflows': 'workflows',
+      'Integrations': 'integrations'
+    };
+    
+    if (moduleMap[key]) {
+      this.router.navigate(['/requirements/wizard/module-' + moduleMap[key]]);
+    } else if (key === 'Tenant') {
+      this.stepIndex = 1;
+    } else if (key === 'Modules') {
+      this.stepIndex = 2;
+    } else if (key === 'Notes') {
+      this.stepIndex = 3;
     }
   }
 }

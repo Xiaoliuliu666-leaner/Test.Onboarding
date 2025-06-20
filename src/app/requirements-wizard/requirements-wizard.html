@@ -7,31 +7,15 @@
 </div>
 
 <div class="wizard-portal">
-  <!-- 侧边栏 Sidebar-->
-  <aside class="wizard-sidebar">
-    <ul>
-      <li [class.active]="stepIndex === 1">Step 1: Tenant</li>
-      <ng-container *ngIf="tenant">
-        <li class="step-summary-item">{{ tenant === '__new__' ? newTenantName : tenant }}</li>
-        <li class="step-summary-item" *ngIf="contactEmail">{{ contactEmail }}</li>
-        <li class="step-summary-item" *ngIf="contactPhone">{{ contactPhone }}</li>
-      </ng-container>
+  <!-- 侧边栏组件化 -->
+  <app-wizard-sidebar
+    [menuList]="menuList"
+    [activeMenu]="activeMenu"
+    [integrationSteps]="integrationSteps"
+    (menuClick)="onSidebarMenuClick($event)">
+  </app-wizard-sidebar>
 
-      <li [class.active]="stepIndex === 2">Step 2: Modules</li>
-      <ng-container *ngIf="selectedModules && selectedModules.length">
-        <li class="step-summary-item" *ngFor="let module of selectedModules">
-          {{ getModuleNameByKey(module) }}
-        </li>
-      </ng-container>
-
-      <li [class.active]="stepIndex === 3">Step 3: Notes</li>
-      <ng-container *ngIf="configNotes">
-        <li class="step-summary-item">{{ configNotes | slice: 0:30 }}...</li>
-      </ng-container>
-    </ul>
-  </aside>
-
-  <!-- 主内容区：加一层蓝色描边的包裹 | Main content area: add a layer of blue stroke package-->
+  <!-- 主内容区 -->
   <main class="wizard-main">
     <div class="wizard-content-outline">
       <div class="wizard-card">
@@ -111,13 +95,35 @@
 
         <!-- 按钮 Button-->
         <div class="wizard-nav">
-          <button (click)="previousStep()" [disabled]="stepIndex === 1" class="wizard-btn wizard-btn-outline">Previous</button>
-          <button *ngIf="stepIndex < 3" (click)="nextStep()" [disabled]="!isStepValid()" class="wizard-btn wizard-btn-primary">Next</button>
-          <button *ngIf="stepIndex === 3" (click)="submitWizard()" [disabled]="!isStepValid()" class="wizard-btn wizard-btn-primary">Submit</button>
+          <button 
+            *ngIf="stepIndex < 3" 
+            (click)="previousStep()" 
+            [disabled]="stepIndex === 1" 
+            class="wizard-btn wizard-btn-outline">
+            Previous
+          </button>
+          <button 
+            *ngIf="stepIndex === 3" 
+            (click)="onPreviousStepFromNotes()" 
+            class="wizard-btn wizard-btn-outline">
+            Previous
+          </button>
+          <button 
+            *ngIf="stepIndex < 3" 
+            (click)="nextStep()" 
+            [disabled]="!isStepValid()" 
+            class="wizard-btn wizard-btn-primary">
+            Next
+          </button>
+          <button 
+            *ngIf="stepIndex === 3" 
+            (click)="submitWizard()" 
+            [disabled]="!isStepValid()" 
+            class="wizard-btn wizard-btn-primary">
+            Submit
+          </button>
         </div>
       </div>
     </div>
   </main>
 </div>
-
-
