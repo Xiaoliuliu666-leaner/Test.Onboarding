@@ -5,17 +5,21 @@
         [class.active]="menu.key === activeMenu"
         [class.step-title]="menu.isStep"
         [class.sub-item]="menu.isSub"
+        (click)="menuClick.emit(menu.key)"
+        style="cursor: pointer;"
       >
         {{ menu.label }}
       </li>
-      <!-- Integration 特殊情况保留 can keep in special circumstances-->
-      <ng-container *ngIf="menu.key === 'Integrations'">
-        <ul *ngIf="integrationSteps?.length">
+      <!-- Integrations 子步骤，仅在 Integrations 步骤下展示 -->
+      <ng-container *ngIf="menu.key === 'Integrations' && integrationSteps?.length">
+        <ul>
           <li
             *ngFor="let step of integrationSteps; let i = index"
             [class.active]="activeMenu === 'Integrations' && integrationStepIndex === i"
             class="integration-substep"
-            (click)="integrationStepChange.emit(i)">
+            (click)="integrationStepChange.emit(i); $event.stopPropagation();"
+            style="cursor: pointer;"
+          >
             {{ getIntegrationLabel(step) }}
           </li>
         </ul>
@@ -23,4 +27,3 @@
     </ng-container>
   </ul>
 </aside>
-

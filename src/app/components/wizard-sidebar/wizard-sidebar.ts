@@ -13,20 +13,18 @@ import { EventEmitter } from '@angular/core';
 })
 
 export class WizardSidebarComponent {
+  @Input() menuList: Array<{ label: string, key: string, isStep?: boolean, isSub?: boolean }> = [];
   @Input() activeMenu: string = '';
   @Input() integrationSteps: string[] = [];
-  @Input() integrationStepIndex: number|null = null;
+  @Input() integrationStepIndex: number | null = null;
+
+  @Output() menuClick = new EventEmitter<string>();
   @Output() integrationStepChange = new EventEmitter<number>();
 
 
-  menuList = [
-  { label: 'Step 1: Tenant', key: 'Tenant', isStep: true },
-  { label: 'Tenant A', key: 'TenantA', isSub: true },
-  { label: 'Step 2: Modules', key: 'Modules', isStep: true },
-  { label: 'Workflows', key: 'Workflows', isSub: true },
-  { label: 'Integrations', key: 'Integrations', isStep: true },
-  { label: 'Step 3: Notes', key: 'Notes', isStep: true }
-];
+  onMenuClick(key: string) {
+    this.menuClick.emit(key);
+  };
 
   integrationStepLabelMap: any = {
     winbeat: 'WinBEAT',
