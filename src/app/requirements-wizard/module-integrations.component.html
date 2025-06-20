@@ -1,19 +1,19 @@
-<!-- 顶部绿色横条 Headbar-->
 <app-wizard-headbar></app-wizard-headbar>
 
 <div class="wizard-layout">
-  <!-- 左侧高亮sidebar Integrations -->
-  <app-wizard-sidebar [activeMenu]="'Integrations'"
-  [integrationSteps]="selectedKeys"
-  [integrationStepIndex]="stepIndex"
-  (integrationStepChange)="stepIndex = $event">
+  <!-- 侧边栏，动态高亮 Integrations + 显示选中的 integration 子步骤 -->
+  <app-wizard-sidebar
+    [menuList]="sidebarMenuList"
+    [activeMenu]="'Integrations'"
+    [integrationSteps]="selectedKeys"
+    [integrationStepIndex]="stepIndex"
+    (integrationStepChange)="stepIndex = $event"
+    (menuClick)="onSidebarMenuClick($event)">
   </app-wizard-sidebar>
-  
-  <!-- 主体蓝色大框 Main content-->
+
   <app-wizard-content-outline>
     <div class="module-card">
       <h2>Integrations - Details</h2>
-      
       <form (ngSubmit)="onNext()" style="width: 100%;">
         <!-- Broking Platform 分组 -->
         <div class="form-group">
@@ -40,7 +40,7 @@
           </div>
         </div>
 
-        <!-- 当前 integration 的表单，分步展示 Step-by-step present-->
+        <!-- 当前 integration 的表单，分步展示 -->
         <ng-container [ngSwitch]="currentKey">
           <ng-container *ngSwitchCase="'winbeat'">
             <div class="form-group">
@@ -81,8 +81,9 @@
         <div style="margin-top: 18px; font-size: 0.97rem; color: #555;" *ngIf="selectedKeys.length > 1">
           Step {{ stepIndex + 1 }} of {{ selectedKeys.length }}: <b>{{ currentKey | titlecase }}</b>
         </div>
-        <button type="submit" class="next-btn"
-          [disabled]="selectedKeys.length === 0">
+
+        <button type="button" class="prev-btn" (click)="onPrevious()">Previous</button>
+        <button type="submit" class="next-btn" [disabled]="selectedKeys.length === 0">
           {{ stepIndex === selectedKeys.length - 1 ? 'Next' : 'Continue' }}
         </button>
       </form>

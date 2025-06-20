@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { WizardDataService } from '../wizard-data.service';
 import { FormsModule } from '@angular/forms';
@@ -11,10 +11,16 @@ import { WizardContentOutlineComponent } from '../components/wizard-content-outl
   standalone: true,
   selector: 'app-module-integrations',
   templateUrl: './module-integrations.component.html',
-  imports: [FormsModule, CommonModule, WizardHeadbarComponent, WizardSidebarComponent, WizardContentOutlineComponent],
+  imports: [
+    FormsModule,
+    CommonModule,
+    WizardHeadbarComponent,
+    WizardSidebarComponent,
+    WizardContentOutlineComponent
+  ],
   styleUrls: ['./module-integrations.component.scss']
 })
-export class ModuleIntegrationsComponent {
+export class ModuleIntegrationsComponent implements OnInit {
   selected: { [key: string]: boolean } = {
     winbeat: false,
     insight: false,
@@ -27,15 +33,13 @@ export class ModuleIntegrationsComponent {
     officetech: { hostingProvider: '', sqlConnection: '', fileStorage: '' }
   };
 
-  // 决定当前轮到哪个integration | Determine which integration is currently in progress
   stepIndex = 0;
+  sidebarMenuList: any[] = [];
+  activeMenu = 'Integrations';
 
-  // 选中的integration key数组，自动过滤顺序 |The selected integration key array, automatically filtering order
   get selectedKeys(): string[] {
     return Object.keys(this.selected).filter(k => this.selected[k]);
   }
-
-  // 当前要填写的integration key |The integration key to be filled in currently
   get currentKey(): string {
     return this.selectedKeys[this.stepIndex];
   }
@@ -45,23 +49,68 @@ export class ModuleIntegrationsComponent {
     private wizardDataService: WizardDataService
   ) {}
 
+  ngOnInit() {
+    // 加载侧边栏菜单
+    const client = this.wizardDataService.getCurrentClient() || {};
+    const tenant = client.tenant?.tenant || '';
+    const newTenantName = client.tenant?.newTenantName || '';
+    const contactEmail = client.tenant?.contactEmail || '';
+    const contactPhone = client.tenant?.contactPhone || '';
+    const selectedModules = this.wizardDataService.getSelectedModules();
+
+    this.sidebarMenuList = [
+      { label: 'Step 1: Tenant', key: 'Tenant', isStep: true },
+      { label: tenant === '__new__' ? newTenantName : tenant, key: 'TenantA', isSub: true },
+      ...(contactEmail ? [{ label: contactEmail, key: 'ContactEmail', isSub: true }] : []),
+      ...(contactPhone ? [{ label: contactPhone, key: 'ContactPhone', isSub: true }] : []),
+      { label: 'Step 2: Modules', key: 'Modules', isStep: true },
+      ...selectedModules.map((key: string) => ({
+        label: this.getModuleName(key),
+        key: this.getModuleName(key),
+        isSub: true
+      })),
+      { label: 'Integrations', key: 'Integrations', isStep: true },
+      { label: 'Step 3: Notes', key: 'Notes', isStep: true }
+    ];
+
+    // 回填数据（可选，若你有保存过 integrations 数据）
+    const saved = this.wizardDataService.getModuleDetail('integrations');
+    if (saved && saved.selected) {
+      this.selected = { ...this.selected, ...saved.selected };
+    }
+    if (saved && saved.details) {
+      Object.keys(this.details).forEach(k => {
+        if (saved.details[k]) {
+          this.details[k] = { ...this.details[k], ...saved.details[k] };
+        }
+      });
+    }
+  }
+
+  getModuleName(key: string): string {
+    const map: Record<string, string> = {
+      'user-management': 'User Management',
+      'billing': 'Billing',
+      'reporting': 'Reporting',
+      'support': 'Support',
+      'workflows': 'Workflows',
+      'integrations': 'Integrations'
+    };
+    return map[key] || key;
+  }
+
   onNext() {
-    // 保存所有已填数据 | save all filled data
+    // 保存数据
     const chosen: any = {};
-    this.selectedKeys.forEach(key => {
-      chosen[key] = this.details[key];
-    });
+    this.selectedKeys.forEach(key => { chosen[key] = this.details[key]; });
     this.wizardDataService.setModuleDetail('integrations', {
       selected: this.selected,
       details: chosen
     });
-
-    // 如果还有下一个integration，stepIndex++ | If there is another integration, stepIndex++
+    // 多步
     if (this.stepIndex < this.selectedKeys.length - 1) {
       this.stepIndex++;
-    // 保持在本页面，刷新后只显示下一个integration的表单 | Stay on this page, and after refreshing, only the form for the next integration will be displayed.
     } else {
-      // 跳到下一个wizard主模块 | Jump to the next wizard main module
       const selectedModules = this.wizardDataService.getSelectedModules();
       const idx = selectedModules.indexOf('integrations');
       const next = idx >= 0 && idx < selectedModules.length - 1 ? selectedModules[idx + 1] : null;
@@ -73,9 +122,42 @@ export class ModuleIntegrationsComponent {
     }
   }
 
-  // 切换了勾选项，重置stepIndex | When the check option is toggled, reset stepIndex
-  onSelectionChange() {
-    this.stepIndex = 0;
+  onSelectionChange() { this.stepIndex = 0; }
+
+  onPrevious() {
+    if (this.stepIndex > 0) {
+      this.stepIndex--;
+    } else {
+      const selectedModules = this.wizardDataService.getSelectedModules();
+      const idx = selectedModules.indexOf('integrations');
+      const prev = idx > 0 ? selectedModules[idx - 1] : null;
+      if (prev) {
+        this.router.navigate(['/requirements/wizard/module-' + prev]);
+      } else {
+        this.router.navigate(['/requirements/wizard'], { queryParams: { step: 2 } });
+      }
+    }
+  }
+
+  onSidebarMenuClick(key: string) {
+    // 跳转到对应模块页面
+    const moduleMap: { [k: string]: string } = {
+      'User Management': 'user-management',
+      'Reporting': 'reporting',
+      'Billing': 'billing',
+      'Support': 'support',
+      'Workflows': 'workflows',
+      'Integrations': 'integrations'
+    };
+
+    if (moduleMap[key]) {
+      this.router.navigate(['/requirements/wizard/module-' + moduleMap[key]]);
+    } else if (key === 'Tenant') {
+      this.router.navigate(['/requirements/wizard'], { queryParams: { step: 1 } });
+    } else if (key === 'Modules') {
+      this.router.navigate(['/requirements/wizard'], { queryParams: { step: 2 } });
+    } else if (key === 'Notes') {
+      this.router.navigate(['/requirements/wizard'], { queryParams: { step: 3 } });
+    }
   }
 }
-

@@ -257,6 +257,24 @@ module-card .form-group input:focus, .module-card .form-group textarea:focus, .m
   justify-content: center;
   box-sizing: border-box;
 }
+
 .module-card .user-row button:hover {
   background: #ffd6d6;
+}
+
+.prev-btn {
+  background: #0074d9;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  padding: 12px 0;
+  width: 100%;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-bottom: 12px;
+}
+.prev-btn:hover {
+  background: #005fa3;
 }
