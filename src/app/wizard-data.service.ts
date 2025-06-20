@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 export interface ClientToOnboard {
+  id?: string;
   tenant: {
     tenant?: string;
     newTenantName?: string;
@@ -80,11 +81,13 @@ export class WizardDataService {
 
   // Data history
   saveCurrentClient() {
+    // 1. 分配唯一 id Assign unique id
+    if (!this.currentClient['id']) {
+      this.currentClient['id'] = Date.now().toString();
+    }
     const newEntry = JSON.parse(JSON.stringify(this.currentClient));
     this.savedEntries = [
-      ...this.savedEntries.filter(e =>
-        (e.tenant.tenant === newEntry.tenant.tenant && e.tenant.newTenantName === newEntry.tenant.newTenantName) === false
-      ),
+      ...this.savedEntries.filter(e => e.id !== newEntry.id),
       newEntry
     ];
   }
