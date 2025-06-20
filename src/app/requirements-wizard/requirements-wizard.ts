@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { WizardDataService } from '../wizard-data.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { RouterModule } from '@angular/router';
-// 引入 Sidebar 组件
 import { WizardSidebarComponent } from '../components/wizard-sidebar/wizard-sidebar';
 
 @Component({
@@ -198,7 +197,7 @@ export class RequirementsWizard implements OnInit {
       'Workflows': 'workflows',
       'Integrations': 'integrations'
     };
-    
+
     if (moduleMap[key]) {
       this.router.navigate(['/requirements/wizard/module-' + moduleMap[key]]);
     } else if (key === 'Tenant') {
