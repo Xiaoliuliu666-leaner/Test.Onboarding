@@ -4,11 +4,12 @@ import { RouterModule } from '@angular/router';
 import { WizardDataService } from '../wizard-data.service'; 
 import { Router } from '@angular/router';
 import { PlusIcon  } from '../icons/plus-icon/plus-icon';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterModule, PlusIcon ],
+  imports: [CommonModule, RouterModule, PlusIcon, FormsModule ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
@@ -50,5 +51,21 @@ export class HomeComponent implements OnInit {
 
   viewDetails(idx: number) {
   this.router.navigate(['/entry-details', idx]);
+  }
+
+  searchText: string = '';
+
+  get filteredEntries() {
+    if (!this.searchText.trim()) return this.wizardEntries;
+    const val = this.searchText.trim().toLowerCase();
+    return this.wizardEntries.filter(entry =>
+      (entry.tenant?.tenant || '').toLowerCase().includes(val) ||
+      (entry.tenant?.newTenantName || '').toLowerCase().includes(val) ||
+      (entry.tenant?.contactName || '').toLowerCase().includes(val) ||
+      (entry.tenant?.contactEmail || '').toLowerCase().includes(val) ||
+      (entry.tenant?.contactPhone || '').toLowerCase().includes(val) ||
+      (entry.tenant?.createdBy || '').toLowerCase().includes(val) ||
+      (entry.tenant?.configNotes || '').toLowerCase().includes(val)
+    );
   }
 }

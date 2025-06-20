@@ -169,3 +169,21 @@
   background: #888;
 }
 
+.table-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.table-search-input {
+  font-size: 1rem;
+  border: 1.5px solid #eaeaea;
+  border-radius: 8px;
+  padding: 6px 12px;
+  transition: border 0.2s;
+}
+.table-search-input:focus {
+  border: 1.5px solid #3c87f7;
+  outline: none;
+}

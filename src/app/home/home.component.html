@@ -10,7 +10,13 @@
   </div>
 
   <div class="wizard-list-panel" *ngIf="wizardEntries && wizardEntries.length > 0">
-    <h2>Previously Created Entries</h2>
+
+    <!-- The title and search box are on the same line -->
+    <div class="table-title-row" style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;">
+      <h2>Previously Created Entries</h2>
+      <input type="text" [(ngModel)]="searchText" placeholder="Search..." class="table-search-input"/>
+    </div>
+
     <table class="wizard-table">
       <thead>
         <tr>
@@ -22,7 +28,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let entry of wizardEntries; let i = index" (click)="viewDetails(i)" class="resumable-row">
+        <tr *ngFor="let entry of filteredEntries; let i = index" (click)="viewDetails(i)" class="resumable-row">
           <td>
             {{ entry.tenant.tenant === '__new__' ? entry.tenant.newTenantName : entry.tenant.tenant }}
           </td>
