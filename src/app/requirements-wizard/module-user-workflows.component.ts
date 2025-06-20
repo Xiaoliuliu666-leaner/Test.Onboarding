@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { WizardDataService } from '../wizard-data.service';
 import { FormsModule } from '@angular/forms';
@@ -11,30 +11,59 @@ import { WizardContentOutlineComponent } from '../components/wizard-content-outl
   standalone: true,
   selector: 'app-module-user-workflows',
   templateUrl: './module-user-workflows.component.html',
-  imports: [FormsModule, CommonModule, WizardHeadbarComponent, WizardSidebarComponent, WizardContentOutlineComponent],
+  imports: [
+    FormsModule,
+    CommonModule,
+    WizardHeadbarComponent,
+    WizardSidebarComponent,
+    WizardContentOutlineComponent
+  ],
   styleUrls: ['./module-user-workflows.component.scss']
 })
-export class ModuleUserWorkflowsComponent {
+export class ModuleUserWorkflowsComponent implements OnInit {
   workflows: Array<{ description: string }> = [];
+  sidebarMenuList: any[] = [];
+  activeMenu = 'workflows';
 
   constructor(
     private router: Router,
     private wizardDataService: WizardDataService
-  ) {
-    // 如果有已保存的数据（比如返回上一步再进来）| If there is saved data (for example, return to the previous step and come back)
+  ) {}
+
+  ngOnInit() {
+    const selectedModules = this.wizardDataService.getSelectedModules();
+    this.sidebarMenuList = [
+      { label: 'Step 1: Tenant', key: 'Tenant', isStep: true },
+      { label: 'Tenant A', key: 'TenantA', isSub: true },
+      { label: 'Step 2: Modules', key: 'Modules', isStep: true },
+      ...selectedModules.map(key => ({
+        label: this.getModuleName(key),
+        key,
+        isSub: true
+      })),
+      { label: 'Step 3: Notes', key: 'Notes', isStep: true }
+    ];
     const saved = this.wizardDataService.getModuleDetail('workflows');
     if (saved && Array.isArray(saved.workflows)) {
       this.workflows = saved.workflows;
     }
+    this.activeMenu = 'workflows';
   }
 
-  onAddWorkflow() {
-    this.workflows.push({ description: '' });
+  getModuleName(key: string): string {
+    const map: Record<string, string> = {
+      'user-management': 'User Management',
+      'billing': 'Billing',
+      'reporting': 'Reporting',
+      'support': 'Support',
+      'workflows': 'Workflows',
+      'integrations': 'Integrations'
+    };
+    return map[key] || key;
   }
 
-  onRemoveWorkflow(idx: number) {
-    this.workflows.splice(idx, 1);
-  }
+  onAddWorkflow() { this.workflows.push({ description: '' }); }
+  onRemoveWorkflow(idx: number) { this.workflows.splice(idx, 1); }
 
   onNext() {
     this.wizardDataService.setModuleDetail('workflows', { workflows: this.workflows });
@@ -44,6 +73,36 @@ export class ModuleUserWorkflowsComponent {
     if (next) {
       this.router.navigate(['/requirements/wizard/module-' + next]);
     } else {
+      this.router.navigate(['/requirements/wizard'], { queryParams: { step: 3 } });
+    }
+  }
+
+  onPrevious() {
+    const selected = this.wizardDataService.getSelectedModules();
+    const idx = selected.indexOf('workflows');
+    const prev = idx > 0 ? selected[idx - 1] : null;
+    if (prev) {
+      this.router.navigate(['/requirements/wizard/module-' + prev]);
+    } else {
+      this.router.navigate(['/requirements/wizard'], { queryParams: { step: 2 } });
+    }
+  }
+  onSidebarMenuClick(key: string) {
+    const moduleMap: { [k: string]: string } = {
+      'User Management': 'user-management',
+      'Reporting': 'reporting',
+      'Billing': 'billing',
+      'Support': 'support',
+      'Workflows': 'workflows',
+      'Integrations': 'integrations'
+    };
+    if (moduleMap[key]) {
+      this.router.navigate(['/requirements/wizard/module-' + moduleMap[key]]);
+    } else if (key === 'Tenant') {
+      this.router.navigate(['/requirements/wizard'], { queryParams: { step: 1 } });
+    } else if (key === 'Modules') {
+      this.router.navigate(['/requirements/wizard'], { queryParams: { step: 2 } });
+    } else if (key === 'Notes') {
       this.router.navigate(['/requirements/wizard'], { queryParams: { step: 3 } });
     }
   }

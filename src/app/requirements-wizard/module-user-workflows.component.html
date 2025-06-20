@@ -1,15 +1,13 @@
-<!-- 绿色头部横条 -->
 <app-wizard-headbar></app-wizard-headbar>
-
 <div class="wizard-layout">
-  <!-- 左侧侧边栏，高亮 Workflows -->
-  <app-wizard-sidebar [activeMenu]="'Workflows'"></app-wizard-sidebar>
-
-  <!-- 主体蓝色大框（内容区）-->
+  <app-wizard-sidebar 
+    [menuList]="sidebarMenuList" 
+    [activeMenu]="activeMenu"
+    (menuClick)="onSidebarMenuClick($event)">
+  </app-wizard-sidebar>
   <app-wizard-content-outline>
     <div class="module-card">
       <h2>Workflows - Requirements</h2>
-
       <form (ngSubmit)="onNext()" style="width: 100%;">
         <div *ngFor="let wf of workflows; let i = index" class="form-group">
           <label>Workflow Description</label>
@@ -29,7 +27,6 @@
             Remove
           </button>
         </div>
-
         <button
           type="button"
           (click)="onAddWorkflow()"
@@ -37,12 +34,11 @@
         >
           Add Workflow
         </button>
-
         <div style="margin-top: 28px;">
+          <button type="button" class="prev-btn" (click)="onPrevious()">Previous</button>
           <button type="submit" class="next-btn">Next</button>
         </div>
       </form>
     </div>
   </app-wizard-content-outline>
 </div>
-
