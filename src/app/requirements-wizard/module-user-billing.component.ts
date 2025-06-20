@@ -105,7 +105,7 @@ export class ModuleUserBillingComponent implements OnInit {
     }
   }
 
-  /** 关键补充：Sidebar点击跳转 **/
+  //Sidebar点击跳转  Sidebar click to jump
   onSidebarMenuClick(key: string) {
     console.log('[Sidebar click]', key);
     const moduleMap: { [k: string]: string } = {

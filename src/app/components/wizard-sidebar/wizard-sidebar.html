@@ -10,7 +10,7 @@
       >
         {{ menu.label }}
       </li>
-      <!-- Integrations 子步骤，仅在 Integrations 步骤下展示 -->
+      <!-- Integrations 子步骤，仅在 Integrations 步骤下展示 | Integrations substep, which is only displayed under the Integrations step-->
       <ng-container *ngIf="menu.key === 'Integrations' && integrationSteps?.length">
         <ul>
           <li

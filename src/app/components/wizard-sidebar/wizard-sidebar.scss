@@ -25,15 +25,15 @@
     user-select: none;
 
     &.active {
-      background: #1976d2;     // 亮蓝背景
-      color: #4b76d3 !important;  // 白字
+      background: #1976d2;     
+      color: #4b76d3 !important;  
       font-weight: 600;
       box-shadow: 0 1px 3px 0 rgba(30,60,110,0.06);
     }
 
     &.step-title {
       font-size: 1.11rem;
-      color: #173a75;          // 蓝色或深色
+      color: #173a75;          
       font-weight: 600;
       margin-top: 1.2em;
       background: none;

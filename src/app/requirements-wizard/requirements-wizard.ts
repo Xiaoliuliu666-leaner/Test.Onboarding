@@ -36,9 +36,8 @@ export class RequirementsWizard implements OnInit {
     { key: 'integrations', name: 'Integrations', description: 'Setup Broking Platform and Document Management integrations'},
   ];
 
-  // 用于sidebar
   get menuList() {
-    // 步骤和选中的模块动态拼接
+    // 步骤和选中的模块动态拼接 Dynamic splicing of steps and selected modules
     return [
       { label: 'Step 1: Tenant', key: 'Tenant', isStep: true },
       ...(this.tenant ? [
@@ -63,7 +62,7 @@ export class RequirementsWizard implements OnInit {
       : [];
   }
 
-  // 当前高亮key，和stepIndex关联
+  // 当前高亮key，和stepIndex关联 The currently highlighted key, associated with stepIndex
   get activeMenu() {
     switch (this.stepIndex) {
       case 1: return 'Tenant';
@@ -186,9 +185,8 @@ export class RequirementsWizard implements OnInit {
     }
   }
 
-  // 侧边栏菜单点击跳转
+  // 侧边栏菜单点击跳转 Click to jump to the sidebar menu
   onSidebarMenuClick(key: string) {
-    // 支持所有模块的跳转
     const moduleMap: { [k: string]: string } = {
       'User Management': 'user-management',
       'Reporting': 'reporting',

@@ -1,4 +1,4 @@
-<!-- Header区域 -->
+<!-- Header区域 Header Area -->
 <div class="wizard-header">
   <div class="wizard-header-title">
     <span>Start the Requirements Gathering Wizard</span>
@@ -7,7 +7,7 @@
 </div>
 
 <div class="wizard-portal">
-  <!-- 侧边栏组件化 -->
+  <!-- 侧边栏组件化 Sidebar componentization-->
   <app-wizard-sidebar
     [menuList]="menuList"
     [activeMenu]="activeMenu"
@@ -15,7 +15,7 @@
     (menuClick)="onSidebarMenuClick($event)">
   </app-wizard-sidebar>
 
-  <!-- 主内容区 -->
+  <!-- 主内容区 Main content area -->
   <main class="wizard-main">
     <div class="wizard-content-outline">
       <div class="wizard-card">

@@ -2,7 +2,7 @@ body {
   background: #f4f7fb;
 }
 
-/* 顶部绿色横条 headbar*/
+/* Top bar headbar*/
 .wizard-header-bar {
   width: 100vw;
   min-height: 48px;
@@ -36,7 +36,7 @@ body {
   min-height: calc(100vh - 48px);
 }
 
-/* 左侧红边栏+浅橙色 Sidebar*/
+/* Left Sidebar Sidebar*/
 .wizard-sidebar {
   flex: 0 0 240px;
   background: #fffdfb;
@@ -97,7 +97,7 @@ body {
 
 }
 
-/* 白色内容卡片 white card */
+/* White Content Card white card */
 .module-card {
   max-width: 420px;
   width: 100%;

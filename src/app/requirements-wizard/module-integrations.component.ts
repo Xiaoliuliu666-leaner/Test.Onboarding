@@ -50,7 +50,7 @@ export class ModuleIntegrationsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // 加载侧边栏菜单
+    // 加载侧边栏菜单 Loading Sidebar Menu
     const client = this.wizardDataService.getCurrentClient() || {};
     const tenant = client.tenant?.tenant || '';
     const newTenantName = client.tenant?.newTenantName || '';
@@ -73,7 +73,7 @@ export class ModuleIntegrationsComponent implements OnInit {
       { label: 'Step 3: Notes', key: 'Notes', isStep: true }
     ];
 
-    // 回填数据（可选，若你有保存过 integrations 数据）
+    // 回填数据 Backfill data
     const saved = this.wizardDataService.getModuleDetail('integrations');
     if (saved && saved.selected) {
       this.selected = { ...this.selected, ...saved.selected };
@@ -100,14 +100,14 @@ export class ModuleIntegrationsComponent implements OnInit {
   }
 
   onNext() {
-    // 保存数据
+    // 保存数据 Save data
     const chosen: any = {};
     this.selectedKeys.forEach(key => { chosen[key] = this.details[key]; });
     this.wizardDataService.setModuleDetail('integrations', {
       selected: this.selected,
       details: chosen
     });
-    // 多步
+
     if (this.stepIndex < this.selectedKeys.length - 1) {
       this.stepIndex++;
     } else {
@@ -140,7 +140,7 @@ export class ModuleIntegrationsComponent implements OnInit {
   }
 
   onSidebarMenuClick(key: string) {
-    // 跳转到对应模块页面
+    // 跳转到对应模块页面 Jump to corresponding module page
     const moduleMap: { [k: string]: string } = {
       'User Management': 'user-management',
       'Reporting': 'reporting',
